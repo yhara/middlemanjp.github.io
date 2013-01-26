@@ -64,7 +64,7 @@ middleman init my_new_project --rack
 
 ### プロジェクトテンプレート
 
-デフォルトの基本スケルトンに加え, Middleman は [HTML5 Boilerplate] ベースのオプションテンプレートが付属します。オプションテンプレートは `-t` や `--template` コマンドラインフラグを使用してアクセスできます。例えば, HTML5 Boilerplate ベースのプロジェクトを始める場合, このコマンドを使用します:
+デフォルトの基本スケルトンに加え, Middleman は [HTML5 Boilerplate] ベースのオプションテンプレートが付属します。オプションテンプレートは `-T` や `--template` コマンドラインフラグを使用してアクセスできます。例えば, HTML5 Boilerplate ベースのプロジェクトを始める場合, このコマンドを使用します:
 
 ``` bash
 middleman init my_new_boilerplate_project --template=html5
@@ -147,7 +147,7 @@ bundle exec middleman
 middleman server -p 4567 -e development
 ```
 
-いくつかの状況か (あなたの設定ファイルが暴走した場合をいう) では, middleman server は自信をブートすることができず, コンソールにエラーが出力されないかもしれません。パニックにならずに, 完全なトレースを見るために `middleman build` を実行しエラーを修正してください。
+いくつかの状況か (あなたの設定ファイルが暴走した場合をいう) では, `middleman server` は自信をブートすることができず, コンソールにエラーが出力されないかもしれません。パニックにならずに, 完全なトレースを見るために `middleman build` を実行しエラーを修正してください。
 
 ## 静的サイトのエクスポート (middleman build)
 
