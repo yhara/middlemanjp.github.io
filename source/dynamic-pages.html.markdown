@@ -1,10 +1,10 @@
 ---
-title: Dynamic Pages
+title: 動的ページ
 ---
 
-# Dynamic Pages
+# 動的ページ
 
-Middleman has the ability to generate pages which do not have a one-to-one relationship with their template files. What this means is that you can have a single template which generates multiple files based on variables. Here's an example `config.rb` setup:
+Middleman にはテンプレートファイルと 1 対 1 の関係を持っていないページを生成する機能があります。これが意味するのは, 変数に応じて複数のファイルを生成する 1 つのテンプレートを扱うことができます。 `config.rb` の設定例の 1 つです:
 
 ``` ruby
 ["tom", "dick", "harry"].each do |name|
@@ -12,14 +12,15 @@ Middleman has the ability to generate pages which do not have a one-to-one relat
 end
 ```
 
+プロジェクトがビルドされる際に, ファイルは次のように出力されます:
 When this project is built, four files will be output:
 
-* /about/tom.html (with `person_name` equalling "tom" in the template)
-* /about/dick.html (with `person_name` equalling "dick" in the template)
-* /about/harry.html (with `person_name` equalling "harry" in the template)
-* /about/template.html (with `person_name` being nil in the template)
+* /about/tom.html (テンプレートの中で `person_name` は "tom" として)
+* /about/dick.html (テンプレートの中で `person_name` は "dick" として)
+* /about/harry.html (テンプレートの中で `person_name` は "harry" として)
+* /about/template.html (テンプレートの中で `person_name` は nil になる)
 
-In most cases, you will not want to generate the template itself without the `person_name` variable, so you can tell Middleman to ignore it:
+ほとんどの場合, `person_name` 変数なしにテンプレートを生成したくないでしょう。 Middleman にこれを無視するように命令できます:
 
 ``` ruby
 ["tom", "dick", "harry"].each do |name|
@@ -27,14 +28,14 @@ In most cases, you will not want to generate the template itself without the `pe
 end
 ```
 
-Now, only the `about/tom.html`, `about/dick.html` and `about/harry.html` files will be output.
+`about/tom.html`, `about/dick.html` や `about/harry.html` だけが出力されます。
 
-## Ignoring Files
+## 無視するファイル
 
-It is also possible to ignore arbitrary paths when building a site using the new `ignore` method in your `config.rb`:
+`config.rb` に新しい `ignore` メソッドを追加し, サイト生成時に任意のパスを無視することも可能です。
 
 ``` ruby
 ignore "/ignore-this-template.html"
 ```
 
-You can give ignore exact source paths, filename globs, or regexes.
+正確なファイルパス, ファイル名の塊や正規表現を ignore に与えることができます。
