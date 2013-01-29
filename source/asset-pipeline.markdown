@@ -1,12 +1,12 @@
 ---
-title: Asset Pipeline
+title: アセットパイプライン
 ---
 
-## Dependency Management (Sprockets)
+## 依存性管理 (Sprockets)
 
-[Sprockets] is a tool for managing libraries of Javascript (and CoffeeScript) code, declaring dependency management and include 3rd-party code. At its core, Sprockets makes a `require` method available inside your .js and .coffee files which can pull in the contents of an external file from your project or from a 3rd party gem.
+[Sprockets] は Javascript (と CoffeeScript) のライブラリを管理するためのツールで, 依存性を宣言し, 3rd パーティのコードを含めます。Sprockets は .js や .coffee のファイルの中で,  `require` メソッドを使用できるようにし, プロジェクトまたは 3rd パーティ製の gem から外部ファイルを取り込むことができます。
 
-Say I have a file called `jquery.js` which contains the jQuery library and another file called `app.js` which contains my application code. My app file can include jquery before it runs like so:
+jQuery ライブラリを含む `jquery.js` ファイルと別ファイルでアプリケーションコードが含まれる `app.js` があるとします。 次のようにすることで, app ファイルは jquery を含むことができます:
 
 ``` javascript
 //= require "jquery"
@@ -19,7 +19,7 @@ $(document).ready(function() {
 });
 ```
 
-This system also works within CSS files:
+このシステムは CSS ファイルの中でも機能します:
 
 ``` css
 //= require "base"

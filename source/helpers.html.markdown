@@ -116,9 +116,9 @@ input_tag :password, :value => "secret", :class => "demo"
   # => <input type='password' value='secret' class='demo'>
 ```
 
-## Asset ヘルパ
+## アセットヘルパ
 
-Asset ヘルパはハイパーリンク, mail_to リンク, 画像, スタイルシートや JavaScript のような html をビューテンプレートに挿入する手助けをします。単純なビューテンプレートでの用途は次のようになります:
+アセットヘルパはハイパーリンク, mail_to リンク, 画像, スタイルシートや JavaScript のような html をビューテンプレートに挿入する手助けをします。単純なビューテンプレートでの用途は次のようになります:
 
 ``` html
 <html>
