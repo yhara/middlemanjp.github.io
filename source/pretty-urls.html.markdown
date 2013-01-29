@@ -1,47 +1,47 @@
 ---
-title: Pretty URLs (Directory Indexes)
+title: きれいな URL (ディレクトリインデックス)
 ---
 
-# Pretty URLs (Directory Indexes)
+# きれいな URL (ディレクトリインデックス)
 
-By default Middleman will output the files exactly as you have described them in your project. For example a `about-us.html.erb` file in the `source` folder will be output as `about-us.html` when you build the project. If you were to place this project in the root of a web-server at `example.com`, then this page would be accessible at: `http://example.com/about-us.html`
+デフォルトで, Middleman はプロジェクトの中であなたが記述したとおりに正確にファイルを出力します。例えば, `source` フォルダの中の `about-us.html.erb` ファイルはプロジェクトのビルド時に `about-us.html` として出力されます。 `example.com` の web サーバのルートディレクトリにプロジェクトを配置すれば, このページは次 URL でアクセスできます: `http://example.com/about-us.html`
 
-This makes sense for a static website, but many find the .html distasteful and would prefer a clean (or pretty) extension-less URL. There are two ways to accomplish this.
+静的な web サイトにとってはリにかなっていますが, 多くの人は .html が不快だと思い, きれいな (わかりやすい) 拡張子なしの URL を好むでしょう。これに対応するには 2 つの方法があります。
 
-## Ruby Web-server
+## Ruby Web サーバ
 
-If you are using a Rack-based web-server, you can use the `Rack::TryStatic` middleware found in the [rack-contrib] project. In your `config.ru` (or Rails Rack configuration), add the following:
+Rack ベースの web サーバを使用しているなら, [rack-contrib] プロジェクトの `Rack::TryStatic` ミドルウェアを使うことができます。 `config.ru` の中に (もしくは Rails の Rack 設定), 次の行を追加してください:
 
 ``` ruby
 require "rack/contrib/try_static"
 use Rack::TryStatic, :root => "build", :urls => %w[/], :try => ['.html']
 ```
 
-The same `about-us.html` file would be accessible at: `http://example.com/about-us`
-    
-However, serving your site via Rack somewhat defeats the purpose of generating a static site.
+`about-us.html` と同じファイルは次の URL でアクセスできます: `http://example.com/about-us`
 
-## Apache (and compatible servers)
+しかし, Rack を介してサイトを提供することは, やや静的サイトを生成する目的に反します。
 
-If you are not using a Rack-based web-server, you can use the Directory Indexes feature to tell Middleman to create a folder for each `.html` file and place the built template file as the index of that folder. In your `config.rb`:
+## Apache (または互換サーバ)
+
+Rack ベースの web サーバを使用していない場合, Middleman に `.html` 毎にフォルダを作成し, テンプレートファイルを index としてフォルダ内に作成するように命令するディレクトリインデックス機能を使いことができます。 `config.rb` に追加します:
 
 ``` ruby
 activate :directory_indexes
 ```
 
-Now when the above project is built, the `about-us.html.erb` file will be output as `about-us/index.html`. When placed in an Apache compatible web-server, the page would be available at:
+このプロジェクトがビルドされた時,  `about-us.html.erb` ファイルは `about-us/index.html` として出力されます。Apache 互換の web サーバに配置された場合, このページは次の URL でアクセスできます:
 
 ``` ruby
 http://example.com/about-us
 ```
 
-If you prefer a different file be output, you can use the `index_file` variable. For example, IIS uses default.html:
+別のファイル名で出力したい場合, `index_file` 変数が使用できます。例えば,  IIS では default.html が使用されます:
 
 ``` ruby
 set :index_file, "default.html"
 ```
 
-Or, you may want a PHP file:
+もしくは, PHP ファイルにしたい場合:
 
 ``` ruby
 set :index_file, "index.php"
@@ -49,18 +49,18 @@ set :index_file, "index.php"
 
 ### Opt-out
 
-If there are pages which you don't want automatically renamed, you can opt-out:
+自動的に名前を変更したくないページがある場合, 除外できます:
 
 ``` ruby
 page "/i-really-want-the-extension.html", :directory_index => false
 ```
 
-`page` works with regexes or file globs if you want to turn off indexes for many files at once.
+1 度に沢山のファイルのインデックスをオフにしたい場合は, `page` には正規表現かファイルの塊を与えることができます。
 
-You can also add a `directory_index: false` key to your page's [YAML Frontmatter](/frontmatter/) to disable directory indexes.
+ページ毎に [YAML 形式の Frontmatter][YAML Frontmatter](/frontmatter/) に `directory_index: false` を追加することもできます。
 
-### Manual Indexes
+### 手動インデックス
 
-If your template file is already named `index.html` it will pass through Middleman untouched. For example, `my-page/index.html.erb` will generate `my-page/index.html` as you would expect.
+テンプレートファイル名がすでに `index.html` になっている場合, この処理行われず Middleman を通過します。例えば, あなたが予想するように `my-page/index.html.erb` は `my-page/index.html` を生成します。
 
 [rack-contrib]: https://github.com/rack/rack-contrib/
