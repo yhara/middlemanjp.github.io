@@ -4,24 +4,24 @@ title: LiveReload
 
 # LiveReload
 
-Middleman provides an official extension for livereloading functionality. Simply install the gem:
+Middleman は LiveReload 機能の公式拡張を提供しています。 gem で簡単にインストールします:
 
 ``` bash
 gem install middleman-livereload
 ```
 
-Add `middleman-livereload` to your Gemfile and open your `config.rb` and add
+`middleman-livereload` を Gemfile や `config.rb` に追加, さらに次の行を追加。
 
 ``` ruby
 activate :livereload
 ```
 
-Simply start middleman webserver again.
+middleman の web サーバを再起動します。
 
 ``` bash
 middleman server
 ```
 
-Your browser will reload changed pages automatically.
+ページ内容が変更されると自動的にブラウザがリロードされます。
 
-NOTE: [middleman 3.0.4 breaks middleman-livereload](https://github.com/middleman/middleman-livereload/issues/10)
+NOTE: [middleman 3.0.4 では middleman-livereload は動作しない](https://github.com/middleman/middleman-livereload/issues/10)
