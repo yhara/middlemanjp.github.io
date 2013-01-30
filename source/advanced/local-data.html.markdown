@@ -1,12 +1,12 @@
 ---
-title: Local Data
+title: ローカルデータ
 ---
 
-# Local Data
+# ローカルデータ
 
-Sometimes it is useful to extract the data content of a page from the rendering. This way some team members can concentrate on building up the database on content, while another team member can build the structure of the site. Local YAML Data allows you to create `.yml` files in a folder called `data` and makes this information available in your templates. The `data` folder should be placed in the root of your project i.e. in the same folder as your project's `source` folder.
+レンダリングからページのコンテンツデータを抜き出すことはしばしば有用です。この方法はあるチームメンバーがコンテンツ・データベースの作成に専念することができ, その間に他のチームメンバーはサイトの構造を作成することができます。ローカルの YAML データは `data` フォルダの中に `.yml` として作成で, テンプレートでこの情報を使用することができます。 `data` フォルダは, プロジェクトの `source` フォルダと同じように, プロジェクトのルートディレクトリに配置されるべきです。
 
-Here's an example file at `data/people.yml` with the contents:
+次に内容が書かれた `data/people.yml` を例として示します:
 
 ``` yaml
 friends:
@@ -15,10 +15,10 @@ friends:
   - Harry
 ```
 
-Now, anywhere in our template files, we will have access to this data:
+さて, テンプレートファイルの中ならどこでも, このデータにアクセスできます:
 
 ``` html
-<h1>Friends</h1>
+<h1>友だち</h1>
 <ol>
   <% data.people.friends.each do |f| %>
   <li><%= f %></li>
@@ -26,10 +26,10 @@ Now, anywhere in our template files, we will have access to this data:
 </ol>
 ```
 
-Which will render:
+このようにレンダリングされます:
 
 ``` html
-<h1>Friends</h1>
+<h1>友だち</h1>
 <ol>
   <li>Tom</li>
   <li>Dick</li>
@@ -37,4 +37,4 @@ Which will render:
 </ol>
 ```
 
-Notice that the name of the `.yml` file (people) is the name of the object which stores the data in your template: `data.people`.
+`.yml` ファイル (people) の名前はテンプレートの中ではデータが格納されたオブジェクトの名前になることに注意してください: `data.people`。
