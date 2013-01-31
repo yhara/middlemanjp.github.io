@@ -126,5 +126,5 @@ activate :i18n, :langs => [:en] # :en 以外のすべての言語を無視
 ``` ruby
 activate :i18n, :mount_at_root => :es # スペイン語をルートに配置
 # or
-activate :i18n, :mount_at_root => false # すべての言語 URL に prefox がつく
+activate :i18n, :mount_at_root => false # すべての言語 URL に prefix がつく
 ```
