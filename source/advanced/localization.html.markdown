@@ -1,16 +1,16 @@
 ---
-title: Localization (i18n)
+title: 多言語化 (i18n)
 ---
 
-# Localization (i18n)
+# 多言語化 (i18n)
 
-The extension provides an api for enabling localization in your `config.rb`:
+この拡張は `config.rb` に多言語化を有効化する API を提供します:
 
 ``` ruby
 activate :i18n
 ```
 
-By default this will search the `locales` folder in the root of your project for YAML files representing each locale you want to support. The YAML file is a set of keys and values for each string you need to localize in your site. The keys, which is how you will refer to these strings in your templates, must be the same in each locale, but the values will change. Here are two example YAML files.
+デフォルトでは, この拡張は対応したい各ロケールを表す YAML ファイルをプロジェクトルートにある `locales` フォルダの中から探します。 YAML ファイルはサイトの中で多言語化する必要がある文字列毎のキーと値のセットです。キーは, テンプレートの中でこれらの文字列を参照するもので, ロケール毎に同じでなければなりませんが, その値は異なるでしょう。 2 つの YAML ファイル例です:
 
 `locales/en.yml`:
 
@@ -28,60 +28,60 @@ es:
   hello: "Hola"
 ```
 
-Localizable templates live in the `source/localizable` folder by default (see below on how to change this option). Each template in that folder will have access to the `I18n` helper. Using this helper, you can refer to keys from your YAML files and inject the language-specific values into your template. Here's a simple `source/localizable/hello_world.html.erb` template:
+多言語化できるテンプレートは, デフォルトで `source/Localizable` フォルダの中に配置します (このオプションの変更方法はページ下部で) 。このフォルダにあるテンプレート毎に `I18n` ヘルパにアクセスできます。このヘルパを使うことで,  YAML ファイルからキーを参照し, 言語固有の値をテンプレートに差し込みます。簡単な `source/localizable/hello_world.html.erb` テンプレートの例です:
 
 ``` html
     <%= I18n.t(:hello) %> World
 ```
 
-This would output two files:
+これは 2 つのファイルとして出力されます:
 
-* /hello_world.html with contents: "Hello World"
-* /es/hello_world.html with contents: "Hola World"
+* /hello_world.html の内容は: "Hello World"
+* /es/hello_world.html の内容は: "Hola World"
 
-## URL Path
+## URL パス
 
-Each individual language is accessible in its own namespaced path. By default, the first language lives at the root of the site (see below to change this option). The default path is to simply use the language name (the name of the YAML file) in the path:
+個々の言語にはそれ自身の名前空間のパスでアクセスすることができます。デフォルトでは, 第一言語はサイトのルートに配置されます (このオプションの変更方法はページ下部で) 。デフォルトのパスはパスの中でシンプルに言語名 ( YAML ファイル名) を使用します:
 
 * /en/index/html
 * /es/index.html
 * /fr/index.html
 
-You can change this with the `:path` option, but remember: the URL will always include the name of the YAML file:
+`:path` オプションで変更できますが, 次のことを忘れないでください: URL は YAML ファイルの名前を含む:
 
 ``` ruby
 activate :i18n, :path => "/langs/:locale/"
 ```
 
-Now the paths would be:
+パスは次のように:
 
 * /langs/en/index/html
 * /langs/es/index.html
 * /langs/fr/index.html
 
-If you are unhappy using the YAML file names as part of your path, you can remap them to different values.
+パスの一部に YAML ファイル名 を使いたくない場合, 違う値で書き換えることができます。
 
 ``` ruby
 activate :i18n, :path => "/langs/:locale/", 
   :lang_map => { :en => :english, :es => :spanish, :fr => :french }
 ```
 
-Now the paths would be:
+パスは次のように:
 
 * /langs/english/index/html
 * /langs/spanish/index.html
 * /langs/french/index.html
 
-## Localizing Paths
+## 多言語化パス
 
-In some cases you may want to localize the name of the file in addition to its contents. You can use the special `paths` key in your language YAML files to rename URLs to be language-specific.
+いくつかのケースでは, YAML ファイルの内容に加えることで, ファイル名を多言語化したい場合があります。言語固有の URL 書き換えを行うために YAML ファイルの中で特別な `paths` キーを使用できます。
 
-Let's say we have a file `source/localizable/hello.html.erb`. By default, this will output as:
+`source/localizable/hello.html.erb` があるとします。デフォルトでは, 次のように出力されます:
 
 * /hello.html
 * /es/hello.html
 
-If we want to rename that file to `hola.html` for Spanish only, we can use the `paths` key in `locales/es.yml`:
+スペイン語の場合のみ `hola.html` に書き換えたい場合, `locales/es.yml` の中で `paths` キーが使用出来ます:
 
 ``` yaml
 ---
@@ -91,40 +91,40 @@ es:
     hello: "hola"
 ```
 
-Now, the files would be output as: 
+すると, 次のように出力されます:
 
 * /hello.html
 * /es/hola.html
 
-## Templates to Localize
+## 多言語化するテンプレート
 
-By default, the contents of `source/localizable` will be built in multiple languages while the rest of your templates will continue to work normally. The name of this folder can be changed with the `:templates_dir` option:
+デフォルトでは, `source/localization` の中身が複数の言語で作成され, その他のテンプレートはそのまま作成されます。このフォルダの名前は変更することができます: `:templates_dir` オプション:
 
 ``` ruby
-# Look in `source/language_specific` instead
+# 代わりに `source/language_specific` を探す
 activate :i18n, :templates_dir => "language_specific"
 ```
 
-## Manually specifying languages
+## 手動で指定する言語
 
-If you'd prefer specify a list of supported languages rather than automatically discovering files in `locales/`, you can use the `:langs` option:
+多言語化する言語のリストを指定する方を `locales/` フォルダのファイルを自動的に発見する方よりも好むのであれば,  `:langs` オプションを使用出来ます:
 
 ``` ruby
-activate :i18n, :langs => [:en] # Ignore all languages except :en
+activate :i18n, :langs => [:en] # :en 以外のすべての言語を無視
 ```
 
-## Default (Root) Language
+## デフォルト (ルート) 言語
 
-By default, the first language (either specified by `:langs` or discovered in your `locales/` folder) will be the "default" language and will be mounted at the root of your site. Given our two languages, files localized to `:en` will be at the root:
+デフォルトでは, 第一言語 ( `:langs` で指定されず, `locales/` フォルダにあるもの) が "標準の" 言語になり, サイトのルートに配置されます。 2 つの言語が与えられた場合, `:en` で多言語化されたファイルがルートに配置されます:
 
 * source/localizable/index.html.erb
   * build/index.html is english
   * build/es/index.html is spanish
 
-You can change the default or disable mounting a specific language at the root entirely using the `:mount_at_root` option:
+`:mount_at_root` を使うことで, このデフォルトを変更したり, 特定の言語をルートに指定することを無効化できます:
 
 ``` ruby
-activate :i18n, :mount_at_root => :es # Mount spanish at root instead
+activate :i18n, :mount_at_root => :es # スペイン語をルートに配置
 # or
-activate :i18n, :mount_at_root => false # All languages will be prefixed
+activate :i18n, :mount_at_root => false # すべての言語 URL に prefox がつく
 ```
