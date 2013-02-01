@@ -1,16 +1,16 @@
 ---
-title: Rack Middleware
+title: Rack ミドルウェア
 ---
 
-# Rack Middleware
+# Rack ミドルウェア
 
-Rack is a system of classes that can modify content on-the-fly and intercept requests before they are processed by the server (Middleman).
+Rack はオンザフライで内容を変更し, サーバ (Middleman) で処理される前にリクエストを傍受できるクラスの仕組みです。
 
-Middleman has full access to Rack Middleware which opens up an expansive universe of libraries which work with Middleman.
+Middleman は Middleman と連携するライブラリの広大な宇宙をを開く Rack ミドルウェアへの完全なアクセス権を持っています。
 
-## Example: Syntax Highlighting
+## 例: 構文ハイライト
 
-This site is written in Middleman and features many code blocks which have syntax highlighting. This syntax highlighting is accomplished outside the scope of Middleman. This site renders `<code>` blocks and then Rack Middleware takes over an enhances those blocks with syntax highlight. The middleware in use is called [`Rack::Codehighlighter`](https://github.com/wbzyl/rack-codehighlighter). Here's how it can be used in your `config.rb`:
+このサイトは Middleman で書かれており, 構文ハイライトされた沢山のコードブロックからできています。構文ハイライトは Middleman の外で行われます。このサイトは `<code>` ブロックをレンダリングし, Rack ミドルウェアはこれらのブロックを引き継ぎ構文ハイライトを追加します。使用されたミドルウェアは [`Rack::Codehighlighter`](https://github.com/wbzyl/rack-codehighlighter) です。次が `config.rb` での使用方法です:
 
 ``` ruby
 require 'rack/codehighlighter'
@@ -22,20 +22,21 @@ use Rack::Codehighlighter,
   :markdown => true
 ```
 
-Make sure you add the right dependencies to your `Gemfile` to make those work:
+この処理を行うために `Gemfile` に正しい依存関係を追加して下さい:
 
 ``` ruby
 gem "rack-codehighlighter", :git => "git://github.com/wbzyl/rack-codehighlighter.git"
 gem "pygments.rb"
 ```
 
-The above block required the `rack/codehighlighter` and `pygments.rb` libraries. Then the `use` command tells Middleman to use this middleware. The rest is standard Rack Middleware setup, passing some variables to the middleware itself instructing the syntax highlighter on how to locate code blocks and which backend to use for parsing the syntax.
+上記ブロックは `rack/codehighlighter` と `pygments.rb` ライブラリが必要です。 `use` コマンドは Middleman にこのミドルウェアを使用するよう命令します。残りは標準的な Rack ミドルウェアのセットアップで, 構文ハイライトを指示するミドルウェアに構文解析のために使用するバックエンドやコードブロックの検索方法をいくつか変数で渡します。
 
-### Build Cycle
+### ビルドサイクル
 
-The Rack Middleware is run on all requests, including those done during the build cycle. This means anything the Rack Middleware effects during preview will be present in the built files. However, be aware that once the project is built, it is a static site. Rack Middleware which does processing on requests, expecting things like cookies, sessions or variables, won't work once the site is built.
+Rack ミドルウェアはビルドサイクルの間に行われたものを含むすべてのリクエストに対して実行されます。これは Rack ミドルウェアのプレビュー中の効果は, ビルドしたファイルに現れるということです。
+しかし, プロジェクトがビルドされると静的なサイトになることに注意して下さい。サイトをビルドすると, Cookie, セッションや変数を期待してリクエストを処理する Rack ミドルウェアは動作しなくなります。
 
-## Useful Middleware
+## 便利なミドルウェア
 
 * [Rack::GoogleAnalytics]
 * [Rack::Tidy]
