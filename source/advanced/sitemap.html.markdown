@@ -1,24 +1,24 @@
 ---
-title: The Sitemap
+title: サイトマップ
 ---
 
-# The Sitemap
+# サイトマップ
 
-Middleman includes a Sitemap, accessible from templates, that can give you information about all the pages and resources in your site and how they relate to each other. This can be used to create navigation, build search pages and sitemaps, etc.
+Middleman は, テンプレートからアクセスできるサイトマップを含み, サイト内のすべてのページとリソース, それらが互いにどのように関係するのか情報を持ちます。これはナビゲーションの作成, 検索ページやサイトマップの作成などに使用できます。
 
-## Accessing the Sitemap
+## サイトマップへのアクセス
 
-The [sitemap](http://rubydoc.info/github/middleman/middleman/master/Middleman/Sitemap/Store) is a repository of every page in your site, including HTML, CSS, JavaScript, images - everything. It also includes any [dynamic pages] you've created using `:proxy`. Within templates, `sitemap` gets you the sitemap object. From there, you can look at every page via the [`resources`](http://rubydoc.info/github/middleman/middleman/master/Middleman/Sitemap/Store#resources-instance_method) method or grab individual resources via [`find_resource_by_path`](http://rubydoc.info/github/middleman/middleman/master/Middleman/Sitemap/Store#find_resource_by_path-instance_method). You can also always get the page object for the page you're currently in via `current_resource`. Once you've got the list of pages from the sitemap, you can filter on various properties using the individual page objects.
+[サイトマップ](http://rubydoc.info/github/middleman/middleman/master/Middleman/Sitemap/Store) はサイトのページ毎のリポジトリで, HTML, CSS, JavaScript, 画像, つまりはすべてのものを含みます。`:proxy` を使って作成した [動的ページ][dynamic pages] も含みます。テンプレート内で, `sitemap` はサイトマップオブジェクトから取得出来ます。そこから [`resources`](http://rubydoc.info/github/middleman/middleman/master/Middleman/Sitemap/Store#resources-instance_method) メソッドを介してすべてのページを調べるか, [`find_resource_by_path`](http://rubydoc.info/github/middleman/middleman/master/Middleman/Sitemap/Store#find_resource_by_path-instance_method) を介して個々のリソースを取得することができます。また, `current_resource` を介すことで, いつでも現在ページのページオブジェクトを取得もできます。サイトマップからページリストを取得すれば, 個々のページオブジェクトを使用することで様々なプロパティをフィルタすることができます。
 
-## Sitemap Pages
+## サイトマップページ
 
-Each resource in the sitemap is a [Resource](http://rubydoc.info/github/middleman/middleman/master/Middleman/Sitemap/Resource) object. Pages can tell you all kinds of interesting things about themselves. You can access [frontmatter] data, file extension, source and output paths, a linkable url, its mime type, etc. Some of the properties of the Page are mostly useful for Middleman's rendering internals, but you could imagine filtering pages on file extension to find all `.html` files, for example.
+サイトマップ内の各リソースは [Resource](http://rubydoc.info/github/middleman/middleman/master/Middleman/Sitemap/Resource) オブジェクトです。ページはページ自身について興味深いものを教えてくれます。[frontmatter] データ, ファイル拡張子, ソースと出力パス, リンク可能な URL, MIME タイプなどにアクセスできます。ページプロパティの一部は Middleman の内部レンダリングにとても便利で, 例えばすべての `.html` ファイルを見つけ出すために, ファイル拡張子でページをフィルタリングする場合が想像できるでしょう。
 
-Each page can also find other pages related to it in the site hierarchy. The `parent`, `siblings`, and `children` methods are particularly useful in building navigation menus and breadcrumbs.
+それぞれのページはサイト階層内の関連する他のページを探すこともできます。 `parent`, `siblings` や `children` メソッドはナビゲーションメニューやパンくずリストを作成する際に特に便利です。
 
-## Using the Sitemap in config.rb
+## config.rb 内のサイトマップの使用
 
-You can use the sitemap information to create new [dynamic pages] from `config.rb` (this is how the [blog extension](/blogging/) creates tag pages), but you need to be a little careful, because the sitemap isn't populated until *after* `config.rb` has already been run. To get around this, you need to register a callback for the application's `ready` event. As an example, let's say we've added a "category" element to the [frontmatter] of our pages, and we want to create category pages dynamically for each category. To do that, we'd add this to `config.rb`:
+`config.rb` から新しい [動的ページ][dynamic pages] を作成するためにサイトマップ情報を使用できます ([blog extension](/blogging/) がタグページを作成する方法です) が, サイトマップはすでに実行された *後の* `config.rb` まで読み込まれないので少し注意が必要です。これを回避するために, アプリケーションの `ready` イベントのコールバックを登録する必要があります。例として, ページの [frontmatter] に "category" 要素を追加し, カテゴリ毎に動的にカテゴリページを作成したいとします。 その場合 `config.rb` にこれを追加します:
 
 ``` ruby
 ready do
@@ -29,7 +29,7 @@ ready do
 end
 ```
 
-Then I could make a `category.html.erb` that uses the `category` and `pages` variables to build a category listing for each category.
+カテゴリリストを作成するために, `category` と `pages` 変数を使う `category.html.erb` を作成できます。
 
 [dynamic pages]: /dynamic-pages/
 [frontmatter]: /frontmatter/
