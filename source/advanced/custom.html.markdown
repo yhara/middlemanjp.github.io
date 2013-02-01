@@ -1,12 +1,12 @@
 ---
-title: Custom Extensions
+title: カスタム拡張
 ---
 
-# Custom Extensions
+# カスタム拡張
 
-Middleman extensions are Ruby classes which can hook into various points of the Middleman system, add new features and manipulate content.
+Middleman の拡張は Middleman の様々なポイントにフックし, 新しい機能を追加し, コンテンツを操作する Ruby のクラスです。
 
-The most basic extension looks like:
+最も基本的な拡張は次のようになります:
 
 ``` ruby
 module MyFeature
@@ -21,19 +21,19 @@ end
 ::Middleman::Extensions.register(:my_feature, MyFeature) 
 ```
 
-This module must be accessible to your `config.rb` file. Either define it directly in that file, or define it in another ruby file and `require` it in `config.rb`
+このモジュールは `config.rb` からアクセスできなければいけません。 `config.rb` に直接定義するか, 別の Ruby ファイルに定義し `config.rb` で `require` します。
 
-Finally, once your module is included, you must activate it in `config.rb`:
+最後に, モジュールを読み込んだら `config.rb` で有効化する必要があります:
 
 ``` ruby
 activate :my_feature
 ```
 
-The [`register`](http://rubydoc.info/github/middleman/middleman/master/Middleman/Extensions#register-class_method) method lets you choose the name your extension is activated with. It can also take a block if you want to require files only when your extension is activated.
+[`register`](http://rubydoc.info/github/middleman/middleman/master/Middleman/Extensions#register-class_method) メソッドは有効化する拡張の名前を選ばせます。拡張が有効になっているファイルのみ読込みたい場合はブロックを取ることができます。
 
-In the `MyFeature` extension, the `registered` method will be called as soon as the `activate` command is run. The `app` variable is a [`Middleman::Application`](http://rubydoc.info/github/middleman/middleman/master/Middleman/Application) class. Using this class, you can augment the Middleman environment.
+`MyFeature` 拡張では, `registered` メソッドは `activate` コマンドが実行されるとすぐに呼び出されます。 `app` 変数は [`Middleman::Application`](http://rubydoc.info/github/middleman/middleman/master/Middleman/Application) クラスです。このクラスを使用すると, Middleman の環境を拡張することができます。
 
-`activate` can also take an options hash (which are passed to `register`) or a block which can be used to configure your extension. 
+`activate` は拡張の設定のためにオプションのハッシュ (`register` に渡される) かブロックを渡すことができます。
 
 ``` ruby
 module MyFeature
@@ -47,7 +47,7 @@ module MyFeature
   end
 end
 
-# Two ways to configure this extension
+# 拡張を設定する 2 つの方法
 activate :my_feature, :foo => 'whatever'
 activate :my_feature do |f|
   f.foo = 'whatever'
@@ -55,11 +55,11 @@ activate :my_feature do |f|
 end
 ```
 
-Passing options to `activate` is generally preferred to setting global variables via `set` to configure your extension (see the next section).
+`activate` へオプションを渡す方法は, 一般的に `set` を介した設定よりもグルーバル変数を設定することが好まれます (次のセクション参照) 。
     
-## Setting variables
+## 変数の設定
 
-The [`Middleman::Application`](http://rubydoc.info/github/middleman/middleman/Middleman/Application) class can be used to change global settings (variables using the `set` command) that can be used in your extension.
+[`Middleman::Application`](http://rubydoc.info/github/middleman/middleman/Middleman/Application) クラス は拡張で使用されるグローバル設定 (`set` コマンドを使用する変数) を変更するために使用できます。
 
 ``` ruby
 module MyFeature
@@ -72,7 +72,7 @@ module MyFeature
 end
 ```
 
-You can also use this ability to create new settings which can be accessed later in your extension.
+新しい設定を作成することができ, これは後で拡張の中でアクセスすることもできます。
 
 ``` ruby
 module MyFeature
@@ -92,11 +92,11 @@ module MyFeature
 end
 ```
 
-`set` adds a new method to `Middleman::Application`, meaning you can read the value of your variable via `my_feature_setting` elsewhere. However, consider using `activate` options instead of global settings when only your extension needs a particular value.
+`set` は `Middleman::Application` に新しいメソッドを追加します。 これは他の場所から `my_feature_setting` を介して変数の値を読み取ることができるということです。拡張に特定の値を必要とするだけの場合には, グローバル設定の代わりに `activate` のオプションを使うことを検討してください。
 
-## Adding Methods to config.rb
+## config.rb にメソッドを追加
 
-Methods available inside `config.rb` as simply class methods of `Middleman::Application`. Let's add a new method to be used in the `config.rb`:
+`config.rb` の中で利用できるメソッドは `Middleman::Application` の単なるクラスメソッドです。`config.rb` を使って新しいメソッドを追加してみましょう。
 
 ``` ruby
 module MyFeature
@@ -115,11 +115,11 @@ module MyFeature
 end
 ```
 
-By extending the `Middleman::Application` class, available as `app`, we've added a `say_hello` method to the environment which simply prints "Hello". Internally, these methods are used to build lists of paths and requests which will be processed later in the app.
+`Middleman::Application` クラスを拡張し, `app` として利用できるようにすることで, この環境に単に "Hello" を出力する `say_hello` メソッドを追加しました。内部的には, これらのメソッドはこのアプリの中で処理されるパスやリクエストのリストを作成するために使用されます。
 
-## after_configuration Callback
+## after_configuration コールバック
 
-Sometimes you will want to wait until the `config.rb` has been executed to run code. For example, if you rely on the `:css_dir` variable, you should wait until it has been set. For this, we'll use a callback:
+時には `config.rb` がコードを実行するために処理されるまで待ちたい場合があるでしょう。例えば, `:css_dir` 変数に依存していて, それがセットされるまで待ちたいような場合です。この実現のためコールバックを使用できます:
 
 ``` ruby
 module MyFeature
@@ -135,16 +135,16 @@ module MyFeature
 end
 ```
 
-### Compass Callback
+### Compass コールバック
 
-Similarly, if you're extension relies on variable and settings within Compass to be ready, use the `compass_config` callback.
+同じように, Compass 内で用意される変数や設定に依存しているなら, `compass_config` コールバックを使用します。
 
 ``` ruby
 module MyFeature
   class << self
     def registered(app)
       app.compass_config do |config|
-        # config is the Compass.configuration object
+        # config は Compass.configuration オブジェクト
         config.output_style = :compact
       end
     end
@@ -153,9 +153,9 @@ module MyFeature
 end
 ```
 
-## Adding Helpers
+## ヘルパの追加
 
-Helpers are methods available inside your template. To add helper methods, we do the following:
+ヘルパはテンプレートの中で使用できるメソッドです。ヘルパメソッドを追加するには, 次にようにします:
 
 ``` ruby
 module MyFeature
@@ -174,17 +174,17 @@ module MyFeature
 end
 ```
 
-Now, inside your templates, you will have access to a `make_a_link` method. Here's an example using an ERb template:
+テンプレートの中で, `make_a_link` メソッドにアクセスできるようになります。 ERb テンプレートでの使用例です:
 
 ``` html
-<h1><%= make_a_link("http://example.com", "Click me") %></h1>
+<h1><%= make_a_link("http://example.com", "クリックしてください") %></h1>
 ```
 
-## Request Callback
+## リクエストコールバック
 
-The request callback allows you to do processing before Middleman renders the page. This can be useful for returning data from another source, or failing early.
+リクエストコールバックは Middleman がページをレンダリングする前に処理を行うことができます。これは別のソースからデータを返す場合や早い段階で失敗する場合に便利です。
 
-Here's an example:
+例を示します:
 
 ``` ruby
 module MyFeature
@@ -200,11 +200,11 @@ module MyFeature
 end
 ```
 
-The above sets the `:currently_requested_path` value at the beginning of each request. Notice the return value of "true." All blocks using `before_processing` must return either true or false.
+上記はそれぞれのリクエストの開始時に `:currently_requested_path` の値を設定します。 "true" の返り値に注意してください。 `before_processing` を使うすべてのブロックは同じように true または false を返さなければなりません。
 
-## Sitemap Extensions
+## サイトマップ拡張
 
-You can modify or add pages in the [sitemap](/advanced/sitemap/) by creating a Sitemap extension. The [`:directory_indexes`](/pretty-urls/) extension uses this feature to reroute normal pages to their directory-index version, and the [blog extension](/blogging/) uses several plugins to generate tag and calendar pages. See [the `Sitemap::Store` class](http://rubydoc.info/github/middleman/middleman/Middleman/Sitemap/Store#register_resource_list_manipulator-instance_method) for more details.
+サイトマップ拡張を作成することで [サイトマップ](/advanced/sitemap/) でページを変更したり追加したりできます。 [ディレクトリインデックス](/pretty-urls/) 拡張は通常のページをディレクトリインデックス版に再ルーティングするためにこの機能を使い, [ブログ拡張](/blogging/) はタグやカレンダーページを作成するためにいくつかプラグインを使っています。詳細は [`Sitemap::Store`](http://rubydoc.info/github/middleman/middleman/Middleman/Sitemap/Store#register_resource_list_manipulator-instance_method)。
 
 ``` ruby
 module MyFeature
@@ -235,9 +235,9 @@ module MyFeature
 end
 ```
 
-## after_build Callback
+## after_build コールバック
 
-This callback is used to execute code after the build process has finished. The [middleman-smusher] extension uses this feature to compress all the images in the build folder after it has been built. It's also conceivable to integrate a deployment script after build.
+このコールバックはビルドプロセスが完了した後にコードを実行するために使用されます。 [middleman-smusher] 拡張はビルド完了後に build フォルダの中のすべての画像を圧縮するためにこの機能を使用します。ビルド後に展開したスクリプトを結合することも考えることができます。
 
 ``` ruby
 module MyFeature
@@ -252,6 +252,6 @@ module MyFeature
 end
 ```
 
-The [`builder`](http://rubydoc.info/github/middleman/middleman/master/Middleman/Cli/Build) parameter is the class that runs the build CLI, and you can use [Thor actions](http://rubydoc.info/github/wycats/thor/master/Thor/Actions) from it.
+[`builder`](http://rubydoc.info/github/middleman/middleman/master/Middleman/Cli/Build) パラメータは CLI のビルドを実行するクラスで, そこから [Thor のアクション](http://rubydoc.info/github/wycats/thor/master/Thor/Actions) を使用できます。
 
 [middleman-smusher]: https://github.com/middleman/middleman-smusher
