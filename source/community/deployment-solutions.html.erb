@@ -1,18 +1,18 @@
 ---
-title: "Deployment Solutions"
+title: "デプロイ方法"
 ---
 
-<h1>Deployment Solutions</h1>
+<h1>デプロイ方法</h1>
 
-<p>Middleman concerns itself only with creating static websites, however through extensions there are a variety of deployment solutions to aid putting your <code>/build</code> where it needs to go.</p>
+<p>Middleman は静的 web サイトの作成にのみ関わりますが, 代わりに <code>/build</code> を必要な場所に送る機能を追加する様々なデプロイ方法を提供する拡張があります。</p>
 
-<p>The highlighted extentions below allow <code>middleman build</code> to deploy using RSync, S3, Git, FTP, Github Pages, Heroku ( Statically ), Google Storage, Rackspace Storage, etc...</p>
+<p>以下のハイライト表示された拡張は <code>middleman のビルドファイル</code> を RSync, S3, Git, FTP, Github Pages, Heroku (静的に), Google Storage, Rackspace Storage などにデプロイします。</p>
 
-<p>Please check out all <a href="/community/3rd-party-extensions/">Community Extensions</a></p>
+<p><a href="/community/3rd-party-extensions/">コミュニティ拡張</a> をすべてチェックしてみてください。</p>
 
 <h3><a href="https://github.com/tvaughan/middleman-deploy" target="_blank">Middleman-Deploy</a></h3>
-<p>Deploy a middleman built site over rsync or to github pages.</p>
-<pre><code class="ruby"># Activate deploy extension
+<p>Middleman で作成したサイトを rsync などの方法で github pages にデプロイする。</p>
+<pre><code class="ruby"># デプロイ拡張を有効化
 activate :deploy do |deploy|
   deploy.method = :ftp
   deploy.host = "ftp.example.com"
@@ -23,8 +23,8 @@ end
 </code></pre>
 
 <h3><a href="https://github.com/karlfreeman/middleman-sync" target="_blank">Middleman-Sync</a></h3>
-<p>Synchronise your Middleman build to S3 and more</p>
-<pre><code class="ruby"># Activate sync extension
+<p>Middleman のビルドファイルを S3 などと同期する。</p>
+<pre><code class="ruby"># 同期拡張を有効化
 activate :sync do |sync|
   sync.fog_provider = 'AWS'
   sync.fog_directory = 'bucket-name'
@@ -36,7 +36,7 @@ end
 </code></pre>
 
 <h3><a href="https://github.com/indirect/heroku-buildpack-middleman" target="_blank">Heroku buildpack: Middleman</a></h3>
-<p>An Heroku buildpack for Middleman apps</p>
+<p>Middleman アプリケーション用の Heroku ビルドパック</p>
 
 <footer>
   <%= link_to "Fork and add your extension on Github", "https://github.com/middleman/middleman-guides/blob/master/source/community/deployment-solutions.html.erb" %>
