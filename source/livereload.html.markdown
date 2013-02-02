@@ -23,5 +23,3 @@ middleman server
 ```
 
 ページ内容が変更されると自動的にブラウザがリロードされます。
-
-NOTE: [middleman 3.0.4 では middleman-livereload は動作しない](https://github.com/middleman/middleman-livereload/issues/10)
