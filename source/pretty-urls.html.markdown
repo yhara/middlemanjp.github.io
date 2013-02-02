@@ -55,7 +55,7 @@ set :index_file, "index.php"
 page "/i-really-want-the-extension.html", :directory_index => false
 ```
 
-1 度に沢山のファイルのインデックスをオフにしたい場合は, `page` には正規表現かファイルの塊を与えることができます。
+1 度に沢山のファイルのインデックスをオフにしたい場合は, `page` には正規表現かファイルのパターンマッチを与えることができます。
 
 ページ毎に [YAML 形式の Frontmatter](/frontmatter/) に `directory_index: false` を追加することもできます。
 

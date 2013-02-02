@@ -248,7 +248,7 @@ admin レイアウトでは次のように:
 </form>
 ```
 
-詳細については [Padrino partial helper] のドキュメントを読んで下さい。
+詳細については [Padrino partial helper] のドキュメントを読んでください。
 
 ### 他のテンプレート言語
 

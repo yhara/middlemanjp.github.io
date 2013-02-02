@@ -56,7 +56,7 @@ Middleman は gem の依存関係の管理に Bundler の Gemfile に使える�
 
 config.ru ファイルは Rack 対応の web サーバによってどのようにサイトが読み込まれるか記述します。このファイルは Middleman で作るサイトを開発時に Heroku のような Rack ベースのサーバにホスティングしたいユーザの便宜のために提供されています。
 
-あなたのプロジェクトの定型の `config.ru` ファイルを含めるには, init コマンドに `--rack` フラグを追加して下さい: 
+あなたのプロジェクトの定型の `config.ru` ファイルを含めるには, init コマンドに `--rack` フラグを追加してください: 
 
 ``` bash
 middleman init my_new_project --rack
