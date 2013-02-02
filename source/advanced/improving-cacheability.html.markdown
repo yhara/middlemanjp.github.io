@@ -1,35 +1,35 @@
 ---
-title: Improving Cacheability
+title: キャッシュ機能による改善
 ---
 
-# Improving Cacheability
+# キャッシュ機能による改善
 
-To make your website render as quickly as possible, you should serve any assets, like JavaScript, CSS, or images, with proper headers that instruct web browsers to [cache them for a very long time](https://code.google.com/speed/page-speed/docs/caching.html). This means that when users visit your site again (or even just go to another page in your site) they don't have to re-download those assets. However, setting a far-future `Expires` or `Cache-Control` header can cause problems when you change your assets but users are still using their cached versions. Middleman has two approaches to solve this problem for you.
+可能な限り web サイトのレンダリングを高速化するには, JavaScript, CSS や画像のようなアセットファイルを [長時間キャッシュするように](https://code.google.com/speed/page-speed/docs/caching.html) web ブラウザに命令する適切なヘッダとともに配信すべきです。これはユーザがサイトに再度訪問する時 (またサイトのその他のページを訪問する時) これらのアセットファイルを再ダウンロードする必要がないことを意味します。長期間の `Expires` や `Cache-Control` のヘッダの設定は, アセットファイルを変更した時にユーザがまだキャッシュされたバージョンを使用していると問題を引き起こ可能性があります。 Middleman はこの問題の解決のために 2 つの方法を提供します。
 
-## Uniquely-named assets
+## 一意の名前のアセットファイル
 
-The most effective technique for preventing users from using outdated files is to change the asset's filename every time you change one of your assets. Since that would be a pain to do by hand, Middleman comes with an `:asset_hash` extension that does it for you. First, activate the extension in your `config.rb`:
+ユーザの古いファイルの使用防止に最も効果的な方法は, アセットファイルを変更する度にそのファイル名を変更するものです。手作業で行うには大変なので, Middleman にはこれに対応する `:asset_hash` 拡張が付属しています。まず, `config.rb` で拡張を有効化します:
 
 ``` ruby
 activate :asset_hash
 ```
 
-Now, refer to your assets as normal, with their original filename. You can use helpers like `image_tag` as well. However, when your site is built, each asset will be produced with a bit of extra text at the end of the filename that is tied to the content of the file, and all of your other files (HTML, CSS, JavaScript, etc) will be changed to reference that unique-ified filename instead of the original one. Now you can serve your assets with a "never expire" policy, but be sure that when you change them, they'll show up as a different filename.
+次に, 元のファイル名でアセットファイルを参照します。`image_tag` のようなヘルパを使用することができます。サイトのビルド時に, それぞれのアセットファイルは, そのファイルの内容で, 元のファイル名の終わりに余分なテキストを少し追加した名前で生成されます。他のファイル (HTML, CSS, JavaScript など) は元のファイル名の代わりに一意に生成されたファイル名を参照するように変更されます。"無期限" 指定でアセットを配信するようになりまが, アセットファイルを変更した場合には別のファイル名で表示されることを確認してください。
 
-However, because this extension works by rewriting your files to reference the renamed assets, it's possible the extension might mess up and miss a reference, or do something you don't want to your code. In that case, you might have to fall back to the older cache buster method.
+しかし, この拡張は名前を変えたアセットファイルを参照するようにファイルを書き換えて動作するので, 参照を失敗したり, コードで実行したくない何かをするかも知れません。この場合, 古いキャッシュを破壊するメソッドの使用を選択する必要があるかもしれません。
 
-If you want to exclude any files from being renamed, pass the `:ignore` option when activating `:asset_hash`, and give it one or more globs, regexes, or procs that identify the files to ignore. Likewise, you can pass an `:exts` option to change which file extensions are renamed.
+一部のファイルを名前の変更から除外したい場合, `:asset_hash` を有効化する時に `:ignore` オプションを渡し, 無視したいファイルを指す 1 つ以上の塊, 正規表現や Proc を与えてください。同様に, ファイル拡張子をリネームし変更するために `:exts` オプションを渡すことができます。
 
-## Cache buster in query string
+## クエリ文字列によるキャッシュ破壊
 
-The second approach is to append a value to the end of URLs that reference your assets. For example, instead of referencing `my_image.png` you'd reference `my_image.png?1234115152`. The extra info at the end of the URL is enough to tell many (but not all) browsers and proxies to cache that file separately from the same file with a different cache buster value. To use this, activate the `:cache_buster` extension in your `config.rb`:
+2 つ目の方法はアセットファイルを参照する URL の末尾に値を追加する方法です。例えば, `my_image.png` を参照する代わりに, `my_image.png?1234115152` を参照します。URL 末尾の余分な情報は多くの (しかしすべてではない) ブラウザやプロキシに, 異なるキャッシュ破壊値をもつ同じファイルを別々にキャッシュするように命じるには充分です。これを使用するには, `config.rb` の中で `:cache_buster` 拡張を有効化します:
 
 ``` ruby
 activate :cache_buster
 ```
 
-Now, to use cache-safe URLs, you must use [asset path helpers](http://www.padrinorb.com/api/Padrino/Helpers/AssetTagHelpers.html) like `image_path` or `javascript_include_tag`. Make sure to use [Compass helpers](http://compass-style.org/reference/compass/helpers/urls/) in your SASS too (`image-url`, etc.). For JavaScript, you'll need to make ERb templates like `my script.js.erb` and call asset helpers via ERb tags to output the right values. If you forget one, your users will still get the file (since the copy on the server just has a normal name) but they might not see changes.
+cache-safe な URL を使用するには, `image_path` や `javascript_include_tag` のような [アセットパスヘルパ](http://www.padrinorb.com/api/Padrino/Helpers/AssetTagHelpers.html) を使用しなければなりません。Sass ファイルの中でも (`image-url` など) [Compass ヘルパ](http://compass-style.org/reference/compass/helpers/urls/) を使用してください。 JavaScript の場合, `script.js.erb` のように ERb テンプレートを作成し, 正しい値を出力するように ERb のタグを使用してアセットヘルパを呼び出す必要があります。ユーザがファイルを取得しても (サーバ上のコピーは普通の名前なので) その変更が影響しない場合があることを忘れないでください。
 
-## Configuring your server
+## サーバの設定
 
-Configuring your server to use far-future `Expires` and `Cache-Control` headers is different depending on which server you use. See Google's [page speed docs](https://code.google.com/speed/page-speed/docs/caching.html) for links on how to configure your particular server, and run [Google Page Speed](https://code.google.com/speed/page-speed/docs/extension.html) or [YSlow](https://addons.mozilla.org/en-US/firefox/addon/yslow/) to check that you've configured things correctly.
+長期間の `Expires` と `Cache-Control` ヘッダを使うためのサーバの設定は使用するサーバによって異なります。あなたの使用する特定のサーバの設定方法は Google の [page speed docs](https://code.google.com/speed/page-speed/docs/caching.html) を参照し, 設定が正しく行われているか確認するために [Google Page Speed](https://code.google.com/speed/page-speed/docs/extension.html) や [YSlow](https://addons.mozilla.org/en-US/firefox/addon/yslow/) を使用してください。
