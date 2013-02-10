@@ -43,7 +43,7 @@ es:
 
 個々の言語にはそれ自身の名前空間のパスでアクセスすることができます。デフォルトでは, 第一言語はサイトのルートに配置されます (このオプションの変更方法はページ下部で) 。デフォルトのパスはパスの中でシンプルに言語名 ( YAML ファイル名) を使用します:
 
-* /en/index/html
+* /en/index.html
 * /es/index.html
 * /fr/index.html
 
@@ -55,7 +55,7 @@ activate :i18n, :path => "/langs/:locale/"
 
 パスは次のように:
 
-* /langs/en/index/html
+* /langs/en/index.html
 * /langs/es/index.html
 * /langs/fr/index.html
 
@@ -68,7 +68,7 @@ activate :i18n, :path => "/langs/:locale/",
 
 パスは次のように:
 
-* /langs/english/index/html
+* /langs/english/index.html
 * /langs/spanish/index.html
 * /langs/french/index.html
 
