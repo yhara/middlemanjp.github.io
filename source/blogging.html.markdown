@@ -32,6 +32,17 @@ middleman init MY_BLOG_PROJECT --template=blog
 
 すでに Middleman のプロジェクトがある場合, サンプルの [`index.html`](https://github.com/middleman/middleman-blog/blob/master/lib/middleman-blog/template/source/index.html.erb), [`tag.html`](https://github.com/middleman/middleman-blog/blob/master/lib/middleman-blog/template/source/tag.html.erb), [`calendar.html`](https://github.com/middleman/middleman-blog/blob/master/lib/middleman-blog/template/source/calendar.html.erb) や [`feed.xml`](https://github.com/middleman/middleman-blog/blob/master/lib/middleman-blog/template/source/feed.xml.builder) を作成するために, blog テンプレートオプションとともに `middleman init` を再実行するか, 自分で作成してください。[何が作成されるのか](https://github.com/middleman/middleman-blog/tree/master/lib/middleman-blog/template/source) は GitHub で確認できます。
 
+サイトマップマニュピレータは順序に依存する傾向があるので, [`ディレクトリインデックス`](/pretty-urls/) を使用する場合, ブログ拡張を有効化した *後* にディレクトリインデックスを有効化するべきです。例えば:
+
+``` ruby
+activate :blog do |blog|
+  # set options on blog
+end
+
+activate :directory_indexes
+page "/404.html", directory_index: false
+```
+
 ## 記事
 
 Middleman 自体がそうであるように, ブログ拡張は個々のファイルに焦点を当てています。それぞれの記事は, あなたが好きなテンプレート言語を使用しています。記事のデフォルトのファイル名構造は `:year-:month-:day-:title.html` です。新しい記事を作成したい場合, 正しいパスに配置し, 動作させるための基本的な [frontmatter](/frontmatter/) を含めます。`config.rb` で `:blog` が有効化されている場合, どの形式で Middleman が記事を探すのか変更する `blog.source` オプションを設定できます。

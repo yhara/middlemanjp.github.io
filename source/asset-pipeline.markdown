@@ -22,7 +22,9 @@ $(document).ready(function() {
 このシステムは CSS ファイルの中でも機能します:
 
 ``` css
-//= require "base"
+/*
+ *= require base
+ */
 
 body {
   font-weight: bold;
