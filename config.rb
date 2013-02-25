@@ -23,16 +23,16 @@ helpers do
   end
 end
 
-activate :fjords do |config|
-  config.username = Bundler.settings["fjords_username"]
-  config.password = Bundler.settings["fjords_password"]
-  config.domain = "middlemanapp.com"
-end
+# activate :fjords do |config|
+#   config.username = Bundler.settings["fjords_username"]
+#   config.password = Bundler.settings["fjords_password"]
+#   config.domain = "middlemanapp.com"
+# end
 
 # Build-specific configuration
 configure :build do
   activate :gzip
-  
+
   # For example, change the Compass output style for deployment
   activate :minify_css
 
