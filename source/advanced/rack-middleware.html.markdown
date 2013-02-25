@@ -10,7 +10,7 @@ Middleman は Middleman と連携するライブラリの広大な宇宙をを�
 
 ## 例: 構文ハイライト
 
-**Note:** 構文ハイライトを行うには, Rack ミドルウェアを使った例公式の [middleman-syntax](https://github.com/middleman/middleman-syntax) 拡張の使用をおすすめします。 Rack ミドルウェアを使った例は 1 例にしか過ぎません。
+**Note:** 構文ハイライトを行うには, 公式の [middleman-syntax](https://github.com/middleman/middleman-syntax) 拡張の使用をおすすめします。 Rack ミドルウェアを使った例は 1 例にしか過ぎません。
 
 このサイトは Middleman で書かれており, 構文ハイライトされた沢山のコードブロックからできています。構文ハイライトは Middleman の外で行われます。このサイトは `<code>` ブロックをレンダリングし, Rack ミドルウェアはこれらのブロックを引き継ぎ構文ハイライトを追加します。使用されたミドルウェアは [`Rack::Codehighlighter`](https://github.com/wbzyl/rack-codehighlighter) です。次が `config.rb` での使用方法です:
 
