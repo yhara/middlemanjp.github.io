@@ -28,6 +28,8 @@ activate :asset_hash
 activate :cache_buster
 ```
 
+Note このアプローチは, アセットファイルがよりキャッシュされないので好まれます。詳細は "["クエリ文字列によるキャッシュ破壊" トリックのテストに関するブログ記事](http://blog.solid1pxred.com/post/248906562/testing-ye-olde-querystring-cache-busting-trick)" で解説されています。
+
 cache-safe な URL を使用するには, `image_path` や `javascript_include_tag` のような [アセットパスヘルパ](http://www.padrinorb.com/api/Padrino/Helpers/AssetTagHelpers.html) を使用しなければなりません。Sass ファイルの中でも (`image-url` など) [Compass ヘルパ](http://compass-style.org/reference/compass/helpers/urls/) を使用してください。 JavaScript の場合, `script.js.erb` のように ERb テンプレートを作成し, 正しい値を出力するように ERb のタグを使用してアセットヘルパを呼び出す必要があります。ユーザがファイルを取得しても (サーバ上のコピーは普通の名前なので) その変更が影響しない場合があることを忘れないでください。
 
 ## サーバの設定

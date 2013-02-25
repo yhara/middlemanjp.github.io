@@ -141,13 +141,13 @@ bundle exec middleman
 
 ### 何かうまくいかない時
 
-いくつかの状況下 (知られているケースとして Windows 環境下, こちらを[参照](https://github.com/middleman/middleman/issues/101)) では, `middleman` コマンドは期待どおりに動作しない可能性があります。代わりに完全なコマンドを使用してみてください:
+特定の状況下 (知られているケースとして Windows 環境下, こちらを[参照](https://github.com/middleman/middleman/issues/101)) では, `middleman` コマンドは期待どおりに動作しない可能性があります。代わりに完全なコマンドを使用してみてください:
 
 ``` bash
 middleman server -p 4567 -e development
 ```
 
-いくつかの状況か (あなたの設定ファイルが暴走した場合をいう) では, `middleman server` は自信をブートすることができず, コンソールにエラーが出力されないかもしれません。パニックにならずに, 完全なトレースを見るために `middleman build` を実行しエラーを修正してください。
+特定の状況下 (あなたの設定ファイルが暴走した場合をいう) では, `middleman server` は自信をブートすることができず, コンソールにエラーが出力されないかもしれません。パニックにならずに, 完全なトレースを見るために `middleman build` を実行しエラーを修正してください。
 
 ## 静的サイトのエクスポート (middleman build)
 
