@@ -4,9 +4,10 @@ title: 動的ページ
 
 # 動的ページ
 
-Middleman にはテンプレートファイルと 1 対 1 の関係を持っていないページを生成する機能があります。これが意味するのは, 変数に応じて複数のファイルを生成する 1 つのテンプレートを扱うことができます。 `config.rb` の設定例の 1 つです:
+Middleman にはテンプレートファイルと 1 対 1 の関係を持っていないページを生成する機能があります。これが意味するのは, 変数に応じて複数のファイルを生成する 1 つのテンプレートを扱うことができます。プロキシを作成するには, `config.rb` で `proxy` メソッドを使用し, 作成したいパスを与え, 使用したいテンプレートのパスを与えます(テンプレートファイル自体の拡張子は除く)。 次は `config.rb` の設定例の 1 つです:
 
 ``` ruby
+# source/about/template.html.erb が存在することを想定
 ["tom", "dick", "harry"].each do |name|
   proxy "/about/#{name}.html", "/about/template.html", :locals => { :person_name => name }
 end
