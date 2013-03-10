@@ -11,7 +11,6 @@ gem install middleman-minify-html
 ```
 
 Gemfile に `middleman-minify-html` を追加し, `config.rb` を開いて次を追加。
-Add `middleman-minify-html` to your Gemfile, open your `config.rb` and add
 
 ``` ruby
 activate :minify_html

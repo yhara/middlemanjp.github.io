@@ -86,18 +86,12 @@ middleman init my_new_mobile_project --template=mobile
     
 ### 含まれるプロジェクトテンプレート
 
-Middleman はいくつかの基本的なプロジェクトテンプレートを搭載しています:
+Middleman は基本的なプロジェクトテンプレートをいくつか搭載しています:
 
 **[HTML5 Boilerplate](http://html5boilerplate.com/)** 
 
 ``` bash
 middleman init my_new_mobile_project --template=html5
-```
-
-**[HTML5 Boilerplate: HAML & SCSS](https://github.com/dannyprose/Middleman-HTML5BP-HAML)**
-
-``` bash
-middleman init my_new_mobile_project --template=html5-haml
 ```
 
 **[SMACSS](https://github.com/nsteiner/middleman-smacss)**
