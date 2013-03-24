@@ -17,7 +17,7 @@ Middleman は Middleman と連携するライブラリの広大な宇宙をを�
 ``` ruby
 require 'rack/codehighlighter'
 require "pygments"
-use Rack::Codehighlighter, 
+use Rack::Codehighlighter,
   :pygments,
   :element => "pre>code",
   :pattern => /\A:::([-_+\w]+)\s*\n/,

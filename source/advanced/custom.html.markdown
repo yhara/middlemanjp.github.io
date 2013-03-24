@@ -12,13 +12,13 @@ Middleman の拡張は Middleman の様々なポイントにフックし, 新し
 module MyFeature
   class << self
     def registered(app)
-      
+
     end
     alias :included :registered
   end
 end
 
-::Middleman::Extensions.register(:my_feature, MyFeature) 
+::Middleman::Extensions.register(:my_feature, MyFeature)
 ```
 
 このモジュールは `config.rb` からアクセスできなければいけません。 `config.rb` に直接定義するか, 別の Ruby ファイルに定義し `config.rb` で `require` します。
@@ -39,7 +39,7 @@ activate :my_feature
 module MyFeature
   # All the options for this extension
   class Options < Struct.new(:foo, :bar); end
-  
+
   class << self
     def registered(app, options_hash={}, &block)
     options = Options.new(options_hash)
@@ -83,7 +83,7 @@ module MyFeature
     end
     alias :included :registered
   end
-  
+
   module Helpers
     def my_helper
       my_feature_setting.to_sentence
@@ -106,7 +106,7 @@ module MyFeature
     end
     alias :included :registered
   end
-  
+
   module ClassMethods
     def say_hello
       puts "Hello"
@@ -220,12 +220,12 @@ module MyFeature
     end
     alias :included :registered
   end
-  
+
   class MyFeatureManipulator
     def initialize(app)
       @app = app
     end
-    
+
     def manipulate_resource_list(resources)
       resources.each do |resource|
          resource.destination_path.gsub!("original", "new")

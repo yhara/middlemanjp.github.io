@@ -62,7 +62,7 @@ activate :i18n, :path => "/langs/:locale/"
 パスの一部に YAML ファイル名 を使いたくない場合, 違う値で書き換えることができます。
 
 ``` ruby
-activate :i18n, :path => "/langs/:locale/", 
+activate :i18n, :path => "/langs/:locale/",
   :lang_map => { :en => :english, :es => :spanish, :fr => :french }
 ```
 

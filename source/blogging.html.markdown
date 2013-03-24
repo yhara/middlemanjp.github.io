@@ -52,6 +52,7 @@ Middleman に関する新しい投稿を作成するとしましょう。`source
 ``` html
 --- 
 title: Middleman ブログの投稿
+=======
 ---
 
 こんにちわ世界
