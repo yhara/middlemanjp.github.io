@@ -22,7 +22,7 @@ Middleman は, テンプレートからアクセスできるサイトマップ�
 
 ``` ruby
 ready do
-  sitemap.pages.group_by {|p| p.data["category"] }.each do |category, pages|
+  sitemap.resources.group_by {|p| p.data["category"] }.each do |category, pages|
     proxy "/categories/#{category}.html", "category.html", 
       :locals => { :category => category, :pages => pages }
   end
