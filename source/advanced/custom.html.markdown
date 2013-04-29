@@ -42,8 +42,9 @@ module MyFeature
 
   class << self
     def registered(app, options_hash={}, &block)
-    options = Options.new(options_hash)
-    yield options if block_given?
+      options = Options.new(options_hash)
+      yield options if block_given?
+    end
   end
 end
 
@@ -244,7 +245,7 @@ module MyFeature
   class << self
     def registered(app)
       app.after_build do |builder|
-        builder.run my_deploy_script.sh
+        builder.run './my_deploy_script.sh'
       end
     end
     alias :included :registered

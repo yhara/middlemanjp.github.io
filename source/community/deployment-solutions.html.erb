@@ -35,6 +35,22 @@ activate :sync do |sync|
 end
 </code></pre>
 
+<h3><a href="https://github.com/polleverywhere/shart" target="_blank">Shart</a></h3>
+<p>デプロイ設定とアプリ設定を合成せずに S3 バケットに Middleman をデプロイする。</p>
+<p>まず shart をインストールします。</p>
+<pre><code class="bash">$ gem install shart</code></pre>
+<p>次に Middleman プロジェクトのルートディレクトリに <code>Shartfile</code> を作成します。</p>
+<pre><code class="ruby"># Middleman の Shartfile。
+source './build'
+target 'your-aws-bucket-name', {
+  :provider               =>  'AWS',
+  :aws_secret_access_key  =>  'your AWS credentials',
+  :aws_access_key_id      =>  'your AWS credentials'
+}
+</code></pre>
+<p>最後に, Middleman をビルドし, shart コマンドで S3 バケットに展開します。</p>
+<pre><code class="bash">$ middleman build && shart</code></pre>
+
 <h3><a href="https://github.com/indirect/heroku-buildpack-middleman" target="_blank">Heroku buildpack: Middleman</a></h3>
 <p>Middleman アプリケーション用の Heroku ビルドパック</p>
 
