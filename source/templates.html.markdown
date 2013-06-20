@@ -185,7 +185,10 @@ page "blog/*", :layout => :article_layout
 いくつかの場合, まったくレイアウトを使用したくない場合があります。 `config.rb` でデフォルトのレイアウトを無効化することで対応できます。
 
 ``` ruby
-disable :layout
+set :layout, false
+
+# Or for an individual file:
+page '/foo.html', :layout => false
 ```
 
 ## パーシャル
@@ -249,6 +252,26 @@ admin レイアウトでは次のように:
 ```
 
 詳細については [Padrino partial helper] のドキュメントを読んでください。
+
+## テンプレートエンジンオプション
+
+`config.rb` にテンプレートエンジンのオプションを設定することができます:
+
+```ruby
+set :haml, { :ugly => true, :format => :html5 }
+```
+
+## Markdown
+
+`config.rb` で一番好きな Markdown ライブラリを選び, オプションを設定することができます:
+
+```ruby
+set :markdown_engine, :redcarpet
+set :markdown, :fenced_code_blocks => true, :smartypants => true
+```
+
+RedCarpet を使用する場合, Middleman はヘルパを用いて `:relative_links` や `:asset_hash` が行うようにリンクや画像タグを処理します。しかし, デフォルトの Markdown エンジンはインストールが容易なことから Kramdown です。
+
 
 ### 他のテンプレート言語
 

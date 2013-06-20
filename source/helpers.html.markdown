@@ -52,6 +52,21 @@ set :relative_links, true
 
 相対パスにしたくないリンクに `:relative => false` を追加することで個別に上書きできます。
 
+リンクのクエリパラメータやURLフラグメントを次のように含めることができます:
+
+```ruby
+<%= link_to '私のフォーム', '/form.html', :query => { :foo => 'bar' }, :fragment => 'deep' %>
+```
+
+結果:
+
+```html
+<a href='/form.html?foo=bar#deep'>私のフォーム</a>
+```
+
+リンクタグなしのページ URL が必要な場合, `url_for` を使用してください。これは `link_to` や `form_tag` の中でも使用されています。
+
+
 ## 出力ヘルパ
 
 出力ヘルパは様々な方法で出力を管理, キャプチャ, 表示する重要なメソッドの集合で, より高いレベルのヘルパ機能をサポートするために使用されます。説明すべき出力ヘルパが 3 つあります: `content_for`, `capture_html` や `concat_content`。
@@ -136,6 +151,8 @@ input_tag :password, :value => "secret", :class => "demo"
 </body>
 </html>
 ```
+
+`auto_stylesheet_link_tag` や `auto_javascript_include_tag` は現在ページのパスを元にスタイルシートや JS のタグを生成します。ページが "contact.html" の場合, "contact.css" や "contact.js" になります。
 
 ## Form ヘルパ
 
@@ -229,6 +246,22 @@ lorem.image('300x400', :random_color => true)
 lorem.image('300x400', :text => 'blah')
   #=> http://placehold.it/300x400&text=blah
 ```
+
+## ページクラス
+
+サイト階層に対応する `body` タグの class 属性が生成されると便利です。 `page_classes` はこれらの属性名を生成します。`projects/rockets/saturn-v.html` にページがあるとすると, レイアウトには次のように書けます。
+
+```erb
+<body class="<%= page_classes %>">
+```
+
+結果:
+
+```html
+<body class="projects rockets saturn-v">
+```
+
+これにより簡単にページに 'project' や `rockets` のスタイルを適用できます。
 
 ## カスタム定義ヘルパ
 

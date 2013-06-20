@@ -6,30 +6,15 @@ title: きれいな URL (ディレクトリインデックス)
 
 デフォルトで, Middleman はプロジェクトの中であなたが記述したとおりに正確にファイルを出力します。例えば, `source` フォルダの中の `about-us.html.erb` ファイルはプロジェクトのビルド時に `about-us.html` として出力されます。 `example.com` の web サーバのルートディレクトリにプロジェクトを配置すれば, このページは次 URL でアクセスできます: `http://example.com/about-us.html`
 
-静的な web サイトにとってはリにかなっていますが, 多くの人は .html が不快だと思い, きれいな (わかりやすい) 拡張子なしの URL を好むでしょう。これに対応するには 2 つの方法があります。
 
-## Ruby Web サーバ
 
-Rack ベースの web サーバを使用しているなら, [rack-contrib] プロジェクトの `Rack::TryStatic` ミドルウェアを使うことができます。 `config.ru` の中に (もしくは Rails の Rack 設定), 次の行を追加してください:
-
-``` ruby
-require "rack/contrib/try_static"
-use Rack::TryStatic, :root => "build", :urls => %w[/], :try => ['.html']
-```
-
-`about-us.html` と同じファイルは次の URL でアクセスできます: `http://example.com/about-us`
-
-しかし, Rack を介してサイトを提供することは, やや静的サイトを生成する目的に反します。
-
-## Apache (または互換サーバ)
-
-Rack ベースの web サーバを使用していない場合, Middleman に `.html` 毎にフォルダを作成し, テンプレートファイルを index としてフォルダ内に作成するように命令するディレクトリインデックス機能を使いことができます。 `config.rb` に追加します:
+Middleman は `.html` 毎にフォルダを作成しそのフォルダの index としてテンプレートを構築するディレクトリインデックス拡張を提供しています。`config.rb` で次のように:
 
 ``` ruby
 activate :directory_indexes
 ```
 
-このプロジェクトがビルドされた時,  `about-us.html.erb` ファイルは `about-us/index.html` として出力されます。Apache 互換の web サーバに配置された場合, このページは次の URL でアクセスできます:
+このプロジェクトがビルドされた時,  `about-us.html.erb` ファイルは `about-us/index.html` として出力されます。"index ファイル" 対応の web サーバに配置された場合 (Apache や Amazon S3), このページは次の URL でアクセスできます:
 
 ``` ruby
 http://example.com/about-us
@@ -47,7 +32,7 @@ set :index_file, "default.html"
 set :index_file, "index.php"
 ```
 
-### Opt-out
+## オプトアウト
 
 自動的に名前を変更したくないページがある場合, 除外できます:
 
@@ -59,8 +44,6 @@ page "/i-really-want-the-extension.html", :directory_index => false
 
 ページ毎に [YAML 形式の Frontmatter](/frontmatter/) に `directory_index: false` を追加することもできます。
 
-### 手動インデックス
+## 手動インデックス
 
-テンプレートファイル名がすでに `index.html` になっている場合, この処理行われず Middleman を通過します。例えば, あなたが予想するように `my-page/index.html.erb` は `my-page/index.html` を生成します。
-
-[rack-contrib]: https://github.com/rack/rack-contrib/
+テンプレートのファイル名が既に `index.html` の場合, Middleman は手をつけません。例えば, `my-page/index.html.erb` はあなたの予想どおり `my-page/index.html` と生成されます。

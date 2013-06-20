@@ -4,15 +4,16 @@ title: カスタム拡張
 
 # カスタム拡張
 
-Middleman の拡張は Middleman の様々なポイントにフックし, 新しい機能を追加し, コンテンツを操作する Ruby のクラスです。
+Middleman の拡張は Middleman の様々なポイントにフックし, 新しい機能を追加し, コンテンツを操作する Ruby のクラスです。このガイドは何が可能なのか説明しますが, すべてのフックや拡張ポイントを探すためには Middleman のソースや middleman-blog のようなプラグインのソースを読むべきです。
+
+## 基本的な拡張
 
 最も基本的な拡張は次のようになります:
 
 ``` ruby
-module MyFeature
-  class << self
-    def registered(app)
-
+class MyFeature < Middleman::Extensio
+    def initialize(app, options_hash={}, &block)
+      super
     end
     alias :included :registered
   end
@@ -31,20 +32,19 @@ activate :my_feature
 
 [`register`](http://rubydoc.info/github/middleman/middleman/master/Middleman/Extensions#register-class_method) メソッドは有効化する拡張の名前を選ばせます。拡張が有効になっているファイルのみ読込みたい場合はブロックを取ることができます。
 
-`MyFeature` 拡張では, `registered` メソッドは `activate` コマンドが実行されるとすぐに呼び出されます。 `app` 変数は [`Middleman::Application`](http://rubydoc.info/github/middleman/middleman/master/Middleman/Application) クラスです。このクラスを使用すると, Middleman の環境を拡張することができます。
+`MyFeature` 拡張では, `registered` メソッドは `activate` コマンドが実行されるとすぐに呼び出されます。 `app` 変数は [`Middleman::Application`](http://rubydoc.info/github/middleman/middleman/master/Middleman/Application) クラスです。
 
-`activate` は拡張の設定のためにオプションのハッシュ (`register` に渡される) かブロックを渡すことができます。
+`activate` は拡張の設定のためにオプションのハッシュ (`register` に渡される) かブロックを渡すことができます。`options` クラスメソッドでオプションを定義し `options` でアクセスすることができます:
 
 ``` ruby
-module MyFeature
+class MyFeature < Middleman::Extension
   # All the options for this extension
-  class Options < Struct.new(:foo, :bar); end
+  option :foo, false, 'Controls whether we foo'
 
-  class << self
-    def registered(app, options_hash={}, &block)
-      options = Options.new(options_hash)
-      yield options if block_given?
-    end
+  def initialize(app, options_hash={}, &block)
+    super
+    
+    puts options.foo
   end
 end
 
@@ -63,12 +63,11 @@ end
 [`Middleman::Application`](http://rubydoc.info/github/middleman/middleman/Middleman/Application) クラス は拡張で使用されるグローバル設定 (`set` コマンドを使用する変数) を変更するために使用できます。
 
 ``` ruby
-module MyFeature
-  class << self
-    def registered(app)
-      app.set :css_dir, "lib/my/css"
-    end
-    alias :included :registered
+class MyFeature < Middleman::Extension
+  def initialize(app, options_hash={}, &block)
+    super
+ 
+    app.set :css_dir, "lib/my/css"
   end
 end
 ```
@@ -76,16 +75,14 @@ end
 新しい設定を作成することができ, これは後で拡張の中でアクセスすることもできます。
 
 ``` ruby
-module MyFeature
-  class << self
-    def registered(app)
-      app.set :my_feature_setting, %w(one two three)
-      app.send :include, Helpers
-    end
-    alias :included :registered
+class MyFeature < Middleman::Extension
+  def initialize(app, options_hash={}, &block)
+    super
+   
+    app.set :my_feature_setting, %w(one two three)
   end
 
-  module Helpers
+  helpers do
     def my_helper
       my_feature_setting.to_sentence
     end
@@ -100,12 +97,10 @@ end
 `config.rb` の中で利用できるメソッドは `Middleman::Application` の単なるクラスメソッドです。`config.rb` を使って新しいメソッドを追加してみましょう。
 
 ``` ruby
-module MyFeature
-  class << self
-    def registered(app)
-      app.extend ClassMethods
-    end
-    alias :included :registered
+class MyFeature < Middleman::Extension
+  def initialize(app, options_hash={}, &block)
+    super
+    app.extend ClassMethods
   end
 
   module ClassMethods
@@ -118,56 +113,17 @@ end
 
 `Middleman::Application` クラスを拡張し, `app` として利用できるようにすることで, この環境に単に "Hello" を出力する `say_hello` メソッドを追加しました。内部的には, これらのメソッドはこのアプリの中で処理されるパスやリクエストのリストを作成するために使用されます。
 
-## after_configuration コールバック
-
-時には `config.rb` がコードを実行するために処理されるまで待ちたい場合があるでしょう。例えば, `:css_dir` 変数に依存していて, それがセットされるまで待ちたいような場合です。この実現のためコールバックを使用できます:
-
-``` ruby
-module MyFeature
-  class << self
-    def registered(app)
-      app.after_configuration do
-        the_users_setting = app.settings.css_dir
-        set :my_setting, "#{the_users_setting}_with_my_suffix"
-      end
-    end
-    alias :included :registered
-  end
-end
-```
-
-### Compass コールバック
-
-同じように, Compass 内で用意される変数や設定に依存しているなら, `compass_config` コールバックを使用します。
-
-``` ruby
-module MyFeature
-  class << self
-    def registered(app)
-      app.compass_config do |config|
-        # config は Compass.configuration オブジェクト
-        config.output_style = :compact
-      end
-    end
-    alias :included :registered
-  end
-end
-```
-
 ## ヘルパの追加
 
 ヘルパはテンプレートの中で使用できるメソッドです。ヘルパメソッドを追加するには, 次にようにします:
 
 ``` ruby
-module MyFeature
-  class << self
-    def registered(app)
-      app.helpers HelperMethods
-    end
-    alias :included :registered
+class MyFeature < Middleman::Extension
+  def initialize(app, options_hash={}, &block)
+    super
   end
-
-  module HelperMethods
+  
+  helpers do
     def make_a_link(url, text)
       "<a href='#{url}'>#{text}</a>"
     end
@@ -181,78 +137,99 @@ end
 <h1><%= make_a_link("http://example.com", "クリックしてください") %></h1>
 ```
 
-## リクエストコールバック
-
-リクエストコールバックは Middleman がページをレンダリングする前に処理を行うことができます。これは別のソースからデータを返す場合や早い段階で失敗する場合に便利です。
-
-例を示します:
-
-``` ruby
-module MyFeature
-  class << self
-    def registered(app)
-      app.before do
-        app.set :currently_requested_path, request.path_info
-        true
-      end
-    end
-    alias :included :registered
-  end
-end
-```
-
-上記はそれぞれのリクエストの開始時に `:currently_requested_path` の値を設定します。 "true" の返り値に注意してください。 `before_processing` を使うすべてのブロックは同じように true または false を返さなければなりません。
 
 ## サイトマップ拡張
 
 サイトマップ拡張を作成することで [サイトマップ](/advanced/sitemap/) でページを変更したり追加したりできます。 [ディレクトリインデックス](/pretty-urls/) 拡張は通常のページをディレクトリインデックス版に再ルーティングするためにこの機能を使い, [ブログ拡張](/blogging/) はタグやカレンダーページを作成するためにいくつかプラグインを使っています。詳細は [`Sitemap::Store`](http://rubydoc.info/github/middleman/middleman/Middleman/Sitemap/Store#register_resource_list_manipulator-instance_method)。
 
 ``` ruby
-module MyFeature
-  class << self
-    def registered(app)
-      app.after_configuration do
-        sitemap.register_resource_list_manipulator(
-          :my_feature,
-          MyFeatureManipulator.new(self),
-          false
-        )
-      end
-    end
-    alias :included :registered
+class MyFeature < Middleman::Extension
+  def initialize(app, options_hash={}, &block)
+    super
   end
 
-  class MyFeatureManipulator
-    def initialize(app)
-      @app = app
-    end
-
-    def manipulate_resource_list(resources)
-      resources.each do |resource|
-         resource.destination_path.gsub!("original", "new")
-      end
+  def manipulate_resource_list(resources)
+    resources.each do |resource|
+      resource.destination_path.gsub!("original", "new")
     end
   end
 end
 ```
 
-## after_build コールバック
+## コールバック
+
+Middleman には拡張によってフックできる部分があります。いくつか例を示しますが, ここに記述するよりも多くあります。
+
+### after_configuration
+
+コードを実行するために `config.rb` が読み込まれるまで待ちたい場合があります。例えば, `:css_dir` 変数に依存する場合, 設定されるまで待つべきです。次の例ではこのコールバックを使用しています:
+
+``` ruby
+class MyFeature < Middleman::Extension
+  def initialize(app, options_hash={}, &block)
+    super
+  end
+  
+  def after_configuration
+    the_users_setting = app.settings.css_dir
+    app.set :my_setting, "#{the_users_setting}_with_my_suffix"
+  end
+end
+```
+
+### before
+
+before コールバックは Middleman がページをレンダリングする直前に処理を実行することができます。別のソースからデータを返したり, 早期に失敗させる場合に便利です。
+
+例:
+
+``` ruby
+class MyFeature < Middleman::Extension
+  def initialize(app, options_hash={}, &block)
+    super
+    app.before do
+      app.set :currently_requested_path, request.path_info
+      true
+    end
+  end
+end
+```
+
+この例では, リクエスト毎に `:currently_requested_path` に値をセットします。"true" を返すことに注意してください。`before` を使用したブロックは true または false を返さなければなりません。
+
+### after_build
 
 このコールバックはビルドプロセスが完了した後にコードを実行するために使用されます。 [middleman-smusher] 拡張はビルド完了後に build フォルダの中のすべての画像を圧縮するためにこの機能を使用します。ビルド後に展開したスクリプトを結合することも考えることができます。
 
 ``` ruby
-module MyFeature
-  class << self
-    def registered(app)
-      app.after_build do |builder|
-        builder.run './my_deploy_script.sh'
-      end
+class MyFeature < Middleman::Extension
+  def initialize(app, options_hash={}, &block)
+    super
+    app.after_build do |builder|
+      builder.run './my_deploy_script.sh'
     end
-    alias :included :registered
   end
 end
 ```
 
 [`builder`](http://rubydoc.info/github/middleman/middleman/master/Middleman/Cli/Build) パラメータは CLI のビルドを実行するクラスで, そこから [Thor のアクション](http://rubydoc.info/github/wycats/thor/master/Thor/Actions) を使用できます。
 
+### compass_config
+
+同じく, 拡張が Compass が用意する変数や設定に依存する場合, `compass_config` コールバックが使用できます。
+
+``` ruby
+class MyFeature < Middleman::Extension
+  def initialize(app, options_hash={}, &block)
+    super
+    
+    app.compass_config do |config|
+      # config is the Compass.configuration object
+      config.output_style = :compact
+    end
+  end
+end
+```
+
 [middleman-smusher]: https://github.com/middleman/middleman-smusher
+

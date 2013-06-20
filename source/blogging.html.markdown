@@ -40,7 +40,6 @@ activate :blog do |blog|
 end
 
 activate :directory_indexes
-page "/404.html", directory_index: false
 ```
 
 ## 記事
@@ -122,6 +121,18 @@ end
 ```
 
 [`BlogArticle`](http://rubydoc.info/github/middleman/middleman-blog/master/Middleman/Blog/BlogArticle) の [`summary`](http://rubydoc.info/github/middleman/middleman-blog/master/Middleman/Blog/BlogArticle#summary-instance_method) 属性からテンプレートの中で要約を使用できます。
+
+`summary` は要約を切り出す長さやテキストが切り捨てられた際に使用する文字列を取得するメソッドです:
+
+```erb
+<%= article.summary(250, '>>') =>
+```
+
+250文字以下の文字と続く ">>" が生成されます:
+
+HTML 対応の要約の提供には, 要約を使用するために `gem 'nokogiri'` を `Gemfile` に追加しなければならないことに注意してください。
+
+もし要約を生成する独自のメソッドがある場合, `blog.summary_generator` に `Proc` をセットできます。レンダリングされたブログの記事、希望の長さ、および省略文字列を受け取り、要約を生成します。
 
 ## タグ
 

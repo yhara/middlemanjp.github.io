@@ -4,7 +4,7 @@ title: 多言語化 (i18n)
 
 # 多言語化 (i18n)
 
-この拡張は `config.rb` に多言語化を有効化する API を提供します:
+`:i18n` 拡張はサイトの多言語化機能を提供します。`config.rb` で次のように有効化します:
 
 ``` ruby
 activate :i18n
@@ -39,7 +39,14 @@ es:
 * /hello_world.html の内容は: "Hello World"
 * /es/hello_world.html の内容は: "Hola World"
 
-## URL パス
+`t` を `I18n.t` のようにテンプレートの中でショートカットとして使用できます。
+
+``` html
+    <%= t(:hello) %> World
+```
+
+
+## 多言語化パス
 
 個々の言語にはそれ自身の名前空間のパスでアクセスすることができます。デフォルトでは, 第一言語はサイトのルートに配置されます (このオプションの変更方法はページ下部で) 。デフォルトのパスはパスの中でシンプルに言語名 ( YAML ファイル名) を使用します:
 
@@ -118,8 +125,8 @@ activate :i18n, :langs => [:en] # :en 以外のすべての言語を無視
 デフォルトでは, 第一言語 ( `:langs` で指定されず, `locales/` フォルダにあるもの) が "標準の" 言語になり, サイトのルートに配置されます。 2 つの言語が与えられた場合, `:en` で多言語化されたファイルがルートに配置されます:
 
 * source/localizable/index.html.erb
-  * build/index.html is english
-  * build/es/index.html is spanish
+  * build/index.html is English
+  * build/es/index.html is Spanish
 
 `:mount_at_root` を使うことで, このデフォルトを変更したり, 特定の言語をルートに指定することを無効化できます:
 
@@ -128,3 +135,10 @@ activate :i18n, :mount_at_root => :es # スペイン語をルートに配置
 # or
 activate :i18n, :mount_at_root => false # すべての言語 URL に prefix がつく
 ```
+
+## テンプレート全体の多言語化
+
+ロケール YAML ファイルに大きなテキストブロックを置くのは非効率だと言えます。この問題に対応するために, Middleman はテンプレート全体を多言語化する方法を提供します。例えば, `index.html` があるとして, `index.en.html.erb` と `index.es.html.erb` を作成することができます。サイトがビルドされると, 次のように:
+
+* build/index.html は英語ページ
+* build/es/index.html はスペイン語ページ

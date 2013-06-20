@@ -4,6 +4,8 @@ title: 動的ページ
 
 # 動的ページ
 
+## Proxy の定義
+
 Middleman にはテンプレートファイルと 1 対 1 の関係を持っていないページを生成する機能があります。これが意味するのは, 変数に応じて複数のファイルを生成する 1 つのテンプレートを扱うことができます。プロキシを作成するには, `config.rb` で `proxy` メソッドを使用し, 作成したいパスを与え, 使用したいテンプレートのパスを与えます(テンプレートファイル自体の拡張子は除く)。 次は `config.rb` の設定例の 1 つです:
 
 ``` ruby
@@ -16,10 +18,10 @@ end
 プロジェクトがビルドされる際に, ファイルは次のように出力されます:
 When this project is built, four files will be output:
 
-* /about/tom.html (テンプレートの中で `person_name` は "tom" として)
-* /about/dick.html (テンプレートの中で `person_name` は "dick" として)
-* /about/harry.html (テンプレートの中で `person_name` は "harry" として)
-* /about/template.html (テンプレートの中で `person_name` は nil になる)
+* '/about/tom.html' (テンプレートの中で `person_name` は "tom" として)
+* '/about/dick.html' (テンプレートの中で `person_name` は "dick" として)
+* '/about/harry.html' (テンプレートの中で `person_name` は "harry" として)
+* '/about/template.html' (テンプレートの中で `person_name` は nil になる)
 
 ほとんどの場合, `person_name` 変数なしにテンプレートを生成したくないでしょう。 Middleman にこれを無視するように命令できます:
 

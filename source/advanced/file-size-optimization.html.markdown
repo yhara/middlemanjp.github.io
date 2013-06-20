@@ -27,6 +27,13 @@ set :js_compressor, Uglifier.new(:toplevel => true, :unsafe => true)
 
 一部のファイルをミニファイ処理から除外するには, これらの拡張を有効化する際に `:ignore` オプションを渡し, 無視するファイルを識別する 1 つ以上のパターンマッチ, 正規表現や Proc を与えます。同様に, ファイル拡張子をリネームし変更するために `:exts` オプションを渡すことができます。
 
+You can speed up your JavaScript minification (and CoffeeScript builds) by including these gems in your `Gemfile`:
+
+```ruby
+gem 'therubyracer' # faster JS compiles
+gem 'oj' # faster JS compiles
+```
+
 ## GZIP のテキストファイル
 
 対応するユーザエージェントに [圧縮ファイルを配信する](http://developer.yahoo.com/performance/rules.html#gzip) ことはいい考えです。多くの web サーバはオンザフライでファイルを gzip にする機能を持っていますが, ファイルが配信される度に CPU を動作させる必要があり, 結果としてほとんどのサーバでは最大圧縮が実行されません。 Middleman は通常のファイルと一緒に gzip バージョンの HTML, CSS や JavaScript を作成することができ,  web サーバに pre-gzip ファイルを直接配信するように命じることができます。まず,  `:gzip` 拡張を有効化します:
@@ -39,21 +46,20 @@ activate :gzip
 
 ## 画像圧縮
 
-ビルド時に画像も圧縮したい場合, [Yahoo's Smush.it tool] を使用して飛躍的に画像サイズを縮小する [Middleman Smusher 拡張][Middleman Smusher extension] を使用できます。サイトのビルド毎に圧縮する方が [PNGGauntlet](http://pnggauntlet.com) や [ImageOptim](http://imageoptim.pornel.net) のようなツールで画像を 1 度ずつ圧縮するよりも良い方法でしょう。
+ビルド時に画像も圧縮したい場合, [`middleman-imageoptim`](https://github.com/plasticine/middleman-imageoptim) を試してみましょう。
 
-インストール:
+## HTML 圧縮
+
+Middleman は HTML 出力を圧縮する公式拡張を提供しています。gem で簡単にインストール:
 
 ``` bash
-gem install middleman-smusher
+gem install middleman-minify-html
 ```
 
-`config.rb` で有効化:
+Gemfile に `middleman-minify-html` を追加し, `config.rb` で有効化:
 
 ``` ruby
-configure :build do
-  activate :smusher
-end
+activate :minify_html
 ```
 
-[Middleman Smusher extension]: https://github.com/middleman/middleman-smusher
-[Yahoo's Smush.it tool]: http://www.smushit.com/ysmush.it/
+ソースを確認すると圧縮されていることがわかると思います。
