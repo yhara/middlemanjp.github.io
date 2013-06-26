@@ -112,7 +112,6 @@ Time.zone = "Tokyo"
 デフォルトでは, パーマリンクページの外から見た場合, 記事の内容は途中で切り捨てられます。ブログ機能の拡張は記事の中の `READMORE` を探し, ホームページにこの前までのテキストの内容のみ表示します。パーマリンクページではこのメタデータを除去します。
 
 これは `config.rb` で変更できます:
-This can be changed in `config.rb`:
 
 ``` ruby
 activate :blog do |blog|
@@ -239,7 +238,7 @@ end
 
 ブログの記事一覧はテンプレートから [`BlogArticle`](http://rubydoc.info/github/middleman/middleman-blog/master/Middleman/Blog/BlogArticle) のリストを返す [`blog.articles`](http://rubydoc.info/github/middleman/middleman-blog/master/Middleman/Blog/BlogData#articles-instance_method) でアクセスできます。
 
-各 [`BlogArticle`](http://rubydoc.info/github/middleman/middleman-blog/master/Middleman/Blog/BlogArticle) は有益なメソッドを持ち, [サイトマップ](/advanced/sitemap) からより情報 ([frontmatter](/frontmatter/) から [`data`](http://rubydoc.info/github/middleman/middleman/master/Middleman/Sitemap/Resource#data-instance_method) のような) が詰まった [`Resource`](http://rubydoc.info/github/middleman/middleman/master/Middleman/Sitemap/Resource) を作成することもできます。
+各 [`BlogArticle`](http://rubydoc.info/github/middleman/middleman-blog/master/Middleman/Blog/BlogArticle) は有益なメソッドを持ち, [サイトマップ](/advanced/sitemap) からより情報 ([frontmatter](/frontmatter/) から [`data`](http://rubydoc.info/github/middleman/middleman/Middleman/Sitemap/Resource#data-instance_method) のような) が詰まった [`Resource`](http://rubydoc.info/github/middleman/middleman/Middleman/Sitemap/Resource) を作成することもできます。
 
 例えば, 次のブロックは直近 5 記事とそれらの要約を示します:
 

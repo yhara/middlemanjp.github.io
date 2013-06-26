@@ -30,9 +30,9 @@ end
 activate :my_feature
 ```
 
-[`register`](http://rubydoc.info/github/middleman/middleman/master/Middleman/Extensions#register-class_method) メソッドは有効化する拡張の名前を選ばせます。拡張が有効になっているファイルのみ読込みたい場合はブロックを取ることができます。
+[`register`](http://rubydoc.info/github/middleman/middleman/Middleman/Extensions#register-class_method) メソッドは有効化する拡張の名前を選ばせます。拡張が有効になっているファイルのみ読み込みたい場合はブロックを取ることができます。
 
-`MyFeature` 拡張では, `registered` メソッドは `activate` コマンドが実行されるとすぐに呼び出されます。 `app` 変数は [`Middleman::Application`](http://rubydoc.info/github/middleman/middleman/master/Middleman/Application) クラスです。
+`MyFeature` 拡張では, `registered` メソッドは `activate` コマンドが実行されるとすぐに呼び出されます。 `app` 変数は [`Middleman::Application`](http://rubydoc.info/github/middleman/middleman/Middleman/Application) クラスです。
 
 `activate` は拡張の設定のためにオプションのハッシュ (`register` に渡される) かブロックを渡すことができます。`options` クラスメソッドでオプションを定義し `options` でアクセスすることができます:
 
@@ -212,7 +212,7 @@ class MyFeature < Middleman::Extension
 end
 ```
 
-[`builder`](http://rubydoc.info/github/middleman/middleman/master/Middleman/Cli/Build) パラメータは CLI のビルドを実行するクラスで, そこから [Thor のアクション](http://rubydoc.info/github/wycats/thor/master/Thor/Actions) を使用できます。
+[`builder`](http://rubydoc.info/github/middleman/middleman/Middleman/Cli/Build) パラメータは CLI のビルドを実行するクラスで, そこから [Thor のアクション](http://rubydoc.info/github/wycats/thor/master/Thor/Actions) を使用できます。
 
 ### compass_config
 
