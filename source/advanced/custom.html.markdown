@@ -11,7 +11,7 @@ Middleman の拡張は Middleman の様々なポイントにフックし, 新し
 最も基本的な拡張は次のようになります:
 
 ``` ruby
-class MyFeature < Middleman::Extensio
+class MyFeature < Middleman::Extension
     def initialize(app, options_hash={}, &block)
       super
     end
