@@ -19,6 +19,10 @@ activate :relative_assets
 #  config.cdn = true
 #end
 
+configure :development do
+  activate :relative_assets
+end
+
 configure :build do
   activate :minify_css
   activate :minify_javascript
