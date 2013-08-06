@@ -44,4 +44,8 @@ JSON を Frontmatter に使用することもできます。`;;;` で区切ら�
 ;;;
 ```
 
+<<<<<<< HEAD
 ページ内で YAML Frontmatter と全く同じように使用することができます。
+=======
+After that, it can be used exactly the same as YAML frontmatter in your page.
+>>>>>>> upstream/master

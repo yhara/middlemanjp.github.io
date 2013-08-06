@@ -45,11 +45,11 @@ end
 ビルド時または開発環境で適用したい設定がある場合, ブロックの中で設定することができます:
 
 ```ruby
-configure :development
+configure :development do
   set :debug_assets, true
 end
 
-configure :build
+configure :build do
   activate :minify_css
 end
 ```
