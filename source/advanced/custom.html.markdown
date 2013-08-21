@@ -30,9 +30,9 @@ end
 activate :my_feature
 ```
 
-[`register`](http://rubydoc.info/github/middleman/middleman/Middleman/Extensions#register-class_method) メソッドは有効化する拡張の名前を選ばせます。拡張が有効になっているファイルのみ読み込みたい場合はブロックを取ることができます。
+[`register`](http://rubydoc.info/gems/middleman-core/Middleman/Extensions#register-class_method) メソッドは有効化する拡張の名前を選ばせます。拡張が有効になっているファイルのみ読み込みたい場合はブロックを取ることができます。
 
-`MyFeature` 拡張では, `registered` メソッドは `activate` コマンドが実行されるとすぐに呼び出されます。 `app` 変数は [`Middleman::Application`](http://rubydoc.info/github/middleman/middleman/Middleman/Application) クラスです。
+`MyFeature` 拡張では, `registered` メソッドは `activate` コマンドが実行されるとすぐに呼び出されます。 `app` 変数は [`Middleman::Application`](http://rubydoc.info/gems/middleman-core/Middleman/Application) クラスです。
 
 `activate` は拡張の設定のためにオプションのハッシュ (`register` に渡される) かブロックを渡すことができます。`options` クラスメソッドでオプションを定義し `options` でアクセスすることができます:
 
@@ -60,7 +60,7 @@ end
     
 ## 変数の設定
 
-[`Middleman::Application`](http://rubydoc.info/github/middleman/middleman/Middleman/Application) クラス は拡張で使用されるグローバル設定 (`set` コマンドを使用する変数) を変更するために使用できます。
+[`Middleman::Application`](http://rubydoc.info/gems/middleman-core/Middleman/Application) クラス は拡張で使用されるグローバル設定 (`set` コマンドを使用する変数) を変更するために使用できます。
 
 ``` ruby
 class MyFeature < Middleman::Extension
@@ -140,7 +140,7 @@ end
 
 ## サイトマップ拡張
 
-サイトマップ拡張を作成することで [サイトマップ](/advanced/sitemap/) でページを変更したり追加したりできます。 [ディレクトリインデックス](/pretty-urls/) 拡張は通常のページをディレクトリインデックス版に再ルーティングするためにこの機能を使い, [ブログ拡張](/blogging/) はタグやカレンダーページを作成するためにいくつかプラグインを使っています。詳細は [`Sitemap::Store`](http://rubydoc.info/github/middleman/middleman/Middleman/Sitemap/Store#register_resource_list_manipulator-instance_method)。
+サイトマップ拡張を作成することで [サイトマップ](/advanced/sitemap/) でページを変更したり追加したりできます。 [ディレクトリインデックス](/pretty-urls/) 拡張は通常のページをディレクトリインデックス版に再ルーティングするためにこの機能を使い, [ブログ拡張](/blogging/) はタグやカレンダーページを作成するためにいくつかプラグインを使っています。詳細は [`Sitemap::Store`](http://rubydoc.info/gems/middleman-core/Middleman/Sitemap/Store#register_resource_list_manipulator-instance_method)。
 
 ``` ruby
 class MyFeature < Middleman::Extension
@@ -212,7 +212,7 @@ class MyFeature < Middleman::Extension
 end
 ```
 
-[`builder`](http://rubydoc.info/github/middleman/middleman/Middleman/Cli/Build) パラメータは CLI のビルドを実行するクラスで, そこから [Thor のアクション](http://rubydoc.info/github/wycats/thor/master/Thor/Actions) を使用できます。
+[`builder`](http://rubydoc.info/gems/middleman-core/Middleman/Cli/Build) パラメータは CLI のビルドを実行するクラスで, そこから [Thor のアクション](http://rubydoc.info/github/wycats/thor/master/Thor/Actions) を使用できます。
 
 ### compass_config
 

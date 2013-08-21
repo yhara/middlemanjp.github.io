@@ -109,15 +109,26 @@ Time.zone = "Tokyo"
 
 ## 要約
 
-デフォルトでは, パーマリンクページの外から見た場合, 記事の内容は途中で切り捨てられます。ブログ機能の拡張は記事の中の `READMORE` を探し, ホームページにこの前までのテキストの内容のみ表示します。パーマリンクページではこのメタデータを除去します。
+ホームページ上のようにリンクをともなった記事の要約を表示したい場合, Middleman は記事の切り取りに対応します。ブログ拡張は記事の中から `READMORE` を探し, ホームページ上にはこの文字列前までの内容だけを表示します。記事ページではこの情報は取り除かれます。
 
-これは `config.rb` で変更できます:
+ブログ拡張が検索し切り取るテキストは `config.rb` で設定できます:
 
 ``` ruby
 activate :blog do |blog|
   blog.summary_separator = /SPLIT_SUMMARY_BEFORE_THIS/
 end
 ```
+
+次に, ホームページ上のテンプレート (または要約を表示したい場所) に次の行を追加することで記事ページヘのリンクともなった要約を表示することができます。
+
+``` erb
+<%= article.summary =>
+<%= link_to 'Read more…', article =>
+```
+
+_(注意することとして, デフォルトのレイアウトを仕様している場合,  `<%= article.body =>` の行が置き換えられます。)_
+
+`READMORE` (または設定したテキスト) は削除された状態で記事へリンクします。
 
 [`BlogArticle`](http://rubydoc.info/github/middleman/middleman-blog/master/Middleman/Blog/BlogArticle) の [`summary`](http://rubydoc.info/github/middleman/middleman-blog/master/Middleman/Blog/BlogArticle#summary-instance_method) 属性からテンプレートの中で要約を使用できます。
 
@@ -238,7 +249,7 @@ end
 
 ブログの記事一覧はテンプレートから [`BlogArticle`](http://rubydoc.info/github/middleman/middleman-blog/master/Middleman/Blog/BlogArticle) のリストを返す [`blog.articles`](http://rubydoc.info/github/middleman/middleman-blog/master/Middleman/Blog/BlogData#articles-instance_method) でアクセスできます。
 
-各 [`BlogArticle`](http://rubydoc.info/github/middleman/middleman-blog/master/Middleman/Blog/BlogArticle) は有益なメソッドを持ち, [サイトマップ](/advanced/sitemap) からより情報 ([frontmatter](/frontmatter/) から [`data`](http://rubydoc.info/github/middleman/middleman/Middleman/Sitemap/Resource#data-instance_method) のような) が詰まった [`Resource`](http://rubydoc.info/github/middleman/middleman/Middleman/Sitemap/Resource) を作成することもできます。
+各 [`BlogArticle`](http://rubydoc.info/github/middleman/middleman-blog/master/Middleman/Blog/BlogArticle) は有益なメソッドを持ち, [サイトマップ](/advanced/sitemap) からより情報 ([frontmatter](/frontmatter/) から [`data`](http://rubydoc.info/github/middleman/middleman/Middleman/Sitemap/Resource#data-instance_method) のような) が詰まった [`Resource`](http://rubydoc.info/gems/middleman-core/Middleman/CoreExtensions/FrontMatter/ResourceInstanceMethods#data-instance_method) を作成することもできます。
 
 例えば, 次のブロックは直近 5 記事とそれらの要約を示します:
 
