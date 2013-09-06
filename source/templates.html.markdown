@@ -119,7 +119,7 @@ page "/admin/*", :layout => "admin"
 page "/login.html", :layout => "admin"
 ```
 
-これは login ページが admin レイアウトを使用するように指定しています。 `config.rb` ですべて指定する代わりに, [Frontmatter] を使ってテンプレートのページ毎にレイアウトを指定することもできます。`login.html.erb` ページ自信にレイアウトを指定する例です。
+これは login ページが admin レイアウトを使用するように指定しています。 `config.rb` ですべて指定する代わりに, [Frontmatter] を使ってテンプレートのページ毎にレイアウトを指定することもできます。`login.html.erb` ページ自身にレイアウトを指定する例です。
 
 ``` html
 ---
