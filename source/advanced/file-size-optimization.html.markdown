@@ -27,7 +27,7 @@ set :js_compressor, Uglifier.new(:toplevel => true, :unsafe => true)
 
 一部のファイルをミニファイ処理から除外するには, これらの拡張を有効化する際に `:ignore` オプションを渡し, 無視するファイルを識別する 1 つ以上のパターンマッチ, 正規表現や Proc を与えます。同様に, ファイル拡張子をリネームし変更するために `:exts` オプションを渡すことができます。
 
-You can speed up your JavaScript minification (and CoffeeScript builds) by including these gems in your `Gemfile`:
+`Gemfile` に次の gem を追加することで, JavaScript の圧縮(さらには CoffeeScript のビルド) を高速化できます。
 
 ```ruby
 gem 'therubyracer' # faster JS compiles
@@ -57,6 +57,12 @@ gem install middleman-minify-html
 ```
 
 Gemfile に `middleman-minify-html` を追加し, `config.rb` で有効化:
+
+``` ruby
+gem "middleman-minify-html"
+```
+
+さらに `config.rb` を開いて次を追加:
 
 ``` ruby
 activate :minify_html
