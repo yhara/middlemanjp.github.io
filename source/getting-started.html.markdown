@@ -114,7 +114,7 @@ middleman init my_new_mobile_project --template=mobile
 
 Middleman はスタート時点から開発とプロダクションコードを分離します。これにより開発中にプロダクションでは不要または望ましくないツール群 ([Haml](http://haml-lang.com) や [Sass](http://sass-lang.com) などのような) を開発中に利用することができます。開発サイクルや静的サイトをこれらの環境に頼ります。
 
-Middlema を使う時間の大半は開発サイクルになります。
+Middleman を使う時間の大半は開発サイクルになります。
 
 コマンドラインを使い, プロジェクトフォルダの中からプレビューサーバを起動してください:
 
