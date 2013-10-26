@@ -32,6 +32,20 @@ set :index_file, "default.html"
 set :index_file, "index.php"
 ```
 
+#### アセットパスに関する注意事項
+
+ディレクトリインデックスを使用する場合, 画像ファイル名だけでアセットファイルの呼び出し (例: 画像ファイル) を行うと失敗します。次のように完全な抽象パスを使って呼び出される必要があります:
+
+``` ruby
+![すごい画像](/posts/2013-09-23-some-interesting-post/amazing-image.png)
+```
+
+わずかにこのプロセスを自動化するには, MarkDown をまずは ERB で作成します。例えば, `/posts/2013-09-23-some-interesting-post.html.markdown.erb` ファイルがあるとします:
+
+``` ruby
+![すごい画像](<%= current_page.url %>some-image.png)
+```
+
 ## オプトアウト
 
 自動的に名前を変更したくないページがある場合, 除外できます:

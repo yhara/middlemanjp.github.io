@@ -72,6 +72,8 @@ end
 
 他のすべての設定 (`permalink`, `tag_path` など) に `prefix` が追加されるので, すべての設定でこれを繰り返す必要はありません。
 
+### パーマリンクのカスタマイズ
+
 投稿を閲覧するためのパーマリンクは次のように簡単に変更できます:
 
 ``` ruby
@@ -80,7 +82,29 @@ activate :blog do |blog|
 end
 ```
 
-これで, あなたの記事は次の URL で閲覧できます: `blog/2011/blog.html` 。パーマリンクは投稿が保管されている形式と完全に異なっても構いません。デフォルトでは, パーマリンクのパスは `:year-:month-:day-:title.html` です。ブログ記事を HTML ファイルとしてではなくディレクトリとして表示したい場合, [きれいな URL](/pretty-urls/) 機能を有効化することもできます。
+これで, あなたの記事は次の URL で閲覧できます: `blog/2011/blog.html`。 Your permalink can be totally independent from the format your posts are stored at. デフォルトのパーマリンクのパスは `:year/:month/:day/:title.html` です。 パーマリンクは記事の日付要素 (:year, :month, :date), 記事タイトル, その他記事の中で使用されている frontmatter に定義されたデータ によって構成することができます。
+
+例えば, 記事の frontmatter に category を定義しパーマリンクに含みたい場合:
+
+```html
+---
+title: Middleman ブログ投稿
+date: 2013/10/13
+category: HTML5
+---
+
+Hello World
+```
+
+``` ruby
+activate :blog do |blog|
+  blog.permalink = "blog/:category/:title.html"
+end
+```
+
+上記記事の URL は `blog/html5/my-middleman-blog-post.html` になります。
+
+ブログ投稿を HTML ファイルではなくディレクトリとして表示したい場合には [きれいな URL](/pretty-urls/) 機能を有効化することもできます。
 
 ### 下書き
 
@@ -180,6 +204,39 @@ end
 
 テンプレートで, カレンダーページへのリンクを作成するために, [`blog_year_path`](http://rubydoc.info/github/middleman/middleman-blog/master/Middleman/Blog/Helpers#blog_year_path-instance_method), [`blog_month_path`](http://rubydoc.info/github/middleman/middleman-blog/master/Middleman/Blog/Helpers#blog_month_path-instance_method) や [`blog_day_path`](http://rubydoc.info/github/middleman/middleman-blog/master/Middleman/Blog/Helpers#blog_day_path-instance_method) ヘルパを使用できます。`blog.year_link`, `blog.month_link` や `blog.day_link` の設定でこれらのリンクがどう見えるのかカスタマイズできます。デフォルトでは, カレンダーページは年月日毎に `/2012.html`, `/2012/03.html` や `/2012/03/15.html` のように表示されます。
 
+## カスタム記事コレクション
+
+Middleman ブログは [frontmatter](/frontmatter/) に定義したデータによって記事をグループ分けする機能に対応しています。次の一般的な例では *category* 属性を使って記事をグループ分けします。
+
+```html
+---
+title: Middleman ブログの投稿
+date: 2013/10/13
+category: HTML5
+---
+
+Hello World
+```
+
+HTML5 のカテゴリに属するすべての記事を表示する `categories/html5.html` を生成するように Middleman ブログを設定できます。次の設定例を参照してください:
+
+```ruby
+activate :blog do |blog|
+  blog.custom_collections = {
+    :category => {
+      :link => '/categories/:category.html',
+      :template => '/category.html'
+    }
+  }
+end
+```
+
+category 属性に基づいてコレクションを設定します。ビルドする際のカスタムページの URL 構造や使用するテンプレートを指定することができます。カスタムコレクションを生成する場合, コレクションページにアクセスする新しいヘルパが生成されます。
+
+### カスタムコレクションヘルパ
+
+上記の例ではヘルパメソッドは `category_path` という名前で生成されます。これは `category_path('html5')` で呼び出すことができ `categories/html5.html` という URL を返します。
+
 ## ページネーション
 
 長い記事一覧は複数ページに分割できます。テンプレートはページ内で frontmatter に次の設定がされていると分割されます。
@@ -263,7 +320,7 @@ end
 
     <%= article.summary %>
 
-    <a href="<%= article.url %>">もっと読む</a></div>
+    <a href="<%= article.url %>">もっと読む</a>
   </article>
 <% end %>
 ```
