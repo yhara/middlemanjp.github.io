@@ -6,7 +6,7 @@ title: 動的ページ
 
 ## Proxy の定義
 
-Middleman にはテンプレートファイルと 1 対 1 の関係を持っていないページを生成する機能があります。これが意味するのは, 変数に応じて複数のファイルを生成する 1 つのテンプレートを扱うことができます。プロキシを作成するには, `config.rb` で `proxy` メソッドを使用し, 作成したいパスを与え, 使用したいテンプレートのパスを与えます(テンプレートファイル自体の拡張子は除く)。 次は `config.rb` の設定例の 1 つです:
+Middleman にはテンプレートファイルと 1 対 1 の関係を持たないページを生成する機能があります。この機能が意味するのは, 変数に応じて複数のファイルを作り出す 1 テンプレートを使うことができるということです。Proxy を作るには, `config.rb` で `proxy` メソッドを使い, 作りたいページのパス, 使いたいテンプレートのパスを与えます(テンプレートファイル自体の拡張子は除く)。 次は `config.rb` の設定例の 1 つです:
 
 ``` ruby
 # source/about/template.html.erb が存在することを想定
@@ -15,15 +15,14 @@ Middleman にはテンプレートファイルと 1 対 1 の関係を持って�
 end
 ```
 
-プロジェクトがビルドされる際に, ファイルは次のように出力されます:
-When this project is built, four files will be output:
+プロジェクトがビルドされる際に, 4 つのファイル出力されます:
 
-* '/about/tom.html' (テンプレートの中で `person_name` は "tom" として)
-* '/about/dick.html' (テンプレートの中で `person_name` は "dick" として)
-* '/about/harry.html' (テンプレートの中で `person_name` は "harry" として)
-* '/about/template.html' (テンプレートの中で `person_name` は nil になる)
+* '/about/tom.html' (テンプレートの中の `person_name` は "tom" として)
+* '/about/dick.html' (テンプレートの中の `person_name` は "dick" として)
+* '/about/harry.html' (テンプレートの中の `person_name` は "harry" として)
+* '/about/template.html' (テンプレートの中の `person_name` は nil になる)
 
-ほとんどの場合, `person_name` 変数なしにテンプレートを生成したくないでしょう。 Middleman にこれを無視するように命令できます:
+ほとんどの場合, `person_name` 変数なしにテンプレートを出力したくないでしょう。 Middleman にこれを無視するように指定できます::
 
 ``` ruby
 ["tom", "dick", "harry"].each do |name|
@@ -31,11 +30,11 @@ When this project is built, four files will be output:
 end
 ```
 
-`about/tom.html`, `about/dick.html` や `about/harry.html` だけが出力されます。
+これで `about/tom.html`, `about/dick.html` や `about/harry.html` だけが出力されます。
 
 ## 無視するファイル
 
-`config.rb` に新しい `ignore` メソッドを追加し, サイト生成時に任意のパスを無視することも可能です。
+`config.rb` に `ignore` メソッドを追加することで, サイトビルド時に任意のパスを無視することも可能です。
 
 ``` ruby
 ignore "/ignore-this-template.html"
