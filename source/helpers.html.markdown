@@ -4,17 +4,17 @@ title: テンプレートヘルパ
 
 # テンプレートヘルパ
 
-テンプレートヘルパは一般的な HTML の作業を簡単にするために, 動的テンプレートの中で使用できるメソッドです。基本的なメソッドのほとんどは Rails のビューヘルパを利用したことのある人にはお馴染みのものです。すべてのヘルパは Padrino フレームワークに組み込まれています。[完全なドキュメントはこちらを参照してください。][view the full documentation here]
+テンプレートヘルパはよくある HTML の作業を簡単にするため, 動的テンプレートの中で使用できるメソッドです。基本的なメソッドのほとんどは Rails のビューヘルパを利用したことのある人にはお馴染みのものです。すべてのヘルパは Padrino フレームワークによって組み込まれています。[完全なドキュメントはこちらを参照してください。][view the full documentation here]
 
 ## リンクヘルパ
 
-Padrino はリンクタグを作るために使う `link_to` メソッドを提供します。最も基本的な使い方は, `link_to` が名称とリンク URL を引数に取ります:
+Padrino はリンクタグを作るために `link_to` メソッドを提供します。基本的な使い方では `link_to` がリンク名とリンク URL を引数に取ります:
 
 ``` html
 <%= link_to '私のサイト', 'http://mysite.com' %>
 ```
 
-`link_to` はより複雑な内容を提供できるように, ブロックをとることもできます:
+`link_to` はより複雑な内容のリンクを生成できるように, ブロックをとることもできます:
 
 ``` html
 <% link_to 'http://mysite.com' do %>
@@ -22,7 +22,7 @@ Padrino はリンクタグを作るために使う `link_to` メソッドを提�
 <% end %>
 ```
 
-Middleman は `link_to` に [サイトマップ](/advanced/sitemap/) を知らせることで強化します。 source フォルダ (ファイル拡張子からテンプレート言語の拡張子を除いた状態で) のページを参照すると, `link_to` は [`:directory_indexes`](/pretty-urls/) の拡張が設定されていたとしても, 正しいリンクを生成します。例えば, `source/about.html` ファイルがあって `:directory_indexes` が設定されている場合, 次のようにリンクされます:
+Middleman は `link_to` に [サイトマップ](/advanced/sitemap/) を把握させることで強化します。 source フォルダ (ファイル拡張子からテンプレート言語拡張子を除いた状態で) のページへの参照を与えると, `link_to` は [`:directory_indexes`](/pretty-urls/) 拡張が有効化されていたとしても, 正しいリンクを生成します。例えば, `source/about.html` ファイルがあり `:directory_indexes` が有効化されている場合, 次のようにリンクします:
 
 ``` html
 <%= link_to 'About', '/about.html' %>
@@ -30,9 +30,9 @@ Middleman は `link_to` に [サイトマップ](/advanced/sitemap/) を知ら�
 結果: <a href='/about/'>About</a>
 ```
 
-現在ページから相対パスで参照することもできます。一部の人はリンクを現在ページからの相対パスにしたいと考えます。 `:relative => true` を渡すことで, `link_to` は相対 URL になります。
+現在ページから相対パスで参照することもできます。リンクを現在ページからの相対パスにしたいと考える人もいるでしょう。 `:relative => true` を渡すことで, `link_to` は相対 URL になります。
 
-`:directory_indexes` が設定され, source/foo/index.html.erb の中から相対パスを得る場合:
+`:directory_indexes` が有効化され, source/foo/index.html.erb の中から相対パスを得る場合:
 
 ``` html
 <%= link_to 'About', '/about.html', :relative => true %>
@@ -44,13 +44,13 @@ Middleman は `link_to` に [サイトマップ](/advanced/sitemap/) を知ら�
 <a href='../about/'>About</a>
 ```
 
-`link_to` で生成されるすべての URL を相対パスにしたい場合, `config.rb` に次を追加します:
+`link_to` で作られるあらゆる URL を相対パスにしたい場合, `config.rb` に次を追加します:
 
 ``` ruby
 set :relative_links, true
 ```
 
-相対パスにしたくないリンクに `:relative => false` を追加することで個別に上書きできます。
+相対パスにしたくないリンクに `:relative => false` を追加することで個別に上書きすることもできます。
 
 リンクのクエリパラメータやURLフラグメントを次のように含めることができます:
 
@@ -64,14 +64,14 @@ set :relative_links, true
 <a href='/form.html?foo=bar#deep'>私のフォーム</a>
 ```
 
-リンクタグなしのページ URL が必要な場合, `url_for` を使用してください。これは `link_to` や `form_tag` の中でも使用されています。
+リンクタグなしのページ URL が必要な場合, `url_for` を使ってください。これは `link_to` や `form_tag` の処理の中でも使われています。
 
 
 ## 出力ヘルパ
 
-出力ヘルパは様々な方法で出力を管理, キャプチャ, 表示する重要なメソッドの集合で, より高いレベルのヘルパ機能をサポートするために使用されます。説明すべき出力ヘルパが 3 つあります: `content_for`, `capture_html` や `concat_content`。
+出力ヘルパは様々な方法で出力を管理, キャプチャ, 表示する重要なメソッドの集合で, より高いレベルのヘルパ機能をサポートするために使われます。説明すべき出力ヘルパが 3 つあります: `content_for`, `capture_html` や `concat_content`。
 
-`content_for` はコンテンツのキャプチャを行い, レイアウトの中など異なった場所でのレンダリングをサポートします。その 1 例はテンプレートからレイアウトに assets を含めるものです:
+`content_for` はコンテンツのキャプチャを行い, レイアウトの中など異なった場所でのレンダリングをサポートします。その 1 つの例はテンプレートからレイアウトに assets を含めるものです:
 
 ``` html
 <% content_for :assets do %>
@@ -79,7 +79,7 @@ set :relative_links, true
 <% end %>
 ```
 
-テンプレートに追加することで, ブロックに含まれる部分をキャプチャし, レイアウトで yield を用いて出力できます:
+テンプレートに追加することで, ブロックに含まれる部分をキャプチャしレイアウトで yield を用いて出力します:
 
 ``` html
 <head>
@@ -99,7 +99,7 @@ set :relative_links, true
 <% end %>
 ```
 
-ブロックの引数も対応します。
+ブロック引数にも対応します。
 
 ``` ruby
 yield_content :head, param1, param2
@@ -108,9 +108,9 @@ content_for(:head) { |param1, param2| ...content... }
 
 ## タグヘルパ
 
-タグヘルパはビューテンプレート内の html "タグ" を作成するために使用される基本的なメソッドです。このカテゴリには 3 つの主要なメソッドがあります: `tag`, `content_tag` と `input_tag`。
+タグヘルパはビューテンプレート内の html "タグ" を生成するために使われる基本的なメソッドです。このカテゴリには 3 つの主要メソッドがあります: `tag`, `content_tag` と `input_tag`。
 
-`tag` と `content_tag` は名前と指定されたオプションで任意の html タグを作成するためのものです。 html タグが "中身" を含む場合, `content_tag` が使われます。例:
+`tag` と `content_tag` はタグ名と指定されたオプションで任意の html タグを生成します。 html タグが "中身" を含む場合, `content_tag` が使われます。例:
 
 ``` html
 <%= tag :img, :src => "/my_image.png" %>
@@ -122,7 +122,7 @@ content_for(:head) { |param1, param2| ...content... }
   # => <p class='stuff'>こんにちわ</p>
 ```
 
-`input_tag` はユーザからの入力受付に関するタグを作成するために使われます:
+`input_tag` はユーザからの入力を受け付けるタグを生成するために使われます:
 
 ``` ruby
 input_tag :text, :class => "demo" 
@@ -133,7 +133,7 @@ input_tag :password, :value => "secret", :class => "demo"
 
 ## アセットヘルパ
 
-アセットヘルパはハイパーリンク, mail_to リンク, 画像, スタイルシートや JavaScript のような html をビューテンプレートに挿入する手助けをします。単純なビューテンプレートでの用途は次のようになります:
+アセットヘルパはハイパーリンク, mail_to リンク, 画像, スタイルシートや JavaScript のような html をビューテンプレートに挿入する手助けをします。簡単なビューテンプレートでの使用方法は次のようになります:
 
 ``` html
 <html>
@@ -152,11 +152,11 @@ input_tag :password, :value => "secret", :class => "demo"
 </html>
 ```
 
-`auto_stylesheet_link_tag` や `auto_javascript_include_tag` は現在ページのパスを元にスタイルシートや JS のタグを生成します。ページが "contact.html" の場合, "contact.css" や "contact.js" になります。
+`auto_stylesheet_link_tag` や `auto_javascript_include_tag` は現在ページのパスを元にスタイルシートや JS のタグを生成します。ページが "contact.html" の場合, "contact.css" や "contact.js" の参照になります。
 
 ## Form ヘルパ
 
-Form ヘルパは form を作成する際に使用するであろう "一般的な" form タグのヘルパです。非オブジェクトの form が作成される場合の例は次のように:
+Form ヘルパは form を作る際に使うであろう "一般的な" form タグのヘルパです。非オブジェクトの form が作られる場合の簡単な例は次のように:
 
 ``` html
 <% form_tag '/destroy', :class => 'destroy-form', :method => 'delete' do %>
@@ -186,7 +186,7 @@ Form ヘルパは form を作成する際に使用するであろう "一般的�
 
 ## フォーマットヘルパ
 
-フォーマットヘルパはテキストを目的に合わせて成型するためのいくつかの便利なメソッドです。
+フォーマットヘルパはテキストを目的に合わせて加工するための便利なメソッドです。
 フォーマットヘルパの代表的なものは `escape_html`, `distance_of_time_in_words`, `time_ago_in_words` と `js_escape_html` の 4 つです。
 
 `escape_html` と `js_escape_html` メソッドは html 文字列を取得し, 特定の文字をエスケープするものです。
@@ -198,11 +198,11 @@ escape_html('<hello>&<goodbye>') # => &lt;hello&gt;&amp;&lt;goodbye&gt;
 
 テンプレート内で簡単に使うために `h` という `escape_html` のエイリアスもあります。
 
-フォーマットヘルパは `simple_format`, `pluralize`, `word_wrap` や `truncate` のようなテキストの成型に便利な機能も含みます。
+フォーマットヘルパは `simple_format`, `pluralize`, `word_wrap` や `truncate` のようなテキストの加工に便利な機能も含みます。
 
 ``` ruby
-simple_format("こんにちわ\nせかい")
-  # => "<p>こんにちわ<br/>世界</p>"
+simple_format("hello\nworld")
+  # => "<p>hello<br/>world</p>"
 pluralize(2, '人')
   # => '2 人'
 word_wrap('Once upon a time', :line_width => 8) 
@@ -217,7 +217,7 @@ highlight('Lorem dolor sit', 'dolor')
 
 ## ダミーテキスト & Placehold.it ヘルパ
 
-[Frank プロジェクト][Frank project], Sinatra の影響も受けた静的ツールは, ランダムなテキストコンテンツとプレースホルダ画像を生成するための素晴らしいヘルパセットです。 私たちはこのコードを Middleman に適合させました (MIT ライセンスを祝福します)。
+Sinatra の影響も受けた静的ツール [Frank プロジェクト][Frank project] は, ランダムなテキストコンテンツとプレースホルダ画像を生成する素晴らしいヘルパセットです。 私たちはこのコードを Middleman に適合させました (MIT ライセンスを祝福します)。
 
 プレースホルダテキストの使用方法:
 
@@ -249,7 +249,7 @@ lorem.image('300x400', :text => 'blah')
 
 ## ページクラス
 
-サイト階層に対応する `body` タグの class 属性が生成されると便利です。 `page_classes` はこれらの属性名を生成します。`projects/rockets/saturn-v.html` にページがあるとすると, レイアウトには次のように書けます。
+サイト階層に対応する `body` タグの class 属性が生成されると便利です。 `page_classes` はこれらの属性名を生成します。`projects/rockets/saturn-v.html` にページがあるとすると, レイアウトには次のように表示されます。
 
 ```erb
 <body class="<%= page_classes %>">
@@ -261,23 +261,23 @@ lorem.image('300x400', :text => 'blah')
 <body class="projects rockets saturn-v">
 ```
 
-これにより簡単にページに 'project' や `rockets` のスタイルを適用できます。
+これにより簡単にページに project-specific や rocket-specific のスタイルを適用できます。
 
 ## カスタム定義ヘルパ
 
-Middleman によって提供されるヘルパに加え, 自動的にコントローラやビューの中からアクセスできる独自のヘルパやクラスを追加することができます。
+Middleman によって提供されるヘルパに加え, コントローラやビューの中からアクセスできる独自のヘルパやクラスを追加することができます。
 
 ヘルパメソッドを定義するには, `config.rb` の中で `helpers` ブロックを使います:
 
 ``` ruby
 helpers do
   def some_method
-    # ...do something here...
+    # ...何らかの処理を追加...
   end
 end
 ```
 
-また, ヘルパを含む外部の Ruby モジュールを作成し, 読込みもできます。 `lib` ディレクトリにファイルを配置します。例えば, `lib/custom_helpers.rb` という名前のファイルに上記のヘルパを抽出する場合には, モジュールを作成できます:
+また, 外部の Ruby モジュール含むヘルパを作成し, 読み込むこともできます。 `lib` ディレクトリにファイルを配置します。例えば, `lib/custom_helpers.rb` という名前のファイルに上記のヘルパを抽出する場合には, モジュールを作ることができます:
 
 ``` ruby
 module CustomHelpers
@@ -294,7 +294,7 @@ require "lib/custom_helpers"
 helpers CustomHelpers
 ```
 
-さらに簡単な方法は, `helpers` ディレクトリにヘルパを配置し, モジュールファイルに名前をつける方法です (例: `CustomHelpers` は `helpers/custom_helpers.rb` として配置)。 Middleman は自動的にファイルを読込み, ヘルパーとして受取ります。
+より簡単な方法として, `helpers` ディレクトリにヘルパを配置し, モジュールファイルの名前をつける方法です (例: `CustomHelpers` は `helpers/custom_helpers.rb` として配置)。 Middleman は自動的にファイルを読込み, ヘルパーとして受け取ります。
 
 [view the full documentation here]: http://www.padrinorb.com/guides/application-helpers
 [Frank project]: https://github.com/blahed/frank
