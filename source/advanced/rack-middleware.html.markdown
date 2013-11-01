@@ -4,15 +4,15 @@ title: Rack ミドルウェア
 
 # Rack ミドルウェア
 
-Rack はオンザフライで内容を変更し, サーバ (Middleman) で処理される前にリクエストを傍受できるクラスの仕組みです。
+Rack はオンザフライで内容を変更し, サーバ (Middleman) で処理される前にリクエストを傍受できる仕組みです。
 
-Middleman は Middleman と連携するライブラリの広大な宇宙をを開く Rack ミドルウェアへの完全なアクセス権を持っています。
+Middleman には Middleman と連携する広大な宇宙を開くライブラリである Rack ミドルウェアへアクセスする仕組みがあります。
 
 ## 例: 構文ハイライト
 
-**Note:** 構文ハイライトを行うには, 公式の [middleman-syntax](https://github.com/middleman/middleman-syntax) 拡張の使用をおすすめします。 Rack ミドルウェアを使った例は 1 例にしか過ぎません。
+**Note:** 構文ハイライトには, 公式の [middleman-syntax](https://github.com/middleman/middleman-syntax) 拡張の使用をおすすめします。 これは Rack ミドルウェアを使う 1 例に過ぎません。
 
-このサイトは Middleman で書かれており, 構文ハイライトされた沢山のコードブロックからできています。構文ハイライトは Middleman の外で行われます。このサイトは `<code>` ブロックをレンダリングし, Rack ミドルウェアはこれらのブロックを引き継ぎ構文ハイライトを追加します。使用されたミドルウェアは [`Rack::Codehighlighter`](https://github.com/wbzyl/rack-codehighlighter) です。次が `config.rb` での使用方法です:
+このサイトは Middleman で書かれており, 構文ハイライトされたたくさんの code ブロックからできています。構文ハイライトは Middleman の外で行われます。このサイトは `<code>` ブロックをレンダリングし, Rack ミドルウェアはこれらのブロックを引き継ぎ構文ハイライトを追加します。呼び出されたミドルウェアは [`Rack::Codehighlighter`](https://github.com/wbzyl/rack-codehighlighter) です。`config.rb` での使用方法を示します:
 
 ``` ruby
 require 'rack/codehighlighter'
@@ -31,12 +31,12 @@ gem "rack-codehighlighter", :git => "git://github.com/wbzyl/rack-codehighlighter
 gem "pygments.rb"
 ```
 
-上記ブロックは `rack/codehighlighter` と `pygments.rb` ライブラリが必要です。 `use` コマンドは Middleman にこのミドルウェアを使用するよう命令します。残りは標準的な Rack ミドルウェアのセットアップで, 構文ハイライトを指示するミドルウェアに構文解析のために使用するバックエンドやコードブロックの検索方法をいくつか変数で渡します。
+上記のブロックには `rack/codehighlighter` と `pygments.rb` ライブラリが必要です。 `use` コマンドは Middleman にこのミドルウェアを使うよう命令します。残りの部分は標準的な Rack ミドルウェアのセットアップで, 構文ハイライトを作るミドルウェアに対し構文解析の処理方法や code ブロックの配置方法を変数で渡しています。
 
 ### ビルドサイクル
 
-Rack ミドルウェアはビルドサイクルの間に行われたものを含むすべてのリクエストに対して実行されます。これは Rack ミドルウェアのプレビュー中の効果は, ビルドしたファイルに現れるということです。
-しかし, プロジェクトがビルドされると静的なサイトになることに注意してください。サイトをビルドすると, Cookie, セッションや変数を期待してリクエストを処理する Rack ミドルウェアは動作しなくなります。
+Rack ミドルウェアは, ビルドサイクルの間に行われたリクエストを含むすべてのリクエストに対し実行されます。プレビュー中に表れる Rack ミドルウェアの効果は, ビルドしたファイルにも現れるます。
+ただし, プロジェクトがビルドされると静的なサイトになることに注意してください。サイトがビルドされると, Cookie, セッションや変数を期待したリクエストを処理する Rack ミドルウェアは動作しなくなります。
 
 ## 便利なミドルウェア
 
