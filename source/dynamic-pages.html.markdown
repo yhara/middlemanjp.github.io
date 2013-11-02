@@ -1,28 +1,28 @@
 ---
-title: Dynamic Pages
+title: 動的ページ
 ---
 
-# Dynamic Pages
+# 動的ページ
 
-## Defining proxies
+## Proxy の定義
 
-Middleman has the ability to generate pages which do not have a one-to-one relationship with their template files. What this means is that you can have a single template which generates multiple files based on variables. To create a proxy, you use the `proxy` method in your `config.rb`, and give the path you want to create, and then the path to the template you want to use (without any templating file extensions). Here's an example `config.rb` setup:
+Middleman にはテンプレートファイルと 1 対 1 の関係を持たないページを生成する機能があります。この機能が意味するのは, 変数に応じて複数のファイルを作り出す 1 テンプレートを使うことができるということです。Proxy を作るには, `config.rb` で `proxy` メソッドを使い, 作りたいページのパス, 使いたいテンプレートのパスを与えます(テンプレートファイル自体の拡張子は除く)。 次は `config.rb` の設定例の 1 つです:
 
 ``` ruby
-# Assumes the file source/about/template.html.erb exists
+# source/about/template.html.erb が存在することを想定
 ["tom", "dick", "harry"].each do |name|
   proxy "/about/#{name}.html", "/about/template.html", :locals => { :person_name => name }
 end
 ```
 
-When this project is built, four files will be output:
+プロジェクトがビルドされる際に, 4 つのファイルが出力されます:
 
-* `/about/tom.html` (with `person_name` equalling "tom" in the template)
-* `/about/dick.html` (with `person_name` equalling "dick" in the template)
-* `/about/harry.html` (with `person_name` equalling "harry" in the template)
-* `/about/template.html` (with `person_name` being nil in the template)
+* '/about/tom.html' (テンプレートの中の `person_name` は "tom" として)
+* '/about/dick.html' (テンプレートの中の `person_name` は "dick" として)
+* '/about/harry.html' (テンプレートの中の `person_name` は "harry" として)
+* '/about/template.html' (テンプレートの中の `person_name` は nil になる)
 
-In most cases, you will not want to generate the template itself without the `person_name` variable, so you can tell Middleman to ignore it:
+ほとんどの場合, `person_name` 変数なしにテンプレートを出力したくないでしょう。 Middleman にこれを無視するように指定できます::
 
 ``` ruby
 ["tom", "dick", "harry"].each do |name|
@@ -30,14 +30,14 @@ In most cases, you will not want to generate the template itself without the `pe
 end
 ```
 
-Now, only the `about/tom.html`, `about/dick.html` and `about/harry.html` files will be output.
+これで `about/tom.html`, `about/dick.html` や `about/harry.html` だけが出力されます。
 
-## Ignoring Files
+## 無視するファイル
 
-It is also possible to ignore arbitrary paths when building a site using the new `ignore` method in your `config.rb`:
+`config.rb` に `ignore` メソッドを追加することで, サイトビルド時に任意のパスを無視することも可能です。
 
 ``` ruby
 ignore "/ignore-this-template.html"
 ```
 
-You can give ignore exact source paths, filename globs, or regexes.
+正確なファイルパス, ファイル名のパターンマッチングや正規表現を ignore に与えることができます。

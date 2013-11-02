@@ -1,68 +1,68 @@
 ---
-title: Blogging
+title: ブログ機能
 ---
 
-# Blogging
+# ブログ機能
 
-Middleman has an official extension to support blogging, articles and tagging. `middleman-blog` ships as an extension and must be installed to use. Simply specify the gem in your `Gemfile`:
+Middleman にはブログ, つまり記事投稿とタグ付けに対応した公式拡張があります。 `middleman-blog` は拡張機能の 1 つで使うにはインストールする必要があります。簡単に `Gemfile` で gem を指定するだけです:
 
 ``` ruby
 gem "middleman-blog"
 ```
 
-Or install it by hand if you're not using Bundler:
+もしくは Bundler を使わずに手動でインストールします:
 
 ``` bash
 gem install middleman-blog
 ```
 
-Then activate the extension in your `config.rb`:
+そして `config.rb` で拡張機能を有効化します:
 
 ``` ruby
 activate :blog do |blog|
-  # set options on blog
+  # ブログ機能のオプションを設定
 end
 ```
 
-Alternatively, you can generate a fresh project already setup for blogging:
+さらに, ブログ機能が用意された新しいプロジェクトを作ることができます:
 
 ``` bash
 middleman init MY_BLOG_PROJECT --template=blog
 ```
 
-If you already have a Middleman project, you can re-run `middleman init` with the blog template option to generate the sample [`index.html`](https://github.com/middleman/middleman-blog/blob/master/lib/middleman-blog/template/source/index.html.erb), [`tag.html`](https://github.com/middleman/middleman-blog/blob/master/lib/middleman-blog/template/source/tag.html.erb), [`calendar.html`](https://github.com/middleman/middleman-blog/blob/master/lib/middleman-blog/template/source/calendar.html.erb), and [`feed.xml`](https://github.com/middleman/middleman-blog/blob/master/lib/middleman-blog/template/source/feed.xml.builder), or you can write those yourself. You can see [what gets generated](https://github.com/middleman/middleman-blog/tree/master/lib/middleman-blog/template/source) on GitHub.
+すでに Middleman のプロジェクトがある場合, サンプルの [`index.html`](https://github.com/middleman/middleman-blog/blob/master/lib/middleman-blog/template/source/index.html.erb), [`tag.html`](https://github.com/middleman/middleman-blog/blob/master/lib/middleman-blog/template/source/tag.html.erb), [`calendar.html`](https://github.com/middleman/middleman-blog/blob/master/lib/middleman-blog/template/source/calendar.html.erb) や [`feed.xml`](https://github.com/middleman/middleman-blog/blob/master/lib/middleman-blog/template/source/feed.xml.builder) を作るために, blog テンプレートオプションとともに `middleman init` を再実行するか, 自分で作ってください。[何が作られるのか](https://github.com/middleman/middleman-blog/tree/master/lib/middleman-blog/template/source) は GitHub で確認できます。
 
-Because sitemap manipulators tend to be order-dependent, if you are using [`directory_indexes`](/pretty-urls/), you'll want to make sure that you activate it *after* you activate the blog extension. For example:
+サイトマップの動作は順序に依存する傾向があるので, [`ディレクトリインデックス`](/pretty-urls/) を使う場合, ブログ拡張を有効化した *後* にディレクトリインデックスを有効化するべきです。例えば:
 
 ``` ruby
 activate :blog do |blog|
-  # set options on blog
+  # ブログ機能のオプションを設定
 end
 
 activate :directory_indexes
 ```
 
-## Articles
+## 記事
 
-Like Middleman itself, the blog extension is focused on individual files. Each article is its own file, using any template language you like. The default filename structure for articles is  `:year-:month-:day-:title.html`. When you want to create a new article, place it in the correct path and include the basic [frontmatter](/frontmatter/) to get going. You can set the `blog.sources` option while activating `:blog` in your `config.rb` to change where and in what format Middleman should look for articles.
+Middleman 自体がそうであるように, ブログ拡張は個別ファイルにフォーカスしています。それぞれの記事はファイルごとに好きなテンプレート言語を使用できます。記事のデフォルトのファイル名構造は `:year-:month-:day-:title.html` です。新しい記事を作りたい場合, 正しいパスに配置し, 動作させるために基本的な [frontmatter](/frontmatter/) を記述します。`config.rb` で `:blog` が有効化されている場合, どのファイル形式で Middleman が記事を探すのか変更する `blog.source` オプションを設定できます。
 
-Let's say I want to create a new post about Middleman. I would create a file at `source/2011-10-18-middleman.html.markdown`. The minimum contents of this file are a `title` entry in the frontmatter:
+Middleman に関する新しい投稿を作るとしましょう。`source/2011-10-18-middleman.html.markdown` を作ります。このファイルの最小限の内容は frontmatter に `title` を入力したものです:
 
 ``` html
----
-title: My Middleman Blog Post
+--- 
+title: Middleman ブログの投稿
 ---
 
 Hello World
 ```
 
-If you want, you can specify a full date and time as a `date` entry in the front matter, to help with ordering multiple posts from the same day. You can also include a list of `tags` in the front matter to generate tag pages.
+必要な場合, 同日の複数投稿に対応するために, frontmatter に `date` として日付と時刻を指定することができます。タグページを作るために frontmatter に `tags` リストを含めることもできます。
 
-As a shortcut, you can run `middleman article TITLE` and Middleman will create a new article for you in the right place with the right filename.
+ショートカットとして, `middleman article TITLE` を実行することで Middleman は新しい投稿を正しい場所, 正しいファイル名で作ります。
 
-## Custom Paths
+### カスタムパス
 
-The base path for your blog defaults to `/` (the root of your website) but can be overridden in `config.rb`:
+ブログのデフォルトのパスは `/` (Web サイトのルート) ですが, `config.rb` で上書きできます:
 
 ``` ruby
 activate :blog do |blog|
@@ -70,11 +70,11 @@ activate :blog do |blog|
 end
 ```
 
-All other settings (`permalink`, `tag_path`, etc.) are added on to `prefix`, so you don't need to repeat it in every setting.
+他のあらゆる設定 (`permalink`, `tag_path` など) に `prefix` が追加されるので, 他の設定でこれを繰り返す必要はありません。
 
-### Customizing Permalinks
+### パーマリンクのカスタマイズ
 
-The permalink for viewing your posts can changed on its own as well:
+投稿を閲覧するためのパーマリンクは次のように簡単に変更できます:
 
 ``` ruby
 activate :blog do |blog|
@@ -82,13 +82,13 @@ activate :blog do |blog|
 end
 ```
 
-Now, your articles will show up at: `blog/2011/blog.html`. Your permalink can be totally independent from the format your posts are stored at. By default, the permalink path is `:year/:month/:day/:title.html`. Permalinks can be made up of any components of the article date (:year, :month, :day), the title of the article, and any other frontmatter data that is used throughout your articles.
+これであなたの記事は次の URL で閲覧できます: `blog/2011/blog.html`。 パーマリンクは投稿が保存されているディレクトリからは完全に独立しています。デフォルトのパーマリンクのパスは `:year/:month/:day/:title.html` です。 パーマリンクは記事の日付要素 (:year, :month, :date), 記事タイトル, その他記事の中で使用されている frontmatter に定義されたデータ によって構成することができます。
 
-For example, if you have a category frontmatter key in your articles and wanted to include that in your permalinks:
+例えば, 記事の frontmatter に category を定義しパーマリンクに含みたい場合:
 
 ```html
 ---
-title: My Middleman Blog Post
+title: Middleman ブログ投稿
 date: 2013/10/13
 category: HTML5
 ---
@@ -102,40 +102,40 @@ activate :blog do |blog|
 end
 ```
 
-The article above would now be under: `blog/html5/my-middleman-blog-post.html`.
+上記記事の URL は `blog/html5/my-middleman-blog-post.html` になります。
 
-You might also consider enabling the [pretty urls](/pretty-urls/) feature if you want your blog posts to appear as directories instead of HTML files.
+ブログ投稿を HTML ファイルではなくディレクトリとして表示したい場合には [きれいな URL](/pretty-urls/) 機能を有効化することもできます。
 
-## Draft Articles
+### 下書き
 
-Articles can be marked as draft in the frontmatter:
+frontmatter に下書きの目印をつけられます:
 
 ``` html
 ---
-title: Work In Progress
+title: 作業中
 published: false
 ---
 
-Unfinished Draft
+完了していない下書き
 ```
 
-Unpublished articles will only appear in development mode.
+下書き記事は開発モードでのみ表示されます。
 
-An articles with a date that is in the future is also considered unpublished; if you use a `cron` job to regenerate your site on a regular basis, this can be used to automatically publish articles at a specified time.
+未来の日付の記事も未発表とみなされます; 定期的に `cron` ジョブを使ってサイトを生成する場合, 自動的に指定された時間に記事を公開するためにこの機能を使うことができます。
 
-## Timezone
+### タイムゾーン
 
-To get accurate publication times in your RSS feed, and for automatically publishing articles on a precise schedule, set your blog's timezone in `config.rb`:
+RSS フィードで正確な公開時刻の取得や, 自動で正確なスケジュールで記事を公開するために, ブログのタイムゾーンを `config.rb` で設定できます:
 
 ``` ruby
 Time.zone = "Tokyo"
 ```
 
-## Summary
+## 要約
 
-Middleman supports article truncation for cases when you'd like to show an article summary with a link to the article's permalink page, such as on the homepage. The blogging extension looks for the string `READMORE` in your article body and shows only the content before this text on the homepage. On the permalink page, this data is then stripped out.
+ホームページ上のようにリンクをともなった記事の要約を表示したい場合, Middleman は記事の切り取りに対応します。ブログ拡張は記事の中から `READMORE` を探し, ホームページ上にはこの文字列前までの内容を表示します。記事ページではこの情報は取り除かれます。
 
-You can configure the text that the blogging extension looks for to tell it to truncate in the `config.rb` file:
+ブログ拡張が検索し切り取るテキストは `config.rb` で設定できます:
 
 ``` ruby
 activate :blog do |blog|
@@ -143,40 +143,40 @@ activate :blog do |blog|
 end
 ```
 
-You can then show just the article summary, accompanied by a link to the full article, by adding the following lines on your homepage template (or wherever you'd like the summary to appear):
+次に, ホームページ上のテンプレート (または要約を表示したい場所) に次の行を追加することで記事ページヘのリンクをともなった要約を表示することができます。
 
 ``` erb
-<%= article.summary %>
-<%= link_to 'Read more…', article %>
+<%= article.summary =>
+<%= link_to 'Read more…', article >
 ```
 
-_(Note that, if you're using the default layout, these lines will replace `<%= article.body %>`.)_
+_(注意することとして, デフォルトのレイアウトを使っている場合,  `<%= article.body =>` の行を置き換えます。)_
 
-This will then link to the article, where `READMORE` (or the text you have configured the extension to match on) will be removed.
+`READMORE` (または設定したテキスト) が削除された状態で記事へリンクします。
 
-You can use the summary in templates from the [`summary`](http://rubydoc.info/github/middleman/middleman-blog/master/Middleman/Blog/BlogArticle#summary-instance_method) attribute of a [`BlogArticle`](http://rubydoc.info/github/middleman/middleman-blog/master/Middleman/Blog/BlogArticle).
+[`BlogArticle`](http://rubydoc.info/github/middleman/middleman-blog/master/Middleman/Blog/BlogArticle) の [`summary`](http://rubydoc.info/github/middleman/middleman-blog/master/Middleman/Blog/BlogArticle#summary-instance_method) 属性からテンプレートの中で要約を使うことができます。
 
-`summary` is actually a method which takes an optional length to chop summaries down to, and a string to use when the text is truncated:
+`summary` は要約を切り出す長さやテキストが切り捨てられた際に表示する文字列を与えられるメソッドです:
 
 ```erb
 <%= article.summary(250, '>>') %>
 ```
 
-This would produce a summary of no more than 250 characters, followed by ">>".
+250文字以下の要約と続く ">>" が出力されます:
 
-Note that, in order to provide HTML-aware summaries, you must add `gem 'nokogiri'` to your `Gemfile` in order to use summaries.
+HTML 対応の要約の提供には, 要約を使うために `gem 'nokogiri'` を `Gemfile` に追加しなければならないので注意してください。
 
-If you have your own method of generating summaries, you can set `blog.summary_generator` to a `Proc` that takes the rendered blog post, desired length, and ellipsis string and produces a summary.
+もし要約を生成する独自のメソッドがある場合, `blog.summary_generator` に `Proc` をセットできます。レンダリングされたブログの記事、切り取りたい長さ、および省略文字列を受け取り、要約を生成します。
 
-## Tags
+## タグ
 
-What would blogging be without organizing articles around tags? Simply add a `tag` entry to your articles' [frontmatter](/frontmatter/). Then, you can access the tags for a [`BlogArticle`](http://rubydoc.info/github/middleman/middleman-blog/master/Middleman/Blog/BlogArticle) using the [`tag`](http://rubydoc.info/github/middleman/middleman-blog/master/Middleman/Blog/BlogArticle#tags-instance_method) method, and you can get a list of all tags with their associated article from [`blog.tags`](http://rubydoc.info/github/middleman/middleman-blog/master/Middleman/Blog/BlogData#tags-instance_method). If you set the `blog.tag_template` setting in `config.rb` to a template (see [the default config.rb](https://github.com/middleman/middleman-blog/blob/master/lib/middleman-blog/template/config.tt)) you can render a page for each tag. The tag template has the local variable `tagname` set to the current tag and `articles` set to a list of articles with that tag, and you can use the [`tag_path`](http://rubydoc.info/github/middleman/middleman-blog/master/Middleman/Blog/Helpers#tag_path-instance_method) helper to generate links to a particular tag page.
+タグを使った記事の整理なしに何がブログ機能でしょうか? 単に記事の [frontmatter](/frontmatter/) に `tag` を追加するだけです。[`BlogArticle`](http://rubydoc.info/github/middleman/middleman-blog/master/Middleman/Blog/BlogArticle) の [`tag`](http://rubydoc.info/github/middleman/middleman-blog/master/Middleman/Blog/BlogArticle#tags-instance_method) メソッドを使うことでタグを呼び出すことができます。さらに, [`blog.tags`](http://rubydoc.info/github/middleman/middleman-blog/master/Middleman/Blog/BlogData#tags-instance_method) から記事に関連するタグリストを取得できます。`config.rb` で `blog.tag_template` にテンプレートを設定した場合 ([デフォルトの config.rb](https://github.com/middleman/middleman-blog/blob/master/lib/middleman-blog/template/config.tt) 参照) , タグごとにページをレンダリングできます。タグテンプレートはローカル変数を持ちます。現在のタグがセットされた `tagname` とそのタグの記事リストがセットされた `articles`です。また特定のタグページへのリンクを作るために [`tag_path`](http://rubydoc.info/github/middleman/middleman-blog/master/Middleman/Blog/Helpers#tag_path-instance_method) ヘルパを使うことができます。
 
-The default template produces a [`tag.html`](https://github.com/middleman/middleman-blog/blob/master/lib/middleman-blog/template/source/tag.html.erb) template for you that produces a page for each tag at `tags/TAGNAME.html`. Adding a couple tags to the above example would look like this:
+デフォルトのテンプレートでは `tag/TAGNAME.html` 形式でタグごとに [`tag.html`](https://github.com/middleman/middleman-blog/blob/master/lib/middleman-blog/template/source/tag.html.erb) ページを作ります。上記の例にいくつかのタグを追加すると次にようになります:
 
 ``` html
----
-title: My Middleman Blog Post
+--- 
+title: Middleman のブログ投稿
 date: 2011/10/18
 tags: blogging, middleman, hello, world
 ---
@@ -184,9 +184,9 @@ tags: blogging, middleman, hello, world
 Hello World
 ```
 
-Now you can find this article listed on `tags/blogging.html`.
+これで `tags/blogging.html` で表示された記事を確認できます。
 
-This path can be changed in `config.rb`:
+パスは `config.rb` で変更できます:
 
 ``` ruby
 activate :blog do |blog|
@@ -194,23 +194,23 @@ activate :blog do |blog|
 end
 ```
 
-Now you can find this article listed on `categories/blogging.html`.
+これで `categories/blogging.html` で記事一覧を確認できます。
 
-## Calendar Pages
+## カレンダーページ
 
-Many blogging engines produce pages that list out all articles for a specific year, month, or day. Middleman does this using a [`calendar.html`](https://github.com/middleman/middleman-blog/blob/master/lib/middleman-blog/template/source/calendar.html.erb) template and the `blog.calendar_template` setting. The default template generates [`calendar.html`](https://github.com/middleman/middleman-blog/blob/master/lib/middleman-blog/template/source/calendar.html.erb) for you. This template gets `year`, `month`, and `day` variables set in it, as well as `articles` which is a list of articles for that day.
+多くのブログエンジンは年月日ごとの全記事を載せたページを作ります。Middleman は [`calendar.html`](https://github.com/middleman/middleman-blog/blob/master/lib/middleman-blog/template/source/calendar.html.erb) テンプレートと `blog.calendar_template` 設定を使ってこれを実現します。デフォルトのテンプレートは [`calendar.html`](https://github.com/middleman/middleman-blog/blob/master/lib/middleman-blog/template/source/calendar.html.erb) を作ります。このテンプレートでは `year`, `month` と `day` 変数が設定され, その日付の記事一覧を出力します。
 
-If you only want certain calendar pages (say, year but not day), or if you want different templates for each type of calendar page, you can set `blog.year_template`, `blog.month_template`, and `blog.day_template` individually. Setting `blog.calendar_template` is just a shortcut for setting them all to the same thing.
+特定形式のカレンダーページにしたい場合 (例えば年別で日別は不要) やカレンダーページの種類ごとに異なるテンプレートを使いたい場合, `blog.year_template`, `blog.month_template` や `blog.day_template` を個別に設定できます。`blog.calendar_template` の設定はこれらすべてを設定するショートカットです。
 
-In templates, you can use the [`blog_year_path`](http://rubydoc.info/github/middleman/middleman-blog/master/Middleman/Blog/Helpers#blog_year_path-instance_method), [`blog_month_path`](http://rubydoc.info/github/middleman/middleman-blog/master/Middleman/Blog/Helpers#blog_month_path-instance_method), and [`blog_day_path`](http://rubydoc.info/github/middleman/middleman-blog/master/Middleman/Blog/Helpers#blog_day_path-instance_method) helpers to generate links to your calendar pages. You can customize what those links look like with the `blog.year_link`, `blog.month_link`, and `blog.day_link` settings. By default, your calendar pages will look like `/2012.html`, `/2012/03.html`, and `/2012/03/15.html` for year, month, and day, respectively.
+テンプレート内で, カレンダーページへのリンクを作るために, [`blog_year_path`](http://rubydoc.info/github/middleman/middleman-blog/master/Middleman/Blog/Helpers#blog_year_path-instance_method), [`blog_month_path`](http://rubydoc.info/github/middleman/middleman-blog/master/Middleman/Blog/Helpers#blog_month_path-instance_method) や [`blog_day_path`](http://rubydoc.info/github/middleman/middleman-blog/master/Middleman/Blog/Helpers#blog_day_path-instance_method) ヘルパを使うことができます。`blog.year_link`, `blog.month_link` や `blog.day_link` の設定でこれらのリンクがどう表示されるのかカスタマイズできます。デフォルトでは, カレンダーページは年月日ごとに `/2012.html`, `/2012/03.html` や `/2012/03/15.html` のように表示されます。
 
-## Custom Article Collections
+## カスタム記事コレクション
 
-Middleman-Blog also supports the ability to group articles by other [frontmatter](/frontmatter/) data as well. A common example would be the ability to group artilces by a *category* attribute.
+Middleman ブログは [frontmatter](/frontmatter/) に定義したデータによって記事をグループ分けする機能に対応しています。次の一般的な例では *category* 属性を使って記事をグループ分けします。
 
 ```html
 ---
-title: My Middleman Blog Post
+title: Middleman ブログの投稿
 date: 2013/10/13
 category: HTML5
 ---
@@ -218,7 +218,7 @@ category: HTML5
 Hello World
 ```
 
-You can configure Middleman-blog to generate `categories/html5.html` to view all articles within the HTML5 category. See the example configuration below:
+HTML5 のカテゴリに属するすべての記事を表示する `categories/html5.html` を生成するように Middleman ブログを設定できます。次の設定例を参照してください:
 
 ```ruby
 activate :blog do |blog|
@@ -231,15 +231,15 @@ activate :blog do |blog|
 end
 ```
 
-This will configure a collection based on the category attribute. You can specify the url structure for the custom pages and the template to use when building them. When building custom collections a new helper will be generated to access the collection page. 
+category 属性に基づいてコレクションを設定します。ビルドする際のカスタムページの URL 構造や使用するテンプレートを指定することができます。カスタムコレクションを生成する場合, コレクションページにアクセスする新しいヘルパが生成されます。
 
-### Custom collection helpers
+### カスタムコレクションヘルパ
 
-In the example above a helper method named `category_path` will be generated. This will allow you to call `category_path('html5')` and generate the URL `categories/html5.html`.
+上記の例ではヘルパメソッドは `category_path` という名前で生成されます。これは `category_path('html5')` で呼び出すことができ `categories/html5.html` という URL を返します。
 
-## Pagination
+## ページネーション
 
-Long lists of articles can be split across multiple pages. A template will be split into pages if it has
+長い記事の一覧は複数ページに分割できます。テンプレートは次の設定がされているとページ分割されます。
 
 ``` html
 ---
@@ -247,14 +247,14 @@ pageable: true
 ---
 ```
 
-in the frontmatter, and pagination is enabled for the site in `config.rb`:
+frontmatter で有効化に加え, ページネーションは `config.rb` の中で有効化できます:
 
 ``` ruby
 activate :blog do |blog|
   blog.paginate = true
 end
 ```
-By default the second and subsequent pages will have links that look like `/2012/page/2.html`; this can be customized, along with the default number of articles per page, in `config.rb`. For example:
+デフォルト設定では 2 ページ目以降は `/2012/page/2.html` のようなリンクになります; これはページあたりの記事数とともに `config.rb` でカスタマイズ可能です。例えば:
 
 ``` ruby
 activate :blog do |blog|
@@ -264,35 +264,35 @@ activate :blog do |blog|
 end
 ```
 
-will result in up to 20 articles per page and links that look like `/2012/p2.html`. The `per_page` parameter can also be set for an individual template in the template's frontmatter.
+上記の設定は, ページあたり 20 記事でリンクは `/2012/p2.html` のような結果になります。`per_page` パラメータはテンプレートの frontmatter でテンプレートごとに設定できます。
 
-Pageable templates can then use the following variables:
+ページネーション対応のテンプレートでは次の変数を使うことができます:
 
 ``` ruby
-paginate       # Set to true if pagination is enabled for this site.
-per_page       # The number of articles per page.
+paginate       # サイトでページネーションを有効化する場合には true を設定
+per_page       # ページあたりの記事数
 
-page_articles  # The list of articles to display on this page.
-articles       # The complete list of articles for the template,
+page_articles  # 記事一覧をこのページで表示する
+articles       # テンプレートのための完全な記事一覧
 
-page_number    # The number of this page.
-num_pages      # The total number of pages. Use with page_number for
-               # displaying "Page X of Y"
+page_number    # ページ番号
+num_pages      # 総ページ数。次のように page_numer と一緒に
+               # "Page X of Y" を表示する
 
-page_start     # The number of the first article on this page.
-page_end       # The number of the last article on this page.
-               # Use with articles.length to show "Articles X to Y of Z"
+page_start     # このページの最初の記事の番号
+page_end       # このページの最後の記事の番号
+               # article.length を使って "Articles X to Y of Z" を表示"
 
-next_page      # The page resources for the next and previous pages
-prev_page      # in the sequence, or nil if there is no adjacent page.
-               # including this and all other pages.
+next_page      # シーケンス内の次と前のページのためのリソース
+prev_page      # 隣接するページが存在しない場合 nil
+               # このページと他のページすべてを含む
 ```
 
-If `paginate` is false and `per_page` is set in the template frontmatter, the `page_articles` variable will be set to the first `per_page` items in `articles`. This simplifies the creation of templates that can be used with and without pagination enabled.
+`paginate` が false で `per_page` がテンプレートの frontmatter に設定されている場合, `page_articles` 変数は `article` の最初の `per_page` 分のアイテムが設定されます。これが有効になっていると改ページせずに使用できるテンプレートを作ることができます。
 
-## Layouts
+## レイアウト
 
-You can set a specific [layout](/templates/#toc_3) to be used for all articles in your `config.rb`:
+`config.rb` であらゆる記事に使われる特別な [レイアウト](/templates/#toc_3) を設定できます:
 
 ``` ruby
 activate :blog do |blog|
@@ -300,15 +300,15 @@ activate :blog do |blog|
 end
 ```
 
-If you want to wrap each article in a bit of structure before inserting it into a layout, you can use Middleman's [nested layouts](/templates/#toc_4) feature to create an article layout that is then wrapped with your main layout.
+レイアウトに挿入する前に記事ごとにちょっとした構造で囲みたい場合, 記事レイアウトを構成してからメインのレイアウトで囲むために, Middleman の [入れ子レイアウト](/templates/#toc_4) 機能を使うことができます。
 
-## Article Data
+## 記事データ
 
-The list of articles in your blog is accessible from templates as [`blog.articles`](http://rubydoc.info/github/middleman/middleman-blog/master/Middleman/Blog/BlogData#articles-instance_method), which returns a list of [`BlogArticle`](http://rubydoc.info/github/middleman/middleman-blog/master/Middleman/Blog/BlogArticle)s.
+ブログ記事の一覧はテンプレートから [`BlogArticle`](http://rubydoc.info/github/middleman/middleman-blog/master/Middleman/Blog/BlogArticle) のリストを返す [`blog.articles`](http://rubydoc.info/github/middleman/middleman-blog/master/Middleman/Blog/BlogData#articles-instance_method) でアクセスできます。
 
-Each [`BlogArticle`](http://rubydoc.info/github/middleman/middleman-blog/master/Middleman/Blog/BlogArticle) has some informative methods on it, and can also produce the [`Resource`](http://rubydoc.info/gems/middleman-core/Middleman/Sitemap/Resource) from the [sitemap](/advanced/sitemap) which has even more information (such as the [`data`](http://rubydoc.info/gems/middleman-core/Middleman/CoreExtensions/FrontMatter/ResourceInstanceMethods#data-instance_method) from your [frontmatter](/frontmatter/))
+各 [`BlogArticle`](http://rubydoc.info/github/middleman/middleman-blog/master/Middleman/Blog/BlogArticle) は有益なメソッドを持ちます。[サイトマップ](/advanced/sitemap) からより情報 ([frontmatter](/frontmatter/) から [`data`](http://rubydoc.info/github/middleman/middleman/Middleman/Sitemap/Resource#data-instance_method) のような) が詰まった [`Resource`](http://rubydoc.info/gems/middleman-core/Middleman/CoreExtensions/FrontMatter/ResourceInstanceMethods#data-instance_method) を得ることもできます。
 
-For example, the following shows the 5 most-recent articles and their summary:
+例えば, 次のブロックは最新 5 記事とそれらの要約を示します:
 
 ``` html
 <% blog.articles[0...5].each do |article| %>
@@ -320,12 +320,12 @@ For example, the following shows the 5 most-recent articles and their summary:
 
     <%= article.summary %>
 
-    <a href="<%= article.url %>">Read more</a>
+    <a href="<%= article.url %>">もっと読む</a>
   </article>
 <% end %>
 ```
 
-You can also get access to the tag data for a tag archive:
+タグアーカイブ用のタグデータへのアクセスを得ることもできます:
 
 ``` html
 <ul>
@@ -341,7 +341,7 @@ You can also get access to the tag data for a tag archive:
 </ul>
 ```
 
-Or similarly for a calendar list:
+さらにカレンダー一覧も同じように:
 
 ``` html
 <ul>
@@ -358,18 +358,18 @@ Or similarly for a calendar list:
 </ul>
 ```
 
-Or if you added a `public` flag to your front matter:
+`public` フラグを frontmatter に追加した場合:
 
 ``` html
-<h1>Public Articles</h1>
+<h1>公開記事</h1>
 <% blog.articles.select {|a| a.page.data[:public] }.each do |article| %>
   ...
 <% end %>
 ```
 
-## Article Subdirectory
+## 記事のサブディレクトリ
 
-A subdirectory named according to a blog article without the extensions can be filled with files that will be copied to the right place in the build output. For example, the following directory structure:
+ブログ記事に紐付いた拡張子なしのサブディレクトリは, ビルド時に正しい場所へ複製されたファイルが入っています。例えば, 次のディレクトリ構造です:
 
 ```
 source/2011-10-18-middleman.html.markdown
@@ -377,7 +377,7 @@ source/2011-10-18-middleman/photo.jpg
 source/2011-10-18-middleman/source_code.rb
 ```
 
-might be output (if [`directory_indexes`](/pretty-urls/) is turned on) as:
+この出力 ([`directory_indexes`](/pretty-urls/) が有効化された場合) は次のようになります:
 
 ```
 build/2011/10/18/middleman/index.html
@@ -385,8 +385,8 @@ build/2011/10/18/middleman/photo.jpg
 build/2011/10/18/middleman/source_code.rb
 ```
 
-This allows files (e.g. images) that belong to a single blog article to be kept with that article in the source and in the output. Depending on your blog structure, this may make it possible to use relative links in your article, although you need to be careful if your article content is used elsewhere in your site, e.g. calendar and tag pages.
+単一のブログ記事に属しているファイル (例えば画像) は source 内で一緒に保管し出力することができます。ブログ構造に依存し, 記事の中で相対リンクの使用を可能にしますが, 記事の内容がサイトの他の部分, 例えばカレンダーやタグページ, で使われる場合には注意が必要です。
 
-## Helpers
+## ヘルパ
 
-There are [several helpers](http://rubydoc.info/github/middleman/middleman-blog/master/Middleman/Blog/Helpers) to use in your templates to make things simpler. They allow you to do things like get the current article, see if the current page is a blog article, or build paths for tag and calendar pages.
+テンプレートを簡単に作るために使用できる [いくつかのヘルパ](http://rubydoc.info/github/middleman/middleman-blog/master/Middleman/Blog/Helpers) があります。これらは現在ページの記事を取得, 現在ページをブログ記事か判定, タグやカレンダーページへのパスを作成といったことができます。

@@ -1,14 +1,14 @@
 ---
-title: File Size Optimization
+title: ファイルサイズ最適化
 ---
 
-# File Size Optimization
+# ファイルサイズ最適化
 
-## Compressing CSS and JavaScript
+## CSS と JavaScript の圧縮
 
-Middleman handles CSS minification and Javascript compression so you don't have to worry about it. Most libraries ship minified and compressed versions of their files for users to deploy, but these files are unreadable or editable. Middleman allows you to keep the original, commented files in our project so you can easily read them and edit them if needed. Then, when you build the project, Middleman will handle all the optimization for you.
+Middleman は CSS のミニファイや JavaScript の圧縮処理を行うので, ファイル最適化について心配する必要はありません。ほとんどのライブラリはデプロイを行うユーザのためにミニファイや圧縮されたバージョンを用意していますが, そのファイルは読めなかったり編集できなかったりします。 Middleman はプロジェクトの中にコメント付きのオリジナルファイルを取っておくので, 必要に応じて読んだり編集することができます。そして, プロジェクトのビルド時には Middleman は最適化処理を行います。
 
-In your `config.rb`, activate the `minify_css` and `minify_javascript` features during the build of your site.
+`config.rb` で, サイトのビルド時に `minify_css` 機能と `minify_javascript` 機能を有効化します。
 
 ``` ruby
 configure :build do
@@ -17,55 +17,55 @@ configure :build do
 end
 ```
 
-If you are already using a compressed file that includes `.min` in its filename, Middleman won't touch it. This can be good for libraries like jQuery which are carefully compressed by their authors ahead of time.
+ファイル名に `.min` を含む圧縮されたファイルを使っている場合, Middleman はそのファイルを最適化しません。作者によって事前に配慮された圧縮をおこなう jQuery のようなライブラリにはとても良い方法です。
 
-You can customize how the JavaScript compressor works by setting the `:compressor` option when activating the `:minify_javascript` extension in `config.rb` to a custom instance of Uglifier. See [Uglifier's docs](https://github.com/lautis/uglifier) for details. For example, you could enable unsafe optimizations and mangle top-level variable names like this:
+`config.rb` で `:minify_javascript` 拡張を有効化する場合, `:compressor` オプションに Uglifier のカスタムインスタンスを設定することで JavaScript の圧縮方法をカスタマイズできます。詳細は [Uglifier's docs](https://github.com/lautis/uglifier) を参照してください。例えば, 次のように危険な最適化やトップレベル変数名のシンボル化を有効化できます:
 
 ``` ruby
 set :js_compressor, Uglifier.new(:toplevel => true, :unsafe => true)
 ```
 
-If you want to exclude any files from being minified, pass the `:ignore` option when activating these extensions, and give it one or more globs, regexes, or procs that identify the files to ignore. Likewise, you can pass an `:exts` option to change which file extensions are renamed.
+一部のファイルをミニファイ処理から除外したい場合, これらの拡張を有効化する際に `:ignore` オプションを渡し, 無視するファイルを識別する 1 つ以上のパターンマッチ, 正規表現や Proc を与えます。同じように, ファイル拡張子をリネームし変更するために `:exts` オプションを渡すこともできます。
 
-You can speed up your JavaScript minification (and CoffeeScript builds) by including these gems in your `Gemfile`:
+`Gemfile` に次の gem を追加することで, JavaScript の圧縮(さらには CoffeeScript のビルド) を高速化できます。
 
 ```ruby
-gem 'therubyracer' # faster JS compiles
-gem 'oj' # faster JS compiles
+gem 'therubyracer' # 高速な JS コンパイラ
+gem 'oj' # 高速な JS コンパイラ
 ```
 
-## GZIP text files
+## テキストファイルの GZIP 化
 
-It's a good idea to [serve compressed files](http://developer.yahoo.com/performance/rules.html#gzip) to user agents that can handle it. Many web servers have the ability to gzip files on the fly, but that requires CPU work every time the file is served, and as a result most servers don't perform the maximum compression. Middleman can produce gzipped versions of your HTML, CSS, and JavaScript alongside your regular files, and you can instruct your web server to serve those pre-gzipped files directly. First, enable the `:gzip` extension:
+対応するユーザエージェントに [圧縮ファイルを配信する](http://developer.yahoo.com/performance/rules.html#gzip) のはいい考えです。多くの web サーバはオンザフライでファイルを gzip にする機能を持っていますが, ファイルが配信される度に CPU を使う必要があり, その結果としてほとんどのサーバでは最大圧縮が実行されません。 Middleman は通常のファイルと一緒に gzip バージョンの HTML, CSS や JavaScript を作ることができ,  Web サーバに GZIP ファイルを直接配信するように命じることができます。まず,  `:gzip` 拡張を有効化します:
 
 ``` ruby
 activate :gzip
 ```
 
-Then configure your server to serve those files. If you use Nginx, check out [the gzip_static](http://wiki.nginx.org/NginxHttpGzipStaticModule) module. For Apache, you'll have to do something a little trickier - see [this Gist](https://gist.github.com/2200790) for an example.
+そして, GZIP ファイルを配信するようにサーバを設定します。 Nginx を使用する場合, [gzip_static](http://wiki.nginx.org/NginxHttpGzipStaticModule) モジュールを確認してください。 Apache の場合, 少しトリッキーなことをしなければなりません - 例として [Gist](https://gist.github.com/2200790) を確認してください。
 
-## Compressing Images
+## 画像圧縮
 
-If you also want to compress images on build, try [`middleman-imageoptim`](https://github.com/plasticine/middleman-imageoptim).
+ビルド時に画像も圧縮したい場合, [`middleman-imageoptim`](https://github.com/plasticine/middleman-imageoptim) を試してみましょう。
 
-## Minify HTML
+## HTML 圧縮
 
-Middleman provides an official extension for minifying its HTML output. Simply install the gem:
+Middleman は HTML 出力を圧縮する公式の拡張機能を提供しています。gem で簡単にインストールします:
 
 ``` bash
 gem install middleman-minify-html
 ```
 
-Add `middleman-minify-html` to your `Gemfile`: 
+Gemfile に `middleman-minify-html` を追加します:
 
 ``` ruby
 gem "middleman-minify-html"
 ```
 
-Then open your `config.rb` and add:
+さらに `config.rb` を開いて次を追加します:
 
 ``` ruby
 activate :minify_html
 ```
 
-You should notice whilst view-source:'ing that your HTML is now being minified.
+ソースを確認すると HTML が圧縮されていることがわかります。

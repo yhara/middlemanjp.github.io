@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 require "pathname"
 
 module GuideHelpers
@@ -6,7 +7,7 @@ module GuideHelpers
     if data.page.title
       title << data.page.title
     else
-      title << "Hand-crafted frontend development"
+      title << "効率的な作業を可能にする Ruby 製の静的サイト生成ツール"
     end
     title
   end

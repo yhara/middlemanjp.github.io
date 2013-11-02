@@ -4,10 +4,10 @@ title: LiveReload
 
 # LiveReload
 
-Middleman comes with an extension that will automatically refresh your browser whenever you edit files in your site. Simply open your `config.rb` and add
+Middleman にはサイト内のファイルを編集するたびにブラウザを自動的にリロードする拡張がついています。`config.rb` を開いて次の行を追加してください。
 
 ``` ruby
 activate :livereload
 ```
 
-Your browser will now reload changed pages automatically.
+これであなたのブラウザはページ内容に変更があると自動的にリロードされます。

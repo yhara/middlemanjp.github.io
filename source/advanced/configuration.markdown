@@ -1,48 +1,48 @@
 ---
-title: Configuration
+title: 設定
 ---
 
-# Configuration
+# 設定
 
-## Discovering Middleman's Settings
+## Middleman の設定を知る
 
-Middleman is incredibly customizable, and extensions bring even more options to the table. Rather than trying to keep up exhaustive documentation on each and every setting, we've given Middleman the ability to tell you directly what settings are available.
+Middleman は驚くほどカスタマイズ可能で, 拡張機能はさらに機能を提供します。設定ごとに完璧なドキュメントを用意するより, 私たちは Middleman にどのような設定ができるか示す機能を与えました。
 
-Once your preview service is running, visit `http://localhost:4567/__middleman/config/` to see all the settings and extensions available to you. Each one will include the setting name, a short description, the default value, and what your site has it set to.
+プレビューサーバを立ち上げ, `http://localhost:4567/__middleman/config/` にアクセスすると, あらゆる設定や使用可能な拡張機能を確認できます。設定名, 簡単な説明, デフォルト値やあなたのサイトでどう設定されているのかを含みます。
 
-## Changing Settings
+## 設定変更
 
-The most basic way to change a setting is to use `set` in your `config.rb`:
+ほとんどの設定の変更方法は `config.rb` で `set` を指定することです:
 
 ```ruby
 set :js_dir, 'js'
 ```
 
-You can also use a somewhat newer syntax:
+新しい構文を使うこともできます:
 
 ```ruby
 config[:js_dir] = 'js'
 ```
 
-This is used for most of the global settings in Middleman.
+これらの書き方は Middleman のほとんどのグローバル設定に使われます。
 
-## Configuring Extensions
+## 拡張機能の設定
 
-Extensions are generally configured when they are activated. For most extensions, you can either pass a hash of options when you `activate`, or use a block to tweak options:
+拡張機能は有効化されたタイミングで設定されます。ほとんどの拡張では, `activate` する際にハッシュのオプションを渡すか, オプションを設定するためにブロックを使います:
 
 ```ruby
-activate :asset_hash, :exts => %w(.jpg) # Only hash for .jpg
+activate :asset_hash, :exts => %w(.jpg) # .jpg のみ有効化
 
-# or:
+# もしくは:
 
 activate :asset_hash do |opts|
   opts.exts += $(.ico)
 end
 ```
 
-## Environment-specific Settings
+## 環境に応じた設定
 
-If you want some configuration to apply only during build or development, you can put that in a block:
+ビルド時または develop 環境でのみ適用したい設定がある場合, ブロックの中で設定することができます:
 
 ```ruby
 configure :development do

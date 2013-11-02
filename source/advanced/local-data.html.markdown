@@ -1,12 +1,12 @@
 ---
-title: Local Data
+title: ローカルデータ
 ---
 
-# Local Data
+# ローカルデータ
 
-Sometimes it is useful to extract the data content of a page from the rendering. This way some team members can concentrate on building up the database of content, while another team member can build the structure of the site. Local Data allows you to create `.yml`, `.yaml` or `.json` files in a folder called `data` and makes this information available in your templates. The `data` folder should be placed in the root of your project i.e. in the same folder as your project's `source` folder.
+ページのコンテンツデータをレンダリングから抜き出すと便利な場合があります。この方法では, あるチームメンバーがコンテンツのデータベースの作成に集中でき, その作業の間に他のチームメンバーはサイト構造を組むことができます。ローカルデータは `data` フォルダの中に `.yml` や `.json` として作ることができ, テンプレートの中でこの情報を使うことができます。 `data` フォルダは, `source` フォルダと同じように, プロジェクトのルートに置かれます。
 
-Here's an example file at `data/people.yml` with the contents:
+ローカルデータが書かれた `data/people.yml` を例として示します:
 
 ``` yaml
 friends:
@@ -15,10 +15,10 @@ friends:
   - Harry
 ```
 
-Now, anywhere in our template files, we will have access to this data:
+テンプレートファイルの中ならどこからでも, このローカルデータにアクセスできます:
 
 ``` html
-<h1>Friends</h1>
+<h1>友だち一覧</h1>
 <ol>
   <% data.people.friends.each do |f| %>
   <li><%= f %></li>
@@ -26,10 +26,10 @@ Now, anywhere in our template files, we will have access to this data:
 </ol>
 ```
 
-Which will render:
+次のようにレンダリングされます:
 
 ``` html
-<h1>Friends</h1>
+<h1>友だち一覧</h1>
 <ol>
   <li>Tom</li>
   <li>Dick</li>
@@ -37,9 +37,9 @@ Which will render:
 </ol>
 ```
 
-Notice that the name of the `.yml` file (people) is the name of the object which stores the data in your template: `data.people`. This works for subdirectories as well. If you have a file `data/people/tom.yml`, you can access it with `data.people.tom`.
+`.yml` (people) のファイル名はテンプレートの中では, `data.people` のように, ローカルデータが保存されたオブジェクトの名前になるので注意してください。サブディレクトリでも同じように機能します。ファイルが `data/people/tom.yml` にある場合, `data.people.tom` でアクセスできます。
 
-You can use JSON to store your data instead of YAML. The above example could be `data/people.json` instead:
+データを保存するために YAML の代わりに JSON を使うこともできます。上記の例では `data/people.json` を使うことができます:
 
 ``` json
 {

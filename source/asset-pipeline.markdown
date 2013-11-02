@@ -1,14 +1,14 @@
 ---
-title: Asset Pipeline
+title: アセットパイプライン
 ---
 
-# Asset Pipeline
+# アセットパイプライン
 
-## Dependency Management
+## 依存性管理
 
-[Sprockets] is a tool for managing libraries of JavaScript (and CoffeeScript) code, declaring dependency management and include 3rd-party code. At its core, Sprockets makes a `require` method available inside your .js and .coffee files which can pull in the contents of an external file from your project or from a 3rd party gem.
+[Sprockets] は Javascript (と CoffeeScript) のライブラリを管理するためのツールで, 依存性を宣言し 3rd パーティのコードを読み込みます。Sprockets は .js や .coffee のファイルの中で,  `require` メソッドを使えるようにし, プロジェクトまたは 3rd パーティ製の gem から外部ファイルを取り込むことができます。
 
-Say I have a file called `jquery.js` which contains the jQuery library and another file called `app.js` which contains my application code. My app file can include jquery before it runs like so:
+jQuery ライブラリを含む `jquery.js` ファイルとアプリケーションコードが含まれる `app.js` があるとします。 次のようにすることで app ファイルは動作する前に jquery を読み込むことができます:
 
 ``` javascript
 //= require "jquery"
@@ -21,7 +21,7 @@ $(document).ready(function() {
 });
 ```
 
-This system also works within CSS files:
+この機能は CSS ファイルの中でも動作します:
 
 ``` css
 /*
@@ -34,31 +34,31 @@ body {
 
 ```
 
-If you're using Sass you should stick with Sass' `@import` rule rather than using Sprockets directives.
+Sass を使う場合, Sprockets のファイル読み込み方法よりも Sass の `@Import` を使用すべきです。
 
-## Asset Gems
+## アセット gem
 
-You can use assets from gems by including them in your `Gemfile`, like this:
+`Gemfile` で読み込まれた gem からアセットを使用することができます:
 
 ```ruby
 gem "bootstrap-sass", :require => false
 ```
 
-The `:require => false` bit is important - many of these gems assume you're running in Rails, and break when they try to hook into Rails' or Compass' internals. Just avoid requiring the gems and Middleman will take care of the rest.
+`:require => false` はやや重要です。これらの多くの gem は Rails で使われるものと仮定されており, Rails や Compass 内部にフックしようとすると壊れます。gem を require することを回避し, Middleman は残り部分の面倒をみます。
 
-Once you've added a dependency on these gems, any images and fonts from the gem will be included in your project automatically. JavaScript and CSS are also available to be `require`ed or `@import`ed into your own files.
+一度これらの gem の依存関係を追加すると, gem から画像やフォントが自動的に読み込まれます。JavaScript や CSS はファイルの中で `require` や `@import` すると使うことができます。
 
-If you want to refer to a gem stylesheet or JS file directly from your HTML rather than including it in your own assets, you'll need to import it explicitly in `config.rb`:
+アセットファイルとして追加せず, HTML から 直接 gem のスタイルシートや JS ファイルを参照したい場合, `config.rb` の中で明示的に読み込む必要があります。
 
 ```ruby
 sprockets.import_asset 'jquery-mobile'
 ```
 
-Then you can refer to that asset directly from `script` tags or `javascript_include_tag`.
+これで `script` タグや `javascript_include_tag` から直接参照することができます。
 
-## Sprockets Import Path
+## Sprockets にパスを追加
 
-If you have assets in directories other than your `:js_dir` or `:css_dir`, you can make them importable by addin them to your Sprockets import path. Add this to your `config.rb`:
+`:js_dir` や `:css_dir` の他にもアセットディレクトリがある場合, Sprockets のインポートパスを追加することができます。`config.rb` に次の内容を追加してください:
 
 ```ruby
 sprockets.append_path '/my/shared/assets/'
@@ -66,7 +66,7 @@ sprockets.append_path '/my/shared/assets/'
 
 ## Compass
 
-Middleman comes with [Compass] support out of the box. Compass is a powerful framework for writing cross-browser stylesheets in Sass. Compass also has its own extensions, like [Susy], which you can use in Middleman. All of Sprockets' path helpers like `image-url` are hooked into the Middleman Sitemap, so other extensions (like `:asset_hash`) will affect your stylesheets too.
+Middleman は柔軟な [Compass] サポートを備えています。Compass は Sass でクロスブラウザなスタイルシートを書くためのパワフルなフレームワークです。Compass は, [Susy] のように, Middleman で使用できる拡張機能です。`image-url` のような Sprockets パスヘルパは Middleman のサイトマップにフックされるので, その他の拡張( :asset_hash のような) もスタイルシートに影響します。
 
 [Sprockets]: https://github.com/sstephenson/sprockets
 [Compass]: http://compass-style.org

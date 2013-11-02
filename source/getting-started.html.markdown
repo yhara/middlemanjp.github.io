@@ -1,92 +1,92 @@
 ---
-title: Getting Started
+title: はじめに
 ---
 
-# Getting Started
+# はじめに
 
-Middleman is a command-line tool for creating static websites using all the shortcuts and tools of the modern web development environment.
+Middleman はモダンな Web 開発環境のあらゆるショートカットやツールを採用した静的 Web サイトを作成するためのコマンドラインツールです。
 
-Middleman assumes familiarity with the command-line. The Ruby language and the Sinatra web framework form the base of the tool. Familiarity with both will go a long way in helping users understand why Middleman works the way it does.
+Middleman はコマンドラインを熟知していることを前提としています。 Ruby と Web フレームワークの Sinatra がこのツールのベースになっています。この 2 つについて熟知していれば Middleman が存在しないかのように動作する理由を理解するには充分でしょう。
 
-## Installation
+## インストール
 
-Middleman is distributed using the RubyGems package manager. This means you will need both the Ruby language runtime installed and RubyGems to begin using Middleman.
+Middleman は RubyGems パッケージマネージャを使って配布されます。これは Middleman を使うには Ruby のランタイムと RubyGems の両方が必要であることを意味します。
 
-Mac OS X comes prepackaged with both Ruby and Rubygems, however, some of the Middleman's dependencies need to be compiled during installation and on OS X that requires Xcode. Xcode can be installed via the [Mac App Store](http://itunes.apple.com/us/app/xcode/id497799835?ls=1&mt=12). Alternately, if you have a free Apple Developer account, you can just install Command Line Tools for Xcode from their [downloads page](https://developer.apple.com/downloads/index.action).
+Mac OS X には Ruby と RubyGems の両方がパッケージされていますが, Middleman の依存ライブラリの一部はインストール時にコンパイルする必要があり OS X ではコンパイルのために Xcode を必要とします。 Xcode は [Mac App Store](http://itunes.apple.com/us/app/xcode/id497799835?ls=1&mt=12) からインストールできます。もしくは無料の Apple Developer アカウントを持っていれば, この [ダウンロードページ](https://developer.apple.com/downloads/index.action) から Xcode 用のコマンドラインツールをインストールすることができます。
 
-Once you have Ruby and RubyGems up and running, execute the following from the command line:
+Ruby と RubyGems をインストールしたら, コマンドラインから次を実行します:
 
 ``` bash
 gem install middleman
 ```
 
-This will install Middleman, its dependencies and the command-line tools for using Middleman.
+このコマンドは Middleman,  その依存ライブラリや Middleman を使うためのコマンドラインツールをインストールします。
 
-The installation process will add one new command to your environment, with 3 useful features:
+このインストールプロセスはあなたの環境に新しいコマンド 1 つと 3 つの便利な機能を追加します:
 
 * middleman init
 * middleman server
 * middleman build
 
-The uses of each of these commands will be covered below.
+それぞれのコマンドの使用方法は続けて説明します。
 
-## Starting a New Site: middleman init
+## 新しいサイトの開発を始める: middleman init
 
-To get started we will need to create a project folder for Middleman to work out of. You can do this using an existing folder or have Middleman create one for you using the `middleman init` command.
+開発を始めるに Middleman が動作するプロジェクトフォルダを作る必要があります。`middleman init` コマンドを使うことで, すでに存在するフォルダか Middleman が作成するフォルダを指定することができます。
 
-Simply point the command at the folder for your new site and Middleman will build a skeleton project in that folder (or create the folder for you).
+コマンドで新しいサイト用のフォルダを指定することで, Middleman はそのフォルダの中にプロジェクトのスケルトンを作ります (場合によってはフォルダも)。
 
 ``` bash
 middleman init my_new_project
 ```
 
-### The Skeleton
+### スケルトン
 
-Every new project creates a basic web development skeleton for you. This automates the construction of a standard hierarchy of folders and files that you can use in all of your projects.
+新しいプロジェクトごとに基本的な Web 開発向けのスケルトンを作ります。この一般的なフォルダ構成やファイルの自動生成はどのプロジェクトでも利用できるものです。
 
-A brand-new project will contain a `source` folder and a `config.rb` file. The source folder is where you will build your website. The skeleton project contains folders for javascript, CSS and images, but you can change these to match your own personal preferences.
+真新しいプロジェクトは `source` フォルダと `config.rb` ファイルを含みます。 source フォルダは Web サイトを作る場所です。スケルトンプロジェクトは javascript, CSS や画像のフォルダを含みますが, あなたの好みに合わせて変更することができます。
 
-The `config.rb` file contains settings for Middleman and commented documentation on how to enable complex features such as compile-time compression and "blog mode".
+`config.rb` ファイルには Middleman の設定やコンパイル時の圧縮や "ブログモード" などの複雑な機能を有効化する方法がコメントアウトされたドキュメントとして含まれます。
 
 #### Gemfile
 
-Middleman will respect a Bundler `Gemfile` for specifying and controlling your gem dependencies. When creating a new project, Middleman will generate a `Gemfile` for you which specifies the same version of Middleman you are using. This will lock Middleman to this specific release series (the 3.0.x series, for example). You can also use your `Gemfile` to use cutting-edge versions of Middleman from GitHub using the `:git` option. All plugins and extra libraries you use in your project should be listed in your Gemfile, and Middleman will automatically `require` all of them when it starts.
+Middleman は gem の依存関係の管理に Bundler の Gemfile を使えるように配慮します。新しいプロジェクトを作ると, Middleman はあなたが使用している Middleman のバージョンを指定した Gemfile を生成します。これにより Middleman を特定のリリースシリーズに固定します (例えば 3.x シリーズ)。もちろん `Gemfile` の `:git` オプションを使用して Github から最新版の Middleman を使用することもできます。プロジェクトで使用するプラグインや追加ライブラリはすべて Gemfile にリストアップされるべきであり, 起動時に Middleman はそれらのプラグインやライブラリを自動的に `require` します。 
 
 #### config.ru
 
-A `config.ru` file describes how the site should be loaded by a Rack-enabled webserver. This file is provided as a convenience for users wishing to host their Middleman site in development mode on a Rack-based host such as Heroku. Remember that Middleman is built to generate *static* sites, though.
+config.ru ファイルは Rack 対応の Web サーバによってどのようにサイトが読み込まれるか記述します。このファイルは Middleman で作るサイトの開発時に Heroku のような Rack ベースのサーバにホスティングしたいユーザの便宜のために提供されています。しかし Middleman は「静的」サイト生成のために作られていることを忘れないでください。
 
-To include a boilerplate `config.ru` file in your project, add the `--rack` flag to the init command:
+プロジェクト内に `config.ru` ファイルの雛形を含めるには, init コマンドに `--rack` フラグを追加してください: 
 
 ``` bash
 middleman init my_new_project --rack
 ```
 
-### Project Templates
+### プロジェクトテンプレート
 
-In addition to the default basic skeleton, Middleman comes with several optional project templates based on the [HTML5 Boilerplate] project, [SMACSS], and [Mobile Boilerplate](http://html5boilerplate.com/mobile/). Middleman extensions (like [middleman-blog](/blogging/)) can contribute their own templates as well. Alternative templates can be accessed using the `-T` or `--template` command-line flags. For example, to start a new project based on HTML5 Boilerplate, run this command:
+デフォルトの基本スケルトンに加え, Middleman は [HTML5 Boilerplate], [SMACSS], や [Mobile Boilerplate](http://html5boilerplate.com/mobile/) ベースのオプションテンプレートが付属します。Middleman 拡張 ([middleman-blog](/blogging/) のような) は同じように独自のテンプレートを使用することができます。テンプレート変更は `-T` や `--template` コマンドラインフラグを使用してアクセスできます。例えば, HTML5 Boilerplate ベースのプロジェクトを始める場合, 次のコマンドを使用します:
 
 ``` bash
 middleman init my_new_boilerplate_project --template=html5
 ```
 
-Finally, you can create your own custom project skeletons by creating folders in the `~/.middleman/` folder. For example, I can create a folder at `~/.middleman/mobile/` and fill it with files I intend to use on mobile projects.
+最後に, `~/.middleman/` フォルダの中に独自のカスタムテンプレートのスケルトンを入れたフォルダを作ることができます。例えば, 私は `~/.middleman/mobile` フォルダを作り, モバイルプロジェクトで利用するファイルをフォルダ用意することができます。
 
-If you run middleman init with the help flag, you will see a list of all the possible templates it has detected:
+help フラグとともに middleman init コマンドを使用すると, 使用可能なテンプレートのリストが表示されます:
 
 ``` bash
 middleman init --help
 ```
 
-This will list my custom mobile framework and I can create new projects based on it as before:
+このコマンドは私の独自モバイルテンプレートを表示し, 私は以前と同じように新しいプロジェクトを作ることができます:
 
 ``` bash
 middleman init my_new_mobile_project --template=mobile
 ```
     
-### Included Project Templates
+### 用意されているプロジェクトテンプレート
 
-Middleman ships with a number of basic project templates, including:
+Middleman は基本的なプロジェクト用のテンプレートをいくつか用意しています:
 
 **[HTML5 Boilerplate]** 
 
@@ -106,49 +106,49 @@ middleman init my_new_mobile_project --template=smacss
 middleman init my_new_mobile_project --template=mobile
 ```
 
-### Community Project Templates
+### コミュニティプロジェクトテンプレート
 
-There are also a number of [community-developed project templates](http://directory.middlemanapp.com/#/templates/all).
+こちらにもいくつか [コミュニティで開発されたテンプレート](http://directory.middlemanapp.com/#/templates/all) があります。
 
-## The Development Cycle (middleman server)
+## 開発サイクル (middleman server)
 
-The Middleman separates your development and production code from the start. This allows you to utilize a bevy of tools (such as [Haml](http://haml-lang.com), [Sass](http://sass-lang.com), [CoffeeScript](http://coffeescript.org/), etc.) during development that are unnecessary or undesirable in production.  We refer to these environments as The Development Cycle and the Static Site.
+Middleman はスタート時点から開発コードとプロダクションコードを分離します。これにより開発中にプロダクションでは不要もしくは望ましくないツール群 ([Haml](http://haml-lang.com) や [Sass](http://sass-lang.com) などのような) を開発中に利用することができます。開発サイクルや静的サイトをこれらの環境に依存することができます。
 
-The vast majority of time spent using Middleman will be in the Development Cycle.
+Middleman を使う時間の大半は開発サイクルになります。
 
-From the command-line, start the preview web-server from inside your project folder:
+コマンドラインから, プロジェクトフォルダの中でプレビューサーバを起動してください:
 
 ``` bash
 cd my_project
 bundle exec middleman server
 ```
 
-This will start a local web server running at: `http://localhost:4567/`
+このコマンドはローカルの Web サーバを起動します: `http://localhost:4567/`
 
-You can create and edit files in the `source` folder and see the changes reflected on the preview web-server.
+`source` フォルダにファイルを作成編集し, プレビュー Web サーバ上で反映された変更を確認することができます。
 
-You can stop the preview server from the command-line using `CTRL-C`.
+コマンドラインから `CTRL-C` を使ってプレビューサーバを停止できます。
 
-### Unadorned middleman command
+### 飾りのない middleman コマンド
 
-Running `middleman` without any commands is the same as starting a server.
+コマンド指定なしの `middleman` の使用はサーバの起動と同じです。
 
 ``` bash
 bundle exec middleman
 ```
 
-This will do exactly the same thing as `middleman server`.
+このコマンドは `middleman server` とまったく同じ動作をします。
 
-## Exporting the Static Site (middleman build)
+## 静的サイトのエクスポート (middleman build)
 
-Finally, when you are ready to deliver static code or, in the case of "blog mode", host a static blog, you will need to build the site. Using the command-line, from the project folder, run `middleman build`:
+最後に, 静的サイトのコードを出力する準備ができているか "ブログモード" で静的ブログをホストするような場合, サイトをビルドします。コマンドラインを使い, プロジェクトフォルダの中から `middleman build` を実行してください。
 
 ``` bash
 cd my_project
 bundle exec middleman build
 ```
 
-This will create a static file for each file located in your `source` folder. Template files will be compiled, static files will be copied and any enabled build-time features (such as compression) will be executed. Middleman will automatically clean out files from the build directory for you that are left over from earlier builds but would no longer be produced.
+このコマンドは `source` フォルダにあるファイル毎に静的ファイルを作ります。テンプレートファイルがコンパイルされ, その静的ファイルがコピーされ, 有効化されたビルド時の機能 (圧縮のような) が実行されます。 Middleman は自動的に前回のビルドに残っているが今回は生成されないファイルを削除します。
 
 [HTML5 Boilerplate]: http://html5boilerplate.com/
 [SMACSS]: http://smacss.com/

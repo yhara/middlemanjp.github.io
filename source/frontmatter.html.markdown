@@ -4,11 +4,11 @@ title: Frontmatter
 
 # Frontmatter
 
-Frontmatter allows page-specific variables to be included at the top of a template using the YAML or JSON format.
+Frontmatter は YAML または JSON フォーマットでテンプレート上部に記述することができるページ固有の変数です。
 
-## YAML Frontmatter
+## YAML フォーマット
 
-Let's take a simple ERb template, adding some frontmatter variables to change the layout for this specific page.
+簡単な ERb テンプレートに, 固有のページのレイアウトを変更する Frontmatter を追加します。
 
 ``` html
 ---
@@ -19,7 +19,7 @@ my_list:
   - three
 ---
 
-<h1>List</h1>
+<h1>リスト</h1>
 <ol>
   <% current_page.data.my_list.each do |f| %>
   <li><%= f %></li>
@@ -27,11 +27,11 @@ my_list:
 </ol>
 ```
 
-Frontmatter must come at the very top of the template and be separated from the rest of the content by a leading and trailing triple hyphen `---`. Inside this block, you can create new data which will be available in the template using the `current_page.data` hash. The `layout` setting will pass directly to Middleman and change which layout is being used for rendering. You can also set `ignore`, `directory_index`, and some other page properties in this way.
+Frontmatter はテンプレートの最上部に記述し, 行頭から行末まで 3 つのハイフン `---` によって, その他の部分から分離されなければなりません。このブロックの中でテンプレートの中で `current_page.data` ハッシュとして使えるデータを作ることができます。`layout` の設定は Middleman に直接渡され, レンダリングに使用されるレイアウトを変更します。`ignore`, `directory_index` やその他のページプロパティもこの方法で設定することができます。
 
-## JSON Frontmatter
+## JSON フォーマット
 
-You can also use JSON for your frontmatter. It's delimited by `;;;` and looks like this:
+Frontmatter に JSON を使うこともできます。`;;;` で区切られ次のようになります:
 
 ``` html
 ;;;
@@ -44,4 +44,4 @@ You can also use JSON for your frontmatter. It's delimited by `;;;` and looks li
 ;;;
 ```
 
-After that, it can be used exactly the same as YAML frontmatter in your page.
+ページ内で YAML フォーマットの Frontmatter と同じように使うことができます。

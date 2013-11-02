@@ -1,38 +1,38 @@
 ---
-title: The Sitemap
+title: サイトマップ
 ---
 
-# The Sitemap
+# サイトマップ
 
-Middleman includes a Sitemap, accessible from templates, that can give you information about all the pages and resources in your site and how they relate to each other. This can be used to create navigation, build search pages and feeds, etc.
+Middleman にはテンプレートからアクセスできる, サイト内のすべてのページとリソース, それらが互いにどのように関係するか情報を持つサイトマップがあります。これはナビゲーションの作成, 検索ページやフィードの作成に使うことができます。
 
-The [sitemap](http://rubydoc.info/gems/middleman-core/Middleman/Sitemap) is a repository of every page in your site, including HTML, CSS, JavaScript, images - everything. It also includes any [dynamic pages] you've created using `:proxy`. 
+[サイトマップ](http://rubydoc.info/gems/middleman-core/Middleman/Sitemap) はページごとの HTML, CSS, JavaScript, 画像などすべての情報のリポジトリです。`:proxy` を使って作る [動的ページ][dynamic pages] も含みます。
 
-## Seeing the Sitemap
+## サイトマップを確認する
 
-To understand exactly how Middleman sees your site, start the preview server and load up http://localhost:4567/__middleman/sitemap/. You'll be able to brows the whole sitemap and see the source path, destination (build) path, URL, and more for each resource in the sitemap. Pay special attention to the "path": you'll use that path to refer to files from `page`, `ignore` and `proxy` in `config.rb`, and from `link_to` and `url_for` in your templates.
+Middleman がどのようにサイトを見ているか正確に理解するために, プレビューサーバを起動しブラウザで http://localhost:4567/__middleman/sitemap/ を開きます。完全なサイトマップやソースへのパス, ビルド先のパス, URL など各リソースを確認できます。"path" には特に注意してください: config.rb の `page`, `ignore` や `proxy`,  `link_to` や `url_for` からファイルを参照するために使います。
 
-## Accessing the Sitemap from Code
+## コードからサイトマップにアクセス
 
-Within templates `sitemap` gets you the sitemap object. From there, you can look at every page via the [`resources`](http://rubydoc.info/gems/middleman-core/Middleman/Sitemap/Store#resources-instance_method) method or grab individual resources via [`find_resource_by_path`](http://rubydoc.info/gems/middleman-core/Middleman/Sitemap/Store#find_resource_by_path-instance_method). You can also always get the page object for the page you're currently in via `current_resource`. Once you've got the list of pages from the sitemap, you can filter on various properties using the individual page objects.
+テンプレートの中では `sitemap` がサイトマップオブジェクトです。サイトマップオブジェクトから, ページごとに [`resources`](http://rubydoc.info/gems/middleman-core/Middleman/Sitemap/Store#resources-instance_method) メソッドを使うか [`find_resource_by_path`](http://rubydoc.info/gems/middleman-core/Middleman/Sitemap/Store#find_resource_by_path-instance_method) を使って個別のリソースを取得できます。`current_resource` を使ってカレントページのページオブジェクトを取得することもできます。サイトマップからページリストを取得できれば, 個々のページオブジェクトを使って, 各種プロパティをフィルタリングできます。
 
-## Sitemap Resources
+## サイトマップのリソース
 
-Each resource in the sitemap is a [Resource](http://rubydoc.info/gems/middleman-core/Middleman/Sitemap/Resource) object. Resources can tell you all kinds of interesting things about themselves. You can access [frontmatter] data, file extension, source and output paths, a linkable url, etc. Some of the properties of the Resource are mostly useful for Middleman's rendering internals, but you could imagine filtering pages on file extension to find all `.html` files, for example.
+サイトマップの各リソースは [Resource](http://rubydoc.info/gems/middleman-core/Middleman/Sitemap/Resource) オブジェクトです。Resource オブジェクトはあらゆる種類の情報を伝えます。[frontmatter] データ, ファイル拡張子, ソースと出力先のパス, リンク URL などにアクセスできます。Resource オブジェクトのプロパティは Middleman の内部レンダリングにとても便利です。例えば, すべての `.html` ファイルを見つけるためにファイル拡張子でページをフィルタリングすることが考えられます。
 
-Each page can also find other pages related to it in the site hierarchy. The `parent`, `siblings`, and `children` methods are particularly useful in building navigation menus and breadcrumbs.
+それぞれのページはサイト階層の中で関連する他のページを探すこともできます。 `parent`, `siblings` や `children` メソッドはナビゲーションメニューやパンくずリストを作る場合に特に便利です。
 
-The sitemap can also be queried via an ActiveRecord-like syntax:
+サイトマップは ActiveRecord ライクな構文で照会できます:
 
 ```ruby
 sitemap.where(:tags.include => "homepage").order_by(:priority).limit(10)
 ```
 
-See [Middleman::Sitemap::Queryable](http://rubydoc.info/gems/middleman-core/Middleman/Sitemap/Queryable) for more on the query interface.
+クエリのインターフェイスは [Middleman::Sitemap::Queryable](http://rubydoc.info/gems/middleman-core/Middleman/Sitemap/Queryable) を確認してください。
 
-## Using the Sitemap in config.rb
+## config.rb の中でサイトマップを使う
 
-You can use the sitemap information to create new [dynamic pages] from `config.rb`, but you need to be a little careful, because the sitemap isn't populated until *after* `config.rb` has already been run. To get around this, you need to register a callback for the application's `ready` event. As an example, let's say we've added a "category" element to the [frontmatter] of our pages, and we want to create category pages dynamically for each category. To do that, we'd add this to `config.rb`:
+サイトマップの情報を使って `config.rb` から新しい [動的ページ][dynamic pages] を作ることができます。ただし, サイトマップは `config.rb` が読み込まれた *後* まで用意されないので少し注意が必要です。これに対応するために, アプリケーションの `ready` イベントにコールバックを登録する必要があります。例として, ページの [frontmatter] に "category" が追加されているものとして, カテゴリーごとに動的にカテゴリーページを作ります。`config.rb` に次の内容を追加:
 
 ``` ruby
 ready do
@@ -43,7 +43,7 @@ ready do
 end
 ```
 
-Then I could make a `category.html.erb` that uses the `category` and `pages` variables to build a category listing for each category.
+そして, 取得したカテゴリごとにページをビルドするために, `category` と `pages` 変数を使う `category.html.erb` を作ります。
 
 [dynamic pages]: /dynamic-pages/
 [frontmatter]: /frontmatter/

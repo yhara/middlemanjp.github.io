@@ -1,25 +1,25 @@
 ---
-title: Improving Cacheability
+title: キャッシュ機能の改善
 ---
 
-# Improving Cacheability
+# キャッシュ機能の改善
 
-To make your website render as quickly as possible, you should serve any assets, like JavaScript, CSS, or images, with proper headers that instruct web browsers to [cache them for a very long time](https://code.google.com/speed/page-speed/docs/caching.html). This means that when users visit your site again (or even just go to another page in your site) they don't have to re-download those assets. However, setting a far-future `Expires` or `Cache-Control` header can cause problems when you change your assets but users are still using their cached versions. Middleman has two approaches to solve this problem for you.
+Web サイトのレンダリングを可能な限り高速化するには, JavaScript, CSS や画像のようなアセットファイルを Web ブラウザに [長時間キャッシュするように](https://code.google.com/speed/page-speed/docs/caching.html) 命令する適切なヘッダとともに配信すべきです。ヘッダによってユーザがサイトを再度訪問する時 (またサイトのその他のページを訪問する時) これらのアセットファイルを再ダウンロードしません。長期間の `Expires` や `Cache-Control` ヘッダの設定は, アセットファイルを変更した時にユーザがまだキャッシュされたバージョンを使っていると問題を引き起こ可能性があります。 Middleman はこの問題解決のために 2 つの方法を提供します。
 
-## Uniquely-named assets
+## 一意の名前のアセットファイル
 
-The most effective technique for preventing users from using outdated files is to change the asset's filename every time you change one of your assets. Since that would be a pain to do by hand, Middleman comes with an `:asset_hash` extension that does it for you. First, activate the extension in your `config.rb`:
+ユーザによる古いファイル使用防止に最も効果的な方法は, アセットファイルの内容を変更する度にファイル名を変更するものです。手作業で行うには大変なので, Middleman にはこの処理に対応する `:asset_hash` 拡張が付属しています。まず `config.rb` で拡張機能を有効化します:
 
 ``` ruby
 activate :asset_hash
 ```
 
-Now, refer to your assets as normal, with their original filename. You can use helpers like `image_tag` as well. However, when your site is built, each asset will be produced with a bit of extra text at the end of the filename that is tied to the content of the file, and all of your other files (HTML, CSS, JavaScript, etc) will be changed to reference that unique-ified filename instead of the original one. Now you can serve your assets with a "never expire" policy, but be sure that when you change them, they'll show up as a different filename.
+次に, 通常のファイル名でアセットファイルを参照します。`image_tag` のようなヘルパを使うことができます。サイトのビルド時にそれぞれのアセットファイルは, そのファイルの内容で通常のファイル名に余分なテキストを少し追加した名前で生成されます。すべてのアセットファイル (HTML, CSS, JavaScript など) は通常のファイル名の代わりに一意に生成されたファイル名を参照するように変更されます。Expires を "無期限" 指定で配信するようになりますが, アセットファイルを変更した場合には別のファイル名で表示されることを確認してください。
 
-However, because this extension works by rewriting your files to reference the renamed assets, it's possible the extension might mess up and miss a reference, or do something you don't want to your code. In that case, you might have to fall back to the older cache buster method.
+ただし, この拡張機能は名前を変えたアセットファイルを参照するようにファイルを書き換えて動作するので, 参照を失敗したり, コードの中で実行したくない処理をするかも知れません。この場合, 古い方法ですが, キャッシュバスターの使用を選択する必要があるかもしれません。
 
-If you want to exclude any files from being renamed, pass the `:ignore` option when activating `:asset_hash`, and give it one or more globs, regexes, or procs that identify the files to ignore. Likewise, you can pass an `:exts` option to change which file extensions are renamed.
+一部ファイルを名前変更から除外したい場合, `:asset_hash` を有効化する時に `:ignore` オプションを渡し, 無視したいファイルを指す 1 つ以上のパターンマッチ, 正規表現や Proc を与えてください。同様にファイル拡張子を変更するために `:exts` オプションを渡すことができます。
 
-## Configuring your server
+## サーバの設定
 
-Configuring your server to use far-future `Expires` and `Cache-Control` headers is different depending on which server you use. See Google's [page speed docs](https://code.google.com/speed/page-speed/docs/caching.html) for links on how to configure your particular server, and run [Google Page Speed](https://code.google.com/speed/page-speed/docs/extension.html) or [YSlow](https://addons.mozilla.org/en-US/firefox/addon/yslow/) to check that you've configured things correctly.
+長期間の `Expires` と `Cache-Control` ヘッダを使うサーバ設定は使うサーバによって異なります。あなたが使うサーバの設定方法は Google の [page speed docs](https://code.google.com/speed/page-speed/docs/caching.html) を参照し, 設定が正しく行われているか確認するために [Google Page Speed](https://code.google.com/speed/page-speed/docs/extension.html) や [YSlow](https://addons.mozilla.org/en-US/firefox/addon/yslow/) を使ってください。
