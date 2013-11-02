@@ -4,35 +4,35 @@ title: サイトマップ
 
 # サイトマップ
 
-Middleman は, テンプレートからアクセスできるサイトマップを含み, サイト内のすべてのページとリソース, それらが互いにどのように関係するのか情報を持ちます。これはナビゲーションの作成, 検索ページやフィードの作成などに使用できます。
+Middleman にはテンプレートからアクセスできる, サイト内のすべてのページとリソース, それらが互いにどのように関係するか情報を持つサイトマップがあります。これはナビゲーションの作成, 検索ページやフィードの作成に使うことができます。
 
-[サイトマップ](http://rubydoc.info/gems/middleman-core/Middleman/Sitemap) はサイトのページ毎のリポジトリで, HTML, CSS, JavaScript, 画像, つまりはすべてのものを含みます。`:proxy` を使って作成した [動的ページ][dynamic pages] も含みます。
+[サイトマップ](http://rubydoc.info/gems/middleman-core/Middleman/Sitemap) はページごとの HTML, CSS, JavaScript, 画像などすべての情報のリポジトリです。`:proxy` を使って作る [動的ページ][dynamic pages] も含みます。
 
-## サイトマップを見る
+## サイトマップを確認する
 
-Middleman がサイトをどのように見ているのか正確に理解するために, プレビューサーバを起動し http://localhost:4567/__middleman/sitemap/ をブラウザで開きます。完全なサイトマップやソースへのパス, ビルド先のパス, URL などを確認できるでしょう。"path" には特に注意を払う必要があります: config.rb の中で `page`, `ignore` や `proxy` からファイルを参照するために使用します。
+Middleman がどのようにサイトを見ているか正確に理解するために, プレビューサーバを起動しブラウザで http://localhost:4567/__middleman/sitemap/ を開きます。完全なサイトマップやソースへのパス, ビルド先のパス, URL など各リソースを確認できます。"path" には特に注意してください: config.rb の `page`, `ignore` や `proxy`,  `link_to` や `url_for` からファイルを参照するために使います。
 
 ## コードからサイトマップにアクセス
 
-`sitemap` テンプレート内でサイトマップオブジェクトを取得します。そこから, ページ毎に [`resources`](http://rubydoc.info/gems/middleman-core/Middleman/Sitemap/Store#resources-instance_method) メソッドを経由して, または  [`find_resource_by_path`](http://rubydoc.info/gems/middleman-core/Middleman/Sitemap/Store#find_resource_by_path-instance_method) を介して個別のリソースを見ることができます。いつでも `current_resource` を経由して現在ページのページオブジェクトを取得できます。サイトマップからページリストを取得できれば, 個々のページオブジェクトを使用して, 様々なプロパティをフィルタリングできます。
+テンプレートの中では `sitemap` がサイトマップオブジェクトです。サイトマップオブジェクトから, ページごとに [`resources`](http://rubydoc.info/gems/middleman-core/Middleman/Sitemap/Store#resources-instance_method) メソッドを使うか [`find_resource_by_path`](http://rubydoc.info/gems/middleman-core/Middleman/Sitemap/Store#find_resource_by_path-instance_method) を使って個別のリソースを取得できます。`current_resource` を使ってカレントページのページオブジェクトを取得することもできます。サイトマップからページリストを取得できれば, 個々のページオブジェクトを使って, 各種プロパティをフィルタリングできます。
 
-## サイトマップリソース
+## サイトマップのリソース
 
-サイトマップ内の各リソースは, [Resource](http://rubydoc.info/gems/middleman-core/Middleman/Sitemap/Resource) オブジェクトです。Resource オブジェクトはそれ自体の興味深いあらゆる種類のものを伝えます。[frontmatter] データへアクセス, ファイル拡張子, 出力パス, リンク URL などにアクセスできます。Resource オブジェクトの一部のプロパティは Middleman の内部レンダリングにとても便利です。例えば, すべての `.html` ファイルを見つけるためにファイル拡張子でページをフィルタリングすることが想像できます。
+サイトマップの各リソースは [Resource](http://rubydoc.info/gems/middleman-core/Middleman/Sitemap/Resource) オブジェクトです。Resource オブジェクトはあらゆる種類の情報を伝えます。[frontmatter] データ, ファイル拡張子, ソースと出力先のパス, リンク URL などにアクセスできます。Resource オブジェクトのプロパティは Middleman の内部レンダリングにとても便利です。例えば, すべての `.html` ファイルを見つけるためにファイル拡張子でページをフィルタリングすることが考えられます。
 
-それぞれのページはサイト階層内の関連する他のページを探すこともできます。 `parent`, `siblings` や `children` メソッドはナビゲーションメニューやパンくずリストを作成する際に特に便利です。
+それぞれのページはサイト階層の中で関連する他のページを探すこともできます。 `parent`, `siblings` や `children` メソッドはナビゲーションメニューやパンくずリストを作る場合に特に便利です。
 
-サイトマップは ActiveRecord のような構文で照会できます:
+サイトマップは ActiveRecord ライクな構文で照会できます:
 
 ```ruby
 sitemap.where(:tags.include => "homepage").order_by(:priority).limit(10)
 ```
 
-See [Middleman::Sitemap::Queryable](http://rubydoc.info/gems/middleman-core/Middleman/Sitemap/Queryable) for more on the query interface.
+クエリのインターフェイスは [Middleman::Sitemap::Queryable](http://rubydoc.info/gems/middleman-core/Middleman/Sitemap/Queryable) を確認してください。
 
-## config.rb 内のサイトマップの使用
+## config.rb の中でサイトマップを使う
 
-サイトマップの情報を使用して `config.rb` から新しい [動的ページ][dynamic pages] の作成ができます。ただし, サイトマップは `config.rb` が実行された *後* まで用意されないので少し注意が必要です。これに対応するために, アプリケーションの `ready` イベントにコールバックを登録する必要があります。例として, ページの [frontmatter] に "category" 要素を追加したとしましょう。カテゴリー毎に動的にカテゴリーページを作成したいとします。`config.rb` に次の内容を追加:
+サイトマップの情報を使って `config.rb` から新しい [動的ページ][dynamic pages] を作ることができます。ただし, サイトマップは `config.rb` が読み込まれた *後* まで用意されないので少し注意が必要です。これに対応するために, アプリケーションの `ready` イベントにコールバックを登録する必要があります。例として, ページの [frontmatter] に "category" が追加されているものとして, カテゴリーごとに動的にカテゴリーページを作ります。`config.rb` に次の内容を追加:
 
 ``` ruby
 ready do
@@ -43,7 +43,7 @@ ready do
 end
 ```
 
-カテゴリリストを作成するために, `category` と `pages` 変数を使う `category.html.erb` を作成できます。
+そして, 取得したカテゴリごとにページをビルドするために, `category` と `pages` 変数を使う `category.html.erb` を作ります。
 
 [dynamic pages]: /dynamic-pages/
 [frontmatter]: /frontmatter/

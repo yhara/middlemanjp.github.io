@@ -4,11 +4,11 @@ title: カスタム拡張
 
 # カスタム拡張
 
-Middleman の拡張は Middleman の様々なポイントにフックし, 新しい機能を追加し, コンテンツを操作する Ruby のクラスです。このガイドは何が可能なのか説明しますが, すべてのフックや拡張ポイントを探すためには Middleman のソースや middleman-blog のようなプラグインのソースを読むべきです。
+Middleman の拡張機能は Middleman のさまざまなポイントにフックし, 新しい機能を追加しコンテンツを操作する Ruby のクラスです。このガイドではどのようなことが可能なのか説明しますが, すべてのフックや拡張ポイントを探すには Middleman のソースや middleman-blog のようなプラグインのソースを読むべきです。
 
-## 基本的な拡張
+## 拡張の基本
 
-最も基本的な拡張は次のようになります:
+基本的な拡張機能は次のようになります:
 
 ``` ruby
 class MyFeature < Middleman::Extension
@@ -22,23 +22,23 @@ end
 ::Middleman::Extensions.register(:my_feature, MyFeature)
 ```
 
-このモジュールは `config.rb` からアクセスできなければいけません。 `config.rb` に直接定義するか, 別の Ruby ファイルに定義し `config.rb` で `require` します。
+このモジュールは `config.rb` からアクセスできなければなりません。 `config.rb` に直接定義するか, 別の Ruby ファイルに定義し `config.rb` で `require` します。
 
-最後に, モジュールを読み込んだら `config.rb` で有効化する必要があります:
+そして, モジュールが読み込まれてから `config.rb` で有効化しなければなりません:
 
 ``` ruby
 activate :my_feature
 ```
 
-[`register`](http://rubydoc.info/gems/middleman-core/Middleman/Extensions#register-class_method) メソッドは有効化する拡張の名前を選ばせます。拡張が有効になっているファイルのみ読み込みたい場合はブロックを取ることができます。
+[`register`](http://rubydoc.info/gems/middleman-core/Middleman/Extensions#register-class_method) メソッドには有効化される拡張機能の名前を与えます。拡張機能を有効化するときに限りブロックを与えることもできます。
 
 `MyFeature` 拡張では, `registered` メソッドは `activate` コマンドが実行されるとすぐに呼び出されます。 `app` 変数は [`Middleman::Application`](http://rubydoc.info/gems/middleman-core/Middleman/Application) クラスです。
 
-`activate` は拡張の設定のためにオプションのハッシュ (`register` に渡される) かブロックを渡すことができます。`options` クラスメソッドでオプションを定義し `options` でアクセスすることができます:
+`activate` は拡張機能を設定するのためにオプションのハッシュ (`register` に渡される) やブロックを渡すことができます。`options` クラスメソッドでオプションを定義することで `options` でアクセスすることができます:
 
 ``` ruby
 class MyFeature < Middleman::Extension
-  # All the options for this extension
+  # この拡張機能のオプション
   option :foo, false, 'Controls whether we foo'
 
   def initialize(app, options_hash={}, &block)
@@ -48,7 +48,7 @@ class MyFeature < Middleman::Extension
   end
 end
 
-# 拡張を設定する 2 つの方法
+# 拡張機能を設定する 2 つの方法
 activate :my_feature, :foo => 'whatever'
 activate :my_feature do |f|
   f.foo = 'whatever'
@@ -56,11 +56,11 @@ activate :my_feature do |f|
 end
 ```
 
-`activate` へオプションを渡す方法は, 一般的に `set` を介した設定よりもグルーバル変数を設定することが好まれます (次のセクション参照) 。
-    
+`activate` へオプションを与える方法は,  拡張機能を設定するために `set` を介してグローバル変数を設定する方法が好まれます (次のセクション参照) 。
+
 ## 変数の設定
 
-[`Middleman::Application`](http://rubydoc.info/gems/middleman-core/Middleman/Application) クラス は拡張で使用されるグローバル設定 (`set` コマンドを使用する変数) を変更するために使用できます。
+[`Middleman::Application`](http://rubydoc.info/gems/middleman-core/Middleman/Application) クラスは拡張機能で使用されるグローバル設定 (`set` コマンドを使用する変数) を変更するために使うことができます。
 
 ``` ruby
 class MyFeature < Middleman::Extension
@@ -72,7 +72,7 @@ class MyFeature < Middleman::Extension
 end
 ```
 
-新しい設定を作成することができ, これは後で拡張の中でアクセスすることもできます。
+拡張機能からアクセスできる新しい設定を作ることもできます。
 
 ``` ruby
 class MyFeature < Middleman::Extension
@@ -90,11 +90,11 @@ class MyFeature < Middleman::Extension
 end
 ```
 
-`set` は `Middleman::Application` に新しいメソッドを追加します。 これは他の場所から `my_feature_setting` を介して変数の値を読み取ることができるということです。拡張に特定の値を必要とするだけの場合には, グローバル設定の代わりに `activate` のオプションを使うことを検討してください。
+`set` は `Middleman::Application` に新しいメソッドを追加することで, 他の場所から `my_feature_setting` を介して変数の値を読み取ることができます。拡張機能に特定の値を必要とするだけの場合には, グローバル設定の代わりに `activate` のオプションを使うことを検討した方がよいでしょう。
 
 ## config.rb にメソッドを追加
 
-`config.rb` の中で利用できるメソッドは `Middleman::Application` の単なるクラスメソッドです。`config.rb` を使って新しいメソッドを追加してみましょう。
+`config.rb` の中で使用できるメソッドは `Middleman::Application` の単なるクラスメソッドです。`config.rb` の中で新しいメソッドを追加してみましょう:
 
 ``` ruby
 class MyFeature < Middleman::Extension
@@ -111,11 +111,11 @@ class MyFeature < Middleman::Extension
 end
 ```
 
-`Middleman::Application` クラスを拡張し, `app` として利用できるようにすることで, この環境に単に "Hello" を出力する `say_hello` メソッドを追加しました。内部的には, これらのメソッドはこのアプリの中で処理されるパスやリクエストのリストを作成するために使用されます。
+`Middleman::Application` クラスを拡張し `app` として使用できるようにすることで, この環境に単純に "Hello" を出力する `say_hello` メソッドを追加しました。内部的には, これらのメソッドはこのアプリの中で処理されるパスやリクエストのリストを作成するために使われます。
 
 ## ヘルパの追加
 
-ヘルパはテンプレートの中で使用できるメソッドです。ヘルパメソッドを追加するには, 次にようにします:
+ヘルパはテンプレートの中で使用できるメソッドです。ヘルパメソッドを追加するには, 次のようにします:
 
 ``` ruby
 class MyFeature < Middleman::Extension
@@ -131,7 +131,7 @@ class MyFeature < Middleman::Extension
 end
 ```
 
-テンプレートの中で, `make_a_link` メソッドにアクセスできるようになります。 ERb テンプレートでの使用例です:
+これでテンプレートの中で, `make_a_link` メソッドにアクセスできるようになります。 ERb テンプレートでの使用例を示します:
 
 ``` html
 <h1><%= make_a_link("http://example.com", "クリックしてください") %></h1>
@@ -140,7 +140,7 @@ end
 
 ## サイトマップ拡張
 
-サイトマップ拡張を作成することで [サイトマップ](/advanced/sitemap/) でページを変更したり追加したりできます。 [ディレクトリインデックス](/pretty-urls/) 拡張は通常のページをディレクトリインデックス版に再ルーティングするためにこの機能を使い, [ブログ拡張](/blogging/) はタグやカレンダーページを作成するためにいくつかプラグインを使っています。詳細は [`Sitemap::Store`](http://rubydoc.info/gems/middleman-core/Middleman/Sitemap/Store#register_resource_list_manipulator-instance_method)。
+サイトマップ拡張を作ることで [サイトマップ](/advanced/sitemap/) でページを変更したり追加したりできます。 [ディレクトリインデックス](/pretty-urls/) 拡張はページをディレクトリインデックス版に再ルーティングするためにこの機能を使い, [ブログ拡張](/blogging/) はタグやカレンダーページを作成するためにいくつかのプラグインを使っています。詳細は [`Sitemap::Store`](http://rubydoc.info/gems/middleman-core/Middleman/Sitemap/Store#register_resource_list_manipulator-instance_method) を参照してください。
 
 ``` ruby
 class MyFeature < Middleman::Extension
@@ -158,11 +158,11 @@ end
 
 ## コールバック
 
-Middleman には拡張によってフックできる部分があります。いくつか例を示しますが, ここに記述するよりも多くあります。
+Middleman には拡張によってフックできる部分があります。いくつか例を示しますが, ここに記述するよりも数多くあります。
 
 ### after_configuration
 
-コードを実行するために `config.rb` が読み込まれるまで待ちたい場合があります。例えば, `:css_dir` 変数に依存する場合, 設定されるまで待つべきです。次の例ではこのコールバックを使用しています:
+コードを実行するために `config.rb` が読み込まれるまで待ちたい場合があります。例えば, `:css_dir` 変数に依存する場合, 設定されるまで待つべきです。次の例ではこのコールバックを使っています:
 
 ``` ruby
 class MyFeature < Middleman::Extension
@@ -179,7 +179,7 @@ end
 
 ### before
 
-before コールバックは Middleman がページをレンダリングする直前に処理を実行することができます。別のソースからデータを返したり, 早期に失敗させる場合に便利です。
+before コールバックは Middleman がページをレンダリングする前に処理を実行することができます。別のソースからデータを返したり, 早い段階で処理を中止したい場合に便利です。
 
 例:
 
@@ -195,11 +195,11 @@ class MyFeature < Middleman::Extension
 end
 ```
 
-この例では, リクエスト毎に `:currently_requested_path` に値をセットします。"true" を返すことに注意してください。`before` を使用したブロックは true または false を返さなければなりません。
+この例ではリクエストごとに `:currently_requested_path` に値をセットします。"true" を返すことに注意してください。`before` を使ったブロックは true または false を返さなければいけません。
 
 ### after_build
 
-このコールバックはビルドプロセスが完了した後にコードを実行するために使用されます。 [middleman-smusher] 拡張はビルド完了後に build フォルダの中のすべての画像を圧縮するためにこの機能を使用します。ビルド後に展開したスクリプトを結合することも考えることができます。
+このコールバックはビルドプロセスが完了した後にコードを実行するために使われます。 [middleman-smusher] 拡張はビルド完了後に build フォルダのすべての画像を圧縮するためにこの機能を使います。ビルド後に展開したスクリプトを結合することも考えられます。
 
 ``` ruby
 class MyFeature < Middleman::Extension
@@ -224,7 +224,7 @@ class MyFeature < Middleman::Extension
     super
     
     app.compass_config do |config|
-      # config is the Compass.configuration object
+      # config は Compass.configuration オブジェクト
       config.output_style = :compact
     end
   end
@@ -232,4 +232,3 @@ end
 ```
 
 [middleman-smusher]: https://github.com/middleman/middleman-smusher
-
