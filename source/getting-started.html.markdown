@@ -62,6 +62,15 @@ config.ru ファイルは Rack 対応の Web サーバによってどのよう�
 middleman init my_new_project --rack
 ```
 
+すでにプロジェクトの初期化が完了しいて, 後から pow やその他開発サーバと連携させるために config.ru が欲しい場合は, 次の内容を記述してください:
+
+```
+require 'rubygems'
+require 'middleman/rack'
+
+run Middleman.server
+```
+
 ### プロジェクトテンプレート
 
 デフォルトの基本スケルトンに加え, Middleman は [HTML5 Boilerplate], [SMACSS], や [Mobile Boilerplate](http://html5boilerplate.com/mobile/) ベースのオプションテンプレートが付属します。Middleman 拡張 ([middleman-blog](/blogging/) のような) は同じように独自のテンプレートを使用することができます。テンプレート変更は `-T` や `--template` コマンドラインフラグを使用してアクセスできます。例えば, HTML5 Boilerplate ベースのプロジェクトを始める場合, 次のコマンドを使用します:
