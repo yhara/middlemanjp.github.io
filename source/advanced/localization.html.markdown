@@ -142,3 +142,5 @@ activate :i18n, :mount_at_root => false # すべての言語ファイル URL に
 
 * build/index.html は英語
 * build/es/index.html はスペイン語
+
+この多言語化の方法を使う場合, `localizable` フォルダの中にファイルを置くようにしてください。

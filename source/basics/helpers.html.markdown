@@ -52,6 +52,30 @@ set :relative_links, true
 
 相対パスにしたくないリンクに `:relative => false` を追加することで個別に上書きすることもできます。
 
+`link_to` ヘルパが与えられた URL の属するページの決定に失敗した場合, 指定された URL を変更せず使います。この場合 `:relative_links` オプションは無視されますが, `:relative => true` を指定している場合はエラーが発生します。
+
+[サイトマップ](/advanced/sitemap/) リソースの [`url` メソッド][`url` method] ([Blog 機能](/blogging/) の BlogArticle に継承される) は *出力 URL* を返すことに注意してください。`link_to` ヘルパは対応する page/article の *ソースパス* に一致させることができず, 相対 URL に変換できない場合があります。
+
+`link_to` に出力 URL を与える代わりに, `link_to` の URL 引数として Resource/Blogarticle の [`path` 属性][`path` attribute] を介した *ソースパス* を与えるか, 単にリソース自体のパスを与えます。どちらの方法も `link_to` に相対 URL を生成させます:
+
+``` html
+<ul>
+  <% blog.articles.each do |article| %>
+    <li>
+      <%= link_to article.title, article.path, :relative => true %> <%# 第 2 引数の `article.path` に注目 %>
+    </li>
+  <% end %>
+</ul>
+
+<ul>
+  <% sitemap.resources.select{|resource| resource.data.title}.each do |resource| %>
+    <li>
+      <%= link_to resource.data.title, resource, :relative => true %> <%# 第 2 引数の `resource` に注目 %>
+    </li>
+  <% end %>
+</ul>
+```
+
 リンクのクエリパラメータやURLフラグメントを次のように含めることができます:
 
 ```ruby
@@ -298,3 +322,5 @@ helpers CustomHelpers
 
 [view the full documentation here]: http://www.padrinorb.com/guides/application-helpers
 [Frank project]: https://github.com/blahed/frank
+[`url` method]: http://rdoc.info/github/middleman/middleman/Middleman/Sitemap/Resource#url-instance_method
+[`path` attribute]: http://rdoc.info/github/middleman/middleman/Middleman/Sitemap/Resource#path-instance_method
