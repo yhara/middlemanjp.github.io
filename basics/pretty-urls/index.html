@@ -4,15 +4,15 @@
     <meta charset="utf-8">
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta content='width=device-width, initial-scale=1.0' name='viewport'>
-    <link href="../stylesheets/site.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="../../stylesheets/site.css" media="screen" rel="stylesheet" type="text/css" />
     <link href="http://fonts.googleapis.com/css?family=Questrial|Arvo" media="screen" rel="stylesheet" type="text/css" />
-    <title>Middleman: HTML の圧縮</title>
+    <title>Middleman: きれいな URL (ディレクトリインデックス)</title>
   </head>
   <body>
 
       <header id="header">
     <div class="container">
-      <h1><a class="logo" href="/"><img width="225" height="225" alt="Middleman" src="../images/mm-blue-w-text.svg" /></a></h1>
+      <h1><a class="logo" href="/"><img width="225" height="225" alt="Middleman" src="../../images/mm-blue-w-text.svg" /></a></h1>
       <p class="console">$ gem install middleman</p>
       <div id="search">
         <form>
@@ -83,24 +83,56 @@
     </nav>
 
     <article id="main" role="main">
-      <h1 id="toc_0">HTML の圧縮</h1>
+      <h1 id="toc_0">きれいな URL (ディレクトリインデックス)</h1>
 
-<p>Middleman は HTML 出力を圧縮する公式拡張を提供しています。 gem で簡単にインストールします:</p>
+<p>デフォルト設定では Middleman はプロジェクトの中であなたが記述したとおり正確にファイルを出力します。例えば <code>source</code> フォルダの中の <code>about-us.html.erb</code> ファイルはプロジェクトのビルド時に <code>about-us.html</code> として出力されます。 <code>example.com</code> の Web サーバのルートディレクトリにプロジェクトを配置すれば, このページは次の URL でアクセスできます: <code>http://example.com/about-us.html</code></p>
 
-<pre><code class="bash">gem install middleman-minify-html
+<p>Middleman は <code>.html</code> 毎にフォルダを作り, そのフォルダの index としてテンプレートを出力するディレクトリインデックス拡張を提供します。<code>config.rb</code> で次のように指定します:</p>
+
+<pre><code class="ruby">activate :directory_indexes
 </code></pre>
 
-<p>Gemfile に <code>middleman-minify-html</code> を追加し, <code>config.rb</code> を開いて次を追加。</p>
+<p>このプロジェクトがビルドされた時,  <code>about-us.html.erb</code> ファイルは <code>about-us/index.html</code> として出力されます。&quot;index ファイル&quot; 対応の Web サーバに置かれた場合 (Apache や Amazon S3), このページは次の URL でアクセスできます:</p>
 
-<pre><code class="ruby">activate :minify_html
+<pre><code class="ruby">http://example.com/about-us
 </code></pre>
 
-<p>middleman の web サーバを再起動します。</p>
+<p>別のファイル名で出力したい場合, <code>index_file</code> 変数が設定できます。例えば IIS では default.html が使用されます:</p>
 
-<pre><code class="bash">middleman server
+<pre><code class="ruby">set :index_file, &quot;default.html&quot;
 </code></pre>
 
-<p>ソースを確認すると, HTML が圧縮されていることが確認できるはずです。</p>
+<p>もしくは PHP ファイルにしたい場合:</p>
+
+<pre><code class="ruby">set :index_file, &quot;index.php&quot;
+</code></pre>
+
+<h4 id="toc_1">アセットパスに関する注意事項</h4>
+
+<p>ディレクトリインデックスを有効化する場合, 画像ファイル名だけでアセットファイルの呼び出し (例: 画像ファイル) を行うと失敗します。次のように完全な抽象パスを使って呼び出す必要があります:</p>
+
+<pre><code class="ruby">![すごい画像](/posts/2013-09-23-some-interesting-post/amazing-image.png)
+</code></pre>
+
+<p>わずかにこのプロセスを自動化するには, MarkDown をまずは ERB で作成します。例えば <code>/posts/2013-09-23-some-interesting-post.html.markdown.erb</code> ファイルがあるとします:</p>
+
+<pre><code class="ruby">![すごい画像](&lt;%= current_page.url %&gt;some-image.png)
+</code></pre>
+
+<h2 id="toc_2">オプトアウト</h2>
+
+<p>自動的に名前を変更したくないページがある場合, 除外できます:</p>
+
+<pre><code class="ruby">page &quot;/i-really-want-the-extension.html&quot;, :directory_index =&gt; false
+</code></pre>
+
+<p>1 度にたくさんのファイルのインデックスを無効化にしたい場合は, <code>page</code> には正規表現かファイルのパターンマッチを与えることができます。</p>
+
+<p>ページ毎に <a href="/frontmatter/">YAML 形式の Frontmatter</a> に <code>directory_index: false</code> を追加することもできます。</p>
+
+<h2 id="toc_3">手動インデックス</h2>
+
+<p>テンプレートのファイル名がすでに <code>index.html</code> の場合, Middleman は手をつけません。例えば, <code>my-page/index.html.erb</code> はあなたの予想どおり <code>my-page/index.html</code> としてビルドされます。</p>
 
     </article>
 
@@ -113,12 +145,12 @@
     <h4>Sponsors</h4>
 
     <a href="http://fjords.cc" target="_blank">
-      <img src="../images/fjords.jpg" />
+      <img src="../../images/fjords.jpg" />
       <span>Fjords: Simple Middleman Hosting &amp; Preview URLs</span>
     </a>
 
     <a href="http://www.maxcdn.com" target="_blank" id="max">
-      <img width="130" src="../images/maxcdn.svg" />
+      <img width="130" src="../../images/maxcdn.svg" />
     </a>
   </div>
 
@@ -137,14 +169,14 @@
           &copy; 2011-2013 <a href="http://awardwinningfjords.com">Thomas Reynolds</a>.
           Localized by <a href="https://github.com/middlemanJP/middlemanjp.github.io/network/members">Middleman users</a>.
         </p>
-        <p class="link"><a href="https://github.com/middleman/middleman-guides/blob/master/source/minify-html.html.markdown">Fork and edit this guide on Github</a></p>
+        <p class="link"><a href="https://github.com/middleman/middleman-guides/blob/master/source/basics/pretty-urls.html.markdown">Fork and edit this guide on Github</a></p>
       </div>
     </footer>
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script src="../javascripts/highlight.pack.js" type="text/javascript"></script>
-    <script src="../javascripts/toc.js" type="text/javascript"></script>
-    <link href="../stylesheets/solarized_light.css" media="screen" rel="stylesheet" type="text/css" />
+    <script src="../../javascripts/highlight.pack.js" type="text/javascript"></script>
+    <script src="../../javascripts/toc.js" type="text/javascript"></script>
+    <link href="../../stylesheets/solarized_light.css" media="screen" rel="stylesheet" type="text/css" />
     <script>hljs.initHighlightingOnLoad();</script>
 
     <script src='https://spacebox.io/embed/js/embed-v1.js'></script>

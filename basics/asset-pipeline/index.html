@@ -4,15 +4,15 @@
     <meta charset="utf-8">
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta content='width=device-width, initial-scale=1.0' name='viewport'>
-    <link href="../stylesheets/site.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="../../stylesheets/site.css" media="screen" rel="stylesheet" type="text/css" />
     <link href="http://fonts.googleapis.com/css?family=Questrial|Arvo" media="screen" rel="stylesheet" type="text/css" />
-    <title>Middleman: HTML の圧縮</title>
+    <title>Middleman: アセットパイプライン</title>
   </head>
   <body>
 
       <header id="header">
     <div class="container">
-      <h1><a class="logo" href="/"><img width="225" height="225" alt="Middleman" src="../images/mm-blue-w-text.svg" /></a></h1>
+      <h1><a class="logo" href="/"><img width="225" height="225" alt="Middleman" src="../../images/mm-blue-w-text.svg" /></a></h1>
       <p class="console">$ gem install middleman</p>
       <div id="search">
         <form>
@@ -83,24 +83,77 @@
     </nav>
 
     <article id="main" role="main">
-      <h1 id="toc_0">HTML の圧縮</h1>
+      <h1 id="toc_0">アセットパイプライン</h1>
 
-<p>Middleman は HTML 出力を圧縮する公式拡張を提供しています。 gem で簡単にインストールします:</p>
+<h2 id="toc_1">依存性管理</h2>
 
-<pre><code class="bash">gem install middleman-minify-html
+<p><a href="https://github.com/sstephenson/sprockets">Sprockets</a> は Javascript (と CoffeeScript) のライブラリを管理するためのツールで, 依存性を宣言し 3rd パーティのコードを読み込みます。Sprockets は .js や .coffee のファイルの中で,  <code>require</code> メソッドを使えるようにし, プロジェクトまたは 3rd パーティ製の gem から外部ファイルを取り込むことができます。</p>
+
+<p>jQuery ライブラリを含む <code>jquery.js</code> ファイルとアプリケーションコードが含まれる <code>app.js</code> があるとします。 次のようにすることで app ファイルは動作する前に jquery を読み込むことができます:</p>
+
+<pre><code class="javascript">//= require &quot;jquery&quot;
+
+$(document).ready(function() {
+  $(&quot;.item&quot;).pluginCode({
+    param1: true,
+    param2: &quot;maybe&quot;
+  });
+});
 </code></pre>
 
-<p>Gemfile に <code>middleman-minify-html</code> を追加し, <code>config.rb</code> を開いて次を追加。</p>
+<p>この機能は CSS ファイルの中でも動作します:</p>
 
-<pre><code class="ruby">activate :minify_html
+<pre><code class="css">/*
+ *= require base
+ */
+
+body {
+  font-weight: bold;
+}
+
 </code></pre>
 
-<p>middleman の web サーバを再起動します。</p>
+<p>Sass を使う場合, Sprockets のファイル読み込み方法よりも Sass の <code>@Import</code> を使用すべきです。</p>
 
-<pre><code class="bash">middleman server
+<h2 id="toc_2">アセット gem</h2>
+
+<p><code>Gemfile</code> で読み込まれた gem からアセットを使用することができます:</p>
+
+<pre><code class="ruby">gem &quot;bootstrap-sass&quot;, :require =&gt; false
 </code></pre>
 
-<p>ソースを確認すると, HTML が圧縮されていることが確認できるはずです。</p>
+<p><code>:require =&gt; false</code> はやや重要です。これらの多くの gem は Rails で使われるものと仮定されており, Rails や Compass 内部にフックしようとすると壊れます。gem を require することを回避し, Middleman は残り部分の面倒をみます。</p>
+
+<p>一度これらの gem の依存関係を追加すると, gem から画像やフォントが自動的に読み込まれます。JavaScript や CSS はファイルの中で <code>require</code> や <code>@import</code> すると使うことができます。</p>
+
+<p>アセットファイルとして追加せず, HTML から 直接 gem のスタイルシートや JS ファイルを参照したい場合, <code>config.rb</code> の中で明示的に読み込む必要があります。</p>
+
+<pre><code class="ruby">ready do
+  sprockets.import_asset &#39;jquery-mobile&#39;
+end
+</code></pre>
+
+<p>これで <code>script</code> タグや <code>javascript_include_tag</code> から直接参照することができます。</p>
+
+<h2 id="toc_3">Sprockets にパスを追加</h2>
+
+<p><code>:js_dir</code> や <code>:css_dir</code> の他にもアセットディレクトリがある場合, Sprockets のインポートパスを追加することができます。<code>config.rb</code> に次の内容を追加してください:</p>
+
+<pre><code class="ruby">ready do
+  sprockets.append_path &#39;/my/shared/assets/&#39;
+end
+</code></pre>
+
+<p>Sprockets supports Bower, so you can add your Bower components path directly:</p>
+
+<pre><code class="ruby">ready do
+  sprockets.append_path &#39;bower_components&#39;
+end
+</code></pre>
+
+<h2 id="toc_4">Compass</h2>
+
+<p>Middleman は柔軟な <a href="http://compass-style.org">Compass</a> サポートを備えています。Compass は Sass でクロスブラウザなスタイルシートを書くためのパワフルなフレームワークです。Compass は, <a href="http://susy.oddbird.net">Susy</a> のように, Middleman で使用できる拡張機能です。<code>image-url</code> のような Sprockets パスヘルパは Middleman のサイトマップにフックされるので, その他の拡張( :asset_hash のような) もスタイルシートに影響します。</p>
 
     </article>
 
@@ -113,12 +166,12 @@
     <h4>Sponsors</h4>
 
     <a href="http://fjords.cc" target="_blank">
-      <img src="../images/fjords.jpg" />
+      <img src="../../images/fjords.jpg" />
       <span>Fjords: Simple Middleman Hosting &amp; Preview URLs</span>
     </a>
 
     <a href="http://www.maxcdn.com" target="_blank" id="max">
-      <img width="130" src="../images/maxcdn.svg" />
+      <img width="130" src="../../images/maxcdn.svg" />
     </a>
   </div>
 
@@ -137,14 +190,14 @@
           &copy; 2011-2013 <a href="http://awardwinningfjords.com">Thomas Reynolds</a>.
           Localized by <a href="https://github.com/middlemanJP/middlemanjp.github.io/network/members">Middleman users</a>.
         </p>
-        <p class="link"><a href="https://github.com/middleman/middleman-guides/blob/master/source/minify-html.html.markdown">Fork and edit this guide on Github</a></p>
+        <p class="link"><a href="https://github.com/middleman/middleman-guides/blob/master/source/basics/asset-pipeline.markdown">Fork and edit this guide on Github</a></p>
       </div>
     </footer>
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script src="../javascripts/highlight.pack.js" type="text/javascript"></script>
-    <script src="../javascripts/toc.js" type="text/javascript"></script>
-    <link href="../stylesheets/solarized_light.css" media="screen" rel="stylesheet" type="text/css" />
+    <script src="../../javascripts/highlight.pack.js" type="text/javascript"></script>
+    <script src="../../javascripts/toc.js" type="text/javascript"></script>
+    <link href="../../stylesheets/solarized_light.css" media="screen" rel="stylesheet" type="text/css" />
     <script>hljs.initHighlightingOnLoad();</script>
 
     <script src='https://spacebox.io/embed/js/embed-v1.js'></script>
