@@ -1,176 +1,176 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>http://middlemanapp.com/advanced/configuration/index.html</loc>
-    <lastmod>2013-11-30T00:00:00+09:00</lastmod>
+    <loc>http://middlemanjp.github.io/advanced/configuration/index.html</loc>
+    <lastmod>2013-12-10T00:00:00+09:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>http://middlemanapp.com/advanced/custom/index.html</loc>
-    <lastmod>2013-11-30T00:00:00+09:00</lastmod>
+    <loc>http://middlemanjp.github.io/advanced/custom/index.html</loc>
+    <lastmod>2013-12-10T00:00:00+09:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>http://middlemanapp.com/advanced/file-size-optimization/index.html</loc>
-    <lastmod>2013-11-30T00:00:00+09:00</lastmod>
+    <loc>http://middlemanjp.github.io/advanced/file-size-optimization/index.html</loc>
+    <lastmod>2013-12-10T00:00:00+09:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>http://middlemanapp.com/advanced/improving-cacheability/index.html</loc>
-    <lastmod>2013-11-30T00:00:00+09:00</lastmod>
+    <loc>http://middlemanjp.github.io/advanced/improving-cacheability/index.html</loc>
+    <lastmod>2013-12-10T00:00:00+09:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>http://middlemanapp.com/advanced/local-data/index.html</loc>
-    <lastmod>2013-11-30T00:00:00+09:00</lastmod>
+    <loc>http://middlemanjp.github.io/advanced/local-data/index.html</loc>
+    <lastmod>2013-12-10T00:00:00+09:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>http://middlemanapp.com/advanced/localization/index.html</loc>
-    <lastmod>2013-11-30T00:00:00+09:00</lastmod>
+    <loc>http://middlemanjp.github.io/advanced/localization/index.html</loc>
+    <lastmod>2013-12-10T00:00:00+09:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>http://middlemanapp.com/advanced/rack-middleware/index.html</loc>
-    <lastmod>2013-11-30T00:00:00+09:00</lastmod>
+    <loc>http://middlemanjp.github.io/advanced/rack-middleware/index.html</loc>
+    <lastmod>2013-12-10T00:00:00+09:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>http://middlemanapp.com/advanced/sitemap/index.html</loc>
-    <lastmod>2013-11-30T00:00:00+09:00</lastmod>
+    <loc>http://middlemanjp.github.io/advanced/sitemap/index.html</loc>
+    <lastmod>2013-12-10T00:00:00+09:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>http://middlemanapp.com/asset-pipeline/index.html</loc>
-    <lastmod>2013-11-30T00:00:00+09:00</lastmod>
+    <loc>http://middlemanjp.github.io/asset-pipeline/index.html</loc>
+    <lastmod>2013-12-10T00:00:00+09:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>http://middlemanapp.com/basics/asset-pipeline/index.html</loc>
-    <lastmod>2013-11-30T00:00:00+09:00</lastmod>
+    <loc>http://middlemanjp.github.io/basics/asset-pipeline/index.html</loc>
+    <lastmod>2013-12-10T00:00:00+09:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>http://middlemanapp.com/basics/blogging/index.html</loc>
-    <lastmod>2013-11-30T00:00:00+09:00</lastmod>
+    <loc>http://middlemanjp.github.io/basics/blogging/index.html</loc>
+    <lastmod>2013-12-10T00:00:00+09:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>http://middlemanapp.com/basics/dynamic-pages/index.html</loc>
-    <lastmod>2013-11-30T00:00:00+09:00</lastmod>
+    <loc>http://middlemanjp.github.io/basics/dynamic-pages/index.html</loc>
+    <lastmod>2013-12-10T00:00:00+09:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>http://middlemanapp.com/basics/frontmatter/index.html</loc>
-    <lastmod>2013-11-30T00:00:00+09:00</lastmod>
+    <loc>http://middlemanjp.github.io/basics/frontmatter/index.html</loc>
+    <lastmod>2013-12-10T00:00:00+09:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>http://middlemanapp.com/basics/getting-started/index.html</loc>
-    <lastmod>2013-11-30T00:00:00+09:00</lastmod>
+    <loc>http://middlemanjp.github.io/basics/getting-started/index.html</loc>
+    <lastmod>2013-12-10T00:00:00+09:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>http://middlemanapp.com/basics/helpers/index.html</loc>
-    <lastmod>2013-11-30T00:00:00+09:00</lastmod>
+    <loc>http://middlemanjp.github.io/basics/helpers/index.html</loc>
+    <lastmod>2013-12-10T00:00:00+09:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>http://middlemanapp.com/basics/livereload/index.html</loc>
-    <lastmod>2013-11-30T00:00:00+09:00</lastmod>
+    <loc>http://middlemanjp.github.io/basics/livereload/index.html</loc>
+    <lastmod>2013-12-10T00:00:00+09:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>http://middlemanapp.com/basics/pretty-urls/index.html</loc>
-    <lastmod>2013-11-30T00:00:00+09:00</lastmod>
+    <loc>http://middlemanjp.github.io/basics/pretty-urls/index.html</loc>
+    <lastmod>2013-12-10T00:00:00+09:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>http://middlemanapp.com/basics/templates/index.html</loc>
-    <lastmod>2013-11-30T00:00:00+09:00</lastmod>
+    <loc>http://middlemanjp.github.io/basics/templates/index.html</loc>
+    <lastmod>2013-12-10T00:00:00+09:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>http://middlemanapp.com/blogging/index.html</loc>
-    <lastmod>2013-11-30T00:00:00+09:00</lastmod>
+    <loc>http://middlemanjp.github.io/blogging/index.html</loc>
+    <lastmod>2013-12-10T00:00:00+09:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>http://middlemanapp.com/community/built-using-middleman/index.html</loc>
-    <lastmod>2013-11-30T00:00:00+09:00</lastmod>
+    <loc>http://middlemanjp.github.io/community/built-using-middleman/index.html</loc>
+    <lastmod>2013-12-10T00:00:00+09:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>http://middlemanapp.com/dynamic-pages/index.html</loc>
-    <lastmod>2013-11-30T00:00:00+09:00</lastmod>
+    <loc>http://middlemanjp.github.io/dynamic-pages/index.html</loc>
+    <lastmod>2013-12-10T00:00:00+09:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>http://middlemanapp.com/frontmatter/index.html</loc>
-    <lastmod>2013-11-30T00:00:00+09:00</lastmod>
+    <loc>http://middlemanjp.github.io/frontmatter/index.html</loc>
+    <lastmod>2013-12-10T00:00:00+09:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>http://middlemanapp.com/getting-started/index.html</loc>
-    <lastmod>2013-11-30T00:00:00+09:00</lastmod>
+    <loc>http://middlemanjp.github.io/getting-started/index.html</loc>
+    <lastmod>2013-12-10T00:00:00+09:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>http://middlemanapp.com/helpers/index.html</loc>
-    <lastmod>2013-11-30T00:00:00+09:00</lastmod>
+    <loc>http://middlemanjp.github.io/helpers/index.html</loc>
+    <lastmod>2013-12-10T00:00:00+09:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>http://middlemanapp.com/index.html</loc>
-    <lastmod>2013-11-30T00:00:00+09:00</lastmod>
+    <loc>http://middlemanjp.github.io/index.html</loc>
+    <lastmod>2013-12-10T00:00:00+09:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>http://middlemanapp.com/livereload/index.html</loc>
-    <lastmod>2013-11-30T00:00:00+09:00</lastmod>
+    <loc>http://middlemanjp.github.io/livereload/index.html</loc>
+    <lastmod>2013-12-10T00:00:00+09:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>http://middlemanapp.com/minify-html/index.html</loc>
-    <lastmod>2013-11-30T00:00:00+09:00</lastmod>
+    <loc>http://middlemanjp.github.io/minify-html/index.html</loc>
+    <lastmod>2013-12-10T00:00:00+09:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>http://middlemanapp.com/pretty-urls/index.html</loc>
-    <lastmod>2013-11-30T00:00:00+09:00</lastmod>
+    <loc>http://middlemanjp.github.io/pretty-urls/index.html</loc>
+    <lastmod>2013-12-10T00:00:00+09:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>http://middlemanapp.com/templates/index.html</loc>
-    <lastmod>2013-11-30T00:00:00+09:00</lastmod>
+    <loc>http://middlemanjp.github.io/templates/index.html</loc>
+    <lastmod>2013-12-10T00:00:00+09:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
